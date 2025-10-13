@@ -14,25 +14,32 @@ const MainBanner = () => {
   ]
 
   useEffect(() => {
-    // 현재 슬라이드의 비디오만 재생, 나머지는 일시정지
+    const handleVideoEnd = () => {
+      setCurrentSlide(prev => (prev + 1) % videos.length);
+    };
+
+    const currentVideo = videoRefs.current[currentSlide];
+
+    // 비디오 재생 및 이벤트 리스너 설정
     videoRefs.current.forEach((video, index) => {
       if (video) {
+        video.removeEventListener('ended', handleVideoEnd); // 이전 리스너 제거
         if (index === currentSlide) {
-          video.currentTime = 0
-          video.play().catch(err => console.log('Video play error:', err))
+          video.currentTime = 0;
+          video.play().catch(err => console.log('Video play error:', err));
+          video.addEventListener('ended', handleVideoEnd);
         } else {
-          video.pause()
+          video.pause();
         }
       }
-    })
-  }, [currentSlide])
+    });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentSlide(prev => (prev + 1) % videos.length);
-    }, 10000); // 10초 간격
-
-    return () => clearTimeout(timer);
+    // 클린업
+    return () => {
+      if (currentVideo) {
+        currentVideo.removeEventListener('ended', handleVideoEnd);
+      }
+    };
   }, [currentSlide, videos.length]);
 
   return (

@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-const experiences = [
+
+const ExperienceSection = () => {
+  const [scrollPosition, setScrollPosition] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [backgroundVideo, setBackgroundVideo] = useState(null)
+
+  const categories = ['All', '동물체험', '자연체험', '문화체험']
+
+  const experiences = [
     {
       image: '/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4',
       title: '동물 먹이주기 체험',
@@ -54,6 +62,11 @@ const experiences = [
 
   return (
     <Section>
+      <BackgroundVideoWrapper $isVisible={!!backgroundVideo}>
+        {backgroundVideo && (
+          <video src={backgroundVideo} autoPlay loop muted playsInline />
+        )}
+      </BackgroundVideoWrapper>
       <Container>
         <SectionHeader>
           <EnglishTitle>Experience Schedule</EnglishTitle>
@@ -78,7 +91,11 @@ const experiences = [
         <SliderContainer>
           <SliderWrapper $offset={scrollPosition}>
             {filteredExperiences.map((exp, index) => (
-              <ExperienceCard key={index}>
+              <ExperienceCard 
+                key={index}
+                onMouseEnter={() => exp.mediaType === 'video' && setBackgroundVideo(exp.image)}
+                onMouseLeave={() => exp.mediaType === 'video' && setBackgroundVideo(null)}
+              >
                 {exp.mediaType === 'video' ? (
                   <CardVideo autoPlay loop muted playsInline>
                     <source src={exp.image} type="video/mp4" />
@@ -122,12 +139,33 @@ const experiences = [
 }
 
 const Section = styled.section`
+  position: relative;
   padding: ${({ theme }) => `${theme.spacing.xxxl} 0`};
   background: #1a1a1a;
   color: white;
+  overflow: hidden;
+`
+
+const BackgroundVideoWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${({ $isVisible }) => ($isVisible ? 0.15 : 0)};
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
 
 const Container = styled.div`
+  position: relative;
+  z-index: 2;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.xl};
@@ -300,4 +338,4 @@ const ViewMoreButton = styled.button`
   }
 `
 
-export default ExperienceSection
+export default ExperienceSection;
