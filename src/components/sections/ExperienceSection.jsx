@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const ExperienceSection = () => {
   const [scrollPosition, setScrollPosition] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [backgroundVideo, setBackgroundVideo] = useState(null)
+  const [hoveredCard, setHoveredCard] = useState(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [velocity, setVelocity] = useState(0)
+  const [lastX, setLastX] = useState(0)
+  const [lastTime, setLastTime] = useState(0)
+  const videoRefs = React.useRef([])
+  const sliderRef = React.useRef(null)
+  const momentumRef = React.useRef(null)
 
   const categories = ['All', '동물체험', '자연체험', '문화체험']
 
   const experiences = [
     {
+      id: 0,
       image: '/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4',
       title: '동물 먹이주기 체험',
       subtitle: '사슴, 토끼와 함께하는 시간',
@@ -18,32 +29,40 @@ const ExperienceSection = () => {
       mediaType: 'video'
     },
     {
-      image: 'https://via.placeholder.com/400x500?text=식물+심기',
+      id: 1,
+      image: '/videos/식물 체험.mp4',
       title: '식물 심기 체험',
       subtitle: '계절 꽃과 나무 가꾸기',
       date: '주말 운영',
-      category: '자연체험'
+      category: '자연체험',
+      mediaType: 'video'
     },
     {
-      image: 'https://via.placeholder.com/400x500?text=생태+탐험',
+      id: 2,
+      image: '/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4',
       title: '생태 탐험 투어',
       subtitle: '전문 가이드와 함께',
       date: '주말 10시, 14시',
-      category: '자연체험'
+      category: '자연체험',
+      mediaType: 'video'
     },
     {
-      image: 'https://via.placeholder.com/400x500?text=야외+공연',
+      id: 3,
+      image: '/videos/freepik__cusersformadesktopseoulchildrensgrandpark__40241.mp4',
       title: '야외 공연 관람',
       subtitle: '다채로운 공연과 이벤트',
       date: '토,일 14시',
-      category: '문화체험'
+      category: '문화체험',
+      mediaType: 'video'
     },
     {
-      image: 'https://via.placeholder.com/400x500?text=동물+교감',
+      id: 4,
+      image: '/videos/freepik__a-bright-and-realistic-scene-at-seoul-childrens-gr__40243.mp4',
       title: '동물 교감 프로그램',
       subtitle: '동물 행동 관찰',
       date: '평일 15시',
-      category: '동물체험'
+      category: '동물체험',
+      mediaType: 'video'
     }
   ]
 
@@ -51,12 +70,103 @@ const ExperienceSection = () => {
     ? experiences
     : experiences.filter(exp => exp.category === selectedCategory)
 
+  useEffect(() => {
+    return () => {
+      if (momentumRef.current) {
+        cancelAnimationFrame(momentumRef.current)
+      }
+    }
+  }, [])
+
   const handleScroll = (direction) => {
     const cardWidth = 350
     if (direction === 'left') {
       setScrollPosition(Math.max(0, scrollPosition - cardWidth))
     } else {
       setScrollPosition(Math.min((filteredExperiences.length - 3) * cardWidth, scrollPosition + cardWidth))
+    }
+  }
+
+  const handleMouseEnter = (exp) => {
+    setHoveredCard(exp.id)
+    if (exp.mediaType === 'video') {
+      setBackgroundVideo(exp.image)
+      if (videoRefs.current[exp.id]) {
+        videoRefs.current[exp.id].play()
+      }
+    }
+  }
+
+  const handleMouseLeave = (exp) => {
+    setHoveredCard(null)
+    if (exp.mediaType === 'video') {
+      setBackgroundVideo(null)
+      if (videoRefs.current[exp.id]) {
+        videoRefs.current[exp.id].pause()
+        videoRefs.current[exp.id].currentTime = 0
+      }
+    }
+  }
+
+  const handleDragStart = (e) => {
+    if (momentumRef.current) {
+      cancelAnimationFrame(momentumRef.current)
+    }
+    setIsDragging(true)
+    setStartX(e.pageX)
+    setScrollLeft(scrollPosition)
+    setLastX(e.pageX)
+    setLastTime(Date.now())
+    setVelocity(0)
+  }
+
+  const handleDragMove = (e) => {
+    if (!isDragging) return
+    e.preventDefault()
+    const x = e.pageX
+    const currentTime = Date.now()
+    const timeDelta = currentTime - lastTime
+
+    if (timeDelta > 0) {
+      const distance = lastX - x
+      setVelocity(distance / timeDelta)
+    }
+
+    setLastX(x)
+    setLastTime(currentTime)
+
+    const walk = (startX - x) * 0.8
+    const newPosition = scrollLeft + walk
+    const maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
+    setScrollPosition(Math.max(0, Math.min(maxScroll, newPosition)))
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+
+    // 관성 효과 적용
+    let currentVelocity = velocity * 15
+    const friction = 0.92
+
+    const applyMomentum = () => {
+      if (Math.abs(currentVelocity) < 0.5) {
+        momentumRef.current = null
+        return
+      }
+
+      currentVelocity *= friction
+      const maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
+
+      setScrollPosition((prevPosition) => {
+        const newPosition = prevPosition + currentVelocity
+        return Math.max(0, Math.min(maxScroll, newPosition))
+      })
+
+      momentumRef.current = requestAnimationFrame(applyMomentum)
+    }
+
+    if (Math.abs(currentVelocity) > 0.5) {
+      applyMomentum()
     }
   }
 
@@ -88,23 +198,39 @@ const ExperienceSection = () => {
           ))}
         </CategoryTabs>
 
-        <SliderContainer>
-          <SliderWrapper $offset={scrollPosition}>
-            {filteredExperiences.map((exp, index) => (
-              <ExperienceCard 
-                key={index}
-                onMouseEnter={() => exp.mediaType === 'video' && setBackgroundVideo(exp.image)}
-                onMouseLeave={() => exp.mediaType === 'video' && setBackgroundVideo(null)}
+        <SliderContainer
+          ref={sliderRef}
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+        >
+          <SliderWrapper $offset={scrollPosition} $isDragging={isDragging}>
+            {filteredExperiences.map((exp) => (
+              <ExperienceCard
+                key={exp.id}
+                $isHovered={hoveredCard === exp.id}
+                $hasHoveredCard={hoveredCard !== null}
+                onMouseEnter={() => handleMouseEnter(exp)}
+                onMouseLeave={() => handleMouseLeave(exp)}
               >
                 {exp.mediaType === 'video' ? (
-                  <CardVideo autoPlay loop muted playsInline>
-                    <source src={exp.image} type="video/mp4" />
-                  </CardVideo>
+                  <VideoWrapper $isHovered={hoveredCard === exp.id}>
+                    <CardVideo
+                      ref={(el) => (videoRefs.current[exp.id] = el)}
+                      loop
+                      muted
+                      playsInline
+                    >
+                      <source src={exp.image} type="video/mp4" />
+                    </CardVideo>
+                  </VideoWrapper>
                 ) : (
-                  <CardImage src={exp.image} alt={exp.title} />
+                  <VideoWrapper $isHovered={hoveredCard === exp.id}>
+                    <CardImage src={exp.image} alt={exp.title} />
+                  </VideoWrapper>
                 )}
                 <CardContent>
-                  <CardIcon>👤</CardIcon>
                   <CardTitle>{exp.title}</CardTitle>
                   <CardSubtitle>{exp.subtitle}</CardSubtitle>
                   <CardDate>
@@ -217,49 +343,65 @@ const CategoryTab = styled.button`
 const SliderContainer = styled.div`
   overflow: hidden;
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  cursor: url('/scroll_11122483.svg') 24 24, grab;
+
+  &:active {
+    cursor: url('/scroll_11122483.svg') 24 24, grabbing;
+  }
 `
 
 const SliderWrapper = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing.lg};
-  transition: transform 0.5s ease;
+  transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.5s ease')};
   transform: translateX(-${({ $offset }) => $offset}px);
+  user-select: none;
 `
 
 const ExperienceCard = styled.div`
-  min-width: 320px;
+  min-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
+  max-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
   background: #2a2a2a;
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: url('/scroll_11122483.svg') 24 24, grab;
+  transition: all 0.5s ease;
+  pointer-events: auto;
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   }
+
+  &:active {
+    cursor: url('/scroll_11122483.svg') 24 24, grabbing;
+  }
+
+  img, video {
+    pointer-events: none;
+  }
+`
+
+const VideoWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
 `
 
 const CardImage = styled.img`
   width: 100%;
-  height: 400px;
+  height: 100%;
   object-fit: cover;
 `
 
 const CardVideo = styled.video`
   width: 100%;
-  height: 400px;
+  height: 100%;
   object-fit: cover;
+  transform: scale(1.4);
 `
 
 const CardContent = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
-`
-
-const CardIcon = styled.div`
-  font-size: 14px;
-  color: #999;
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
 `
 
 const CardTitle = styled.h3`
