@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import AnimalFeedingVideo from '../../assets/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4'
-
-const ExperienceSection = () => {
-  const [scrollPosition, setScrollPosition] = useState(0)
-  const [selectedCategory, setSelectedCategory] = useState('All')
-
-  const categories = ['All', '동물체험', '자연체험', '문화체험']
-
-  const experiences = [
+const experiences = [
     {
-      image: AnimalFeedingVideo,
+      image: '/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4',
       title: '동물 먹이주기 체험',
       subtitle: '사슴, 토끼와 함께하는 시간',
       date: '매일 운영',

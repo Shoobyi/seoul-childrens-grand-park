@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import video1 from '../../assets/videos/메인배너1.mp4'
-import video2 from '../../assets/videos/메인배너2.mp4'
-import video3 from '../../assets/videos/메인배너3.mp4'
 
 const MainBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const videoRefs = useRef([])
 
-  const videos = [video1, video2, video3]
+  const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
 
   const quickGuides = [
     { title: '입장권 구매', icon: '/티켓.svg', color: '#FFF4D6' },
