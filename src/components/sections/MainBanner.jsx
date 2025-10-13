@@ -1,25 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import video1 from '../../assets/videos/메인배너1.mp4'
+import video2 from '../../assets/videos/메인배너2.mp4'
+import video3 from '../../assets/videos/메인배너3.mp4'
 
 const MainBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const videoRefs = useRef([])
 
-  const videos = [
-    '/메인배너1.mp4',
-    '/메인배너2.mp4',
-    '/메인배너3.mp4',
-  ]
+  const videos = [video1, video2, video3]
 
   const quickGuides = [
     { title: '입장권 구매', icon: '/티켓.svg', color: '#FFF4D6' },
     { title: '행사안내', icon: '/행사.svg', color: '#E6D4F0' },
     { title: '교통안내', icon: '/버스.svg', color: '#D4F0E6' },
   ]
-
-  const handleVideoEnd = () => {
-    setCurrentSlide((prev) => (prev + 1) % videos.length)
-  }
 
   useEffect(() => {
     // 현재 슬라이드의 비디오만 재생, 나머지는 일시정지
@@ -35,6 +30,14 @@ const MainBanner = () => {
     })
   }, [currentSlide])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentSlide(prev => (prev + 1) % videos.length);
+    }, 10000); // 10초 간격
+
+    return () => clearTimeout(timer);
+  }, [currentSlide, videos.length]);
+
   return (
     <BannerContainer>
       <VideoSlider>
@@ -45,7 +48,7 @@ const MainBanner = () => {
               src={video}
               muted
               playsInline
-              onEnded={index === currentSlide ? handleVideoEnd : undefined}
+              autoPlay
             />
           </VideoSlide>
         ))}

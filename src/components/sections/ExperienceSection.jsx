@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import AnimalFeedingVideo from '../../assets/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4'
 
 const ExperienceSection = () => {
   const [scrollPosition, setScrollPosition] = useState(0)
@@ -9,11 +10,12 @@ const ExperienceSection = () => {
 
   const experiences = [
     {
-      image: 'https://via.placeholder.com/400x500?text=동물+먹이주기',
+      image: AnimalFeedingVideo,
       title: '동물 먹이주기 체험',
       subtitle: '사슴, 토끼와 함께하는 시간',
       date: '매일 운영',
-      category: '동물체험'
+      category: '동물체험',
+      mediaType: 'video'
     },
     {
       image: 'https://via.placeholder.com/400x500?text=식물+심기',
@@ -85,7 +87,13 @@ const ExperienceSection = () => {
           <SliderWrapper $offset={scrollPosition}>
             {filteredExperiences.map((exp, index) => (
               <ExperienceCard key={index}>
-                <CardImage src={exp.image} alt={exp.title} />
+                {exp.mediaType === 'video' ? (
+                  <CardVideo autoPlay loop muted playsInline>
+                    <source src={exp.image} type="video/mp4" />
+                  </CardVideo>
+                ) : (
+                  <CardImage src={exp.image} alt={exp.title} />
+                )}
                 <CardContent>
                   <CardIcon>👤</CardIcon>
                   <CardTitle>{exp.title}</CardTitle>
@@ -203,6 +211,12 @@ const ExperienceCard = styled.div`
 `
 
 const CardImage = styled.img`
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+`
+
+const CardVideo = styled.video`
   width: 100%;
   height: 400px;
   object-fit: cover;
