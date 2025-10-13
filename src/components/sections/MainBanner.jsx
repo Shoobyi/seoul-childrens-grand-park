@@ -11,6 +11,12 @@ const MainBanner = () => {
     '/메인배너3.mp4',
   ]
 
+  const quickGuides = [
+    { title: '입장권 구매', icon: '/티켓.svg', color: '#FFF4D6' },
+    { title: '행사안내', icon: '/행사.svg', color: '#E6D4F0' },
+    { title: '교통안내', icon: '/버스.svg', color: '#D4F0E6' },
+  ]
+
   const handleVideoEnd = () => {
     setCurrentSlide((prev) => (prev + 1) % videos.length)
   }
@@ -69,6 +75,15 @@ const MainBanner = () => {
             </svg>
           </SearchButton>
         </SearchBar>
+
+        <QuickGuideContainer>
+          {quickGuides.map((guide, index) => (
+            <QuickGuideCard key={index} $bgColor={guide.color}>
+              <GuideIcon src={guide.icon} alt={guide.title} />
+              <GuideTitle>{guide.title}</GuideTitle>
+            </QuickGuideCard>
+          ))}
+        </QuickGuideContainer>
       </BannerContent>
 
       <SlideIndicators>
@@ -198,6 +213,57 @@ const SearchButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.primary.darkGreen};
     transform: scale(1.05);
+  }
+`
+
+const QuickGuideContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${({ theme }) => theme.spacing.sm};
+  max-width: 500px;
+  margin: ${({ theme }) => theme.spacing.md} auto 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
+`
+
+const QuickGuideCard = styled.div`
+  background: transparent;
+  padding: ${({ theme }) => theme.spacing.sm};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing.xs};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+`
+
+const GuideIcon = styled.img`
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 28px;
+    height: 28px;
+  }
+`
+
+const GuideTitle = styled.span`
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  color: white;
+  text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 10px;
   }
 `
 
