@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 const ParkZoneSection = () => {
-  const [selectedZone, setSelectedZone] = useState(0)
+  const [selectedZone, setSelectedZone] = useState(null)
   const [mapScale, setMapScale] = useState(1)
   const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+  const [backgroundEffect, setBackgroundEffect] = useState(null)
   const mapRef = useRef(null)
 
   const adjustMapPosition = (scale) => {
@@ -125,7 +126,8 @@ const ParkZoneSection = () => {
       ],
       facilities: ['화장실 3곳', '수유실 2곳', '매점 5곳', '휴게소 4곳'],
       location: '정문(메인게이트) → 직진 200m → 왼쪽 구역',
-      mapPosition: { top: '40%', left: '25%' }
+      mapPosition: { top: '40%', left: '25%' },
+      cameraPosition: { x: 150, y: 80 }
     },
     {
       name: '그린 가든',
@@ -140,7 +142,8 @@ const ParkZoneSection = () => {
       ],
       facilities: ['화장실 2곳', '수유실 1곳', '카페 2곳', '휴게소 3곳'],
       location: '정문(메인게이트) → 직진 300m → 중앙 광장 주변',
-      mapPosition: { top: '50%', left: '45%' }
+      mapPosition: { top: '50%', left: '45%' },
+      cameraPosition: { x: 0, y: 0 }
     },
     {
       name: '플레이 파크',
@@ -155,7 +158,8 @@ const ParkZoneSection = () => {
       ],
       facilities: ['화장실 4곳', '수유실 2곳', '매점 6곳', '휴게소 5곳'],
       location: '정문(메인게이트) → 직진 400m → 오른쪽 구역',
-      mapPosition: { top: '55%', left: '65%' }
+      mapPosition: { top: '55%', left: '65%' },
+      cameraPosition: { x: -150, y: -50 }
     },
     {
       name: '가든 페스티벌',
@@ -170,268 +174,269 @@ const ParkZoneSection = () => {
       ],
       facilities: ['화장실 2곳', '수유실 1곳', '매점 4곳', '공연장 1곳'],
       location: '정문(메인게이트) → 직진 500m → 후문 방향',
-      mapPosition: { top: '30%', left: '55%' }
+      mapPosition: { top: '30%', left: '55%' },
+      cameraPosition: { x: -50, y: 120 }
     }
   ]
 
+  const handleZoneSelect = (index, e) => {
+    e.stopPropagation()
+    setSelectedZone(index)
+    setBackgroundEffect(zones[index].color)
+
+    // 카메라를 해당 zone으로 이동
+    const targetPosition = zones[index].cameraPosition
+    setMapPosition(targetPosition)
+  }
+
+  const handleMapClick = () => {
+    setSelectedZone(null)
+    setBackgroundEffect(null)
+  }
+
   return (
     <Section>
+      <BackgroundEffectWrapper $isVisible={!!backgroundEffect} $color={backgroundEffect}>
+        <div />
+      </BackgroundEffectWrapper>
       <Container>
-        <CenterTitle>주요 구역 안내 및 찾아오시는 길</CenterTitle>
+        <SectionHeader>
+          <EnglishTitle>Park Zones</EnglishTitle>
+          <MainTitle>공원 구역 안내</MainTitle>
+        </SectionHeader>
 
-        <ContentWrapper>
-          <LeftInfo>
-            <InfoIcon>①</InfoIcon>
-            <InfoTitle>{zones[selectedZone].name}</InfoTitle>
-
-            <InfoBox>
-              <InfoLabel>찾아가는 길</InfoLabel>
-              <LocationBox>
-                <LocationIcon>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M10 2C6.13 2 3 5.13 3 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
-                  </svg>
-                </LocationIcon>
-                <InfoText>{zones[selectedZone].location}</InfoText>
-              </LocationBox>
-            </InfoBox>
-
-            <InfoBox>
-              <InfoLabel>소개</InfoLabel>
-              <InfoText>{zones[selectedZone].description}</InfoText>
-            </InfoBox>
-
-            <InfoBox>
-              <InfoLabel>주요 특징</InfoLabel>
-              <FeatureList>
-                {zones[selectedZone].features.map((feature, idx) => (
-                  <FeatureItem key={idx}>· {feature}</FeatureItem>
-                ))}
-              </FeatureList>
-            </InfoBox>
-
-            <InfoBox>
-              <InfoLabel>편의시설</InfoLabel>
-              <FacilityList>
-                {zones[selectedZone].facilities.map((facility, idx) => (
-                  <FacilityItem key={idx}>{facility}</FacilityItem>
-                ))}
-              </FacilityList>
-            </InfoBox>
-          </LeftInfo>
-
-          <MapWrapper
-            ref={mapRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            $isDragging={isDragging}
-          >
-            <MapControls>
-              <ControlButton onClick={handleZoomIn} title="확대">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 5v10M5 10h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </ControlButton>
-              <ControlButton onClick={handleZoomOut} title="축소">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M5 10h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </ControlButton>
-              <ControlButton onClick={resetMapView} title="초기화">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10a6 6 0 1 1 12 0M10 4v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </ControlButton>
-              <ZoomLevel>{Math.round(mapScale * 100)}%</ZoomLevel>
-            </MapControls>
-
-            <MapImageContainer
-              $scale={mapScale}
-              $x={mapPosition.x}
-              $y={mapPosition.y}
-            >
-              <MapImage src="/map_v2.jpg" alt="서울어린이대공원 지도" />
-              <MapOverlay>
-                <MapMarker
-                  $top={zones[selectedZone].mapPosition.top}
-                  $left={zones[selectedZone].mapPosition.left}
-                  $color={zones[selectedZone].color}
-                >
-                  <MarkerPulse $color={zones[selectedZone].color} />
-                  <MarkerIcon>{zones[selectedZone].icon}</MarkerIcon>
-                  <MarkerLabel>{zones[selectedZone].name}</MarkerLabel>
-                </MapMarker>
-              </MapOverlay>
-            </MapImageContainer>
-          </MapWrapper>
-        </ContentWrapper>
-
-        <ZoneQuickNav>
+        <CategoryTabs>
           {zones.map((zone, index) => (
-            <QuickNavButton
+            <CategoryTab
               key={index}
-              $bgColor={zone.color}
-              $isActive={selectedZone === index}
-              onClick={() => setSelectedZone(index)}
+              $isActive={selectedZone !== null && selectedZone === index}
+              onClick={(e) => handleZoneSelect(index, e)}
             >
               <span>{zone.icon}</span>
               <span>{zone.name}</span>
-            </QuickNavButton>
+            </CategoryTab>
           ))}
-        </ZoneQuickNav>
+        </CategoryTabs>
+
+        <MapWrapper
+          ref={mapRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          $isDragging={isDragging}
+        >
+          <MapControls>
+            <ControlButton onClick={handleZoomIn} title="확대">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 5v10M5 10h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </ControlButton>
+            <ControlButton onClick={handleZoomOut} title="축소">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 10h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </ControlButton>
+            <ControlButton onClick={resetMapView} title="초기화">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10a6 6 0 1 1 12 0M10 4v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </ControlButton>
+            <ZoomLevel>{Math.round(mapScale * 100)}%</ZoomLevel>
+          </MapControls>
+
+          <MapImageContainer
+            $scale={mapScale}
+            $x={mapPosition.x}
+            $y={mapPosition.y}
+            $isDragging={isDragging}
+            onClick={handleMapClick}
+          >
+            <MapImage src="/park-map-3d.png" alt="서울어린이대공원 지도" />
+            <MapOverlay>
+              {zones.map((zone, index) => (
+                <MapMarker
+                  key={index}
+                  $top={zone.mapPosition.top}
+                  $left={zone.mapPosition.left}
+                  $color={zone.color}
+                  $isActive={selectedZone !== null && selectedZone === index}
+                  onClick={(e) => handleZoneSelect(index, e)}
+                >
+                  {selectedZone === index && <MarkerPulse $color={zone.color} />}
+                  <MarkerIcon $isActive={selectedZone !== null && selectedZone === index}>
+                    {zone.icon}
+                  </MarkerIcon>
+                </MapMarker>
+              ))}
+
+              {selectedZone !== null && (
+                <ZoneInfoPopup
+                  key={selectedZone}
+                  $top={zones[selectedZone].mapPosition.top}
+                  $left={zones[selectedZone].mapPosition.left}
+                >
+                  <PopupHeader>
+                    <PopupIcon>{zones[selectedZone].icon}</PopupIcon>
+                    <PopupTitle>{zones[selectedZone].name}</PopupTitle>
+                  </PopupHeader>
+
+                  <PopupContent>
+                    <PopupSection>
+                      <PopupLabel>
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                          <path d="M10 2C6.13 2 3 5.13 3 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                        </svg>
+                        찾아가는 길
+                      </PopupLabel>
+                      <PopupText>{zones[selectedZone].location}</PopupText>
+                    </PopupSection>
+
+                    <PopupSection>
+                      <PopupLabel>
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                          <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                          <path d="M10 6v4l3 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
+                        소개
+                      </PopupLabel>
+                      <PopupText>{zones[selectedZone].description}</PopupText>
+                    </PopupSection>
+
+                    <PopupSection>
+                      <PopupLabel>
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                          <path d="M9 2l1.5 5.5L16 9l-5.5 1.5L9 16l-1.5-5.5L2 9l5.5-1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" fill="none"/>
+                        </svg>
+                        주요 특징
+                      </PopupLabel>
+                      {zones[selectedZone].features.map((feature, idx) => (
+                        <PopupFeature key={idx}>{feature}</PopupFeature>
+                      ))}
+                    </PopupSection>
+
+                    <PopupSection>
+                      <PopupLabel>
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                          <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                          <path d="M7 2v4M13 2v4M3 8h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
+                        편의시설
+                      </PopupLabel>
+                      <PopupFacilities>
+                        {zones[selectedZone].facilities.map((facility, idx) => (
+                          <PopupFacilityTag key={idx}>{facility}</PopupFacilityTag>
+                        ))}
+                      </PopupFacilities>
+                    </PopupSection>
+                  </PopupContent>
+                </ZoneInfoPopup>
+              )}
+            </MapOverlay>
+          </MapImageContainer>
+        </MapWrapper>
       </Container>
     </Section>
   )
 }
 
 const Section = styled.section`
+  position: relative;
   padding: ${({ theme }) => `${theme.spacing.xxxl} 0`};
-  background: #f8f9fa;
+  background: #1a1a1a;
+  color: white;
+  overflow: hidden;
+`
+
+const BackgroundEffectWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${({ $isVisible }) => ($isVisible ? 0.1 : 0)};
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+
+  div {
+    width: 100%;
+    height: 100%;
+    background: ${({ $color }) => $color || 'transparent'};
+  }
 `
 
 const Container = styled.div`
-  max-width: ${({ theme }) => theme.container.maxWidth};
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.xl};
 `
 
-const CenterTitle = styled.h2`
-  font-size: 40px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-
-  span {
-    color: ${({ theme }) => theme.colors.secondary.yellow};
-  }
 `
 
-const ContentWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: ${({ theme }) => theme.spacing.xxl};
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  padding: ${({ theme }) => theme.spacing.xxl};
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
-  }
-`
-
-const LeftInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.lg};
-`
-
-const InfoIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
-  border-radius: ${({ theme }) => theme.borderRadius.round};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`
-
-const InfoTitle = styled.h3`
-  font-size: 32px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
+const EnglishTitle = styled.div`
+  font-size: 14px;
+  color: #999;
   margin-bottom: ${({ theme }) => theme.spacing.sm};
+  letter-spacing: 1px;
 `
 
-const InfoBox = styled.div`
+const MainTitle = styled.h2`
+  font-size: 48px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+`
+
+const CategoryTabs = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-`
-
-const InfoLabel = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  color: ${({ theme }) => theme.colors.primary.green};
-
-  &::before {
-    content: '';
-    width: 4px;
-    height: 4px;
-    background: ${({ theme }) => theme.colors.primary.green};
-    border-radius: ${({ theme }) => theme.borderRadius.round};
-  }
-`
-
-const InfoText = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  line-height: 1.6;
-`
-
-const FeatureList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-`
-
-const FeatureItem = styled.li`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  line-height: 1.6;
-`
-
-const FacilityList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.sm};
-`
-
-const FacilityItem = styled.span`
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  background: ${({ theme }) => theme.colors.primary.lightGreen}40;
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const LocationBox = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => theme.spacing.md};
-  background: ${({ theme }) => theme.colors.primary.lightGreen}20;
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  border-left: 4px solid ${({ theme }) => theme.colors.primary.green};
-`
-
-const LocationIcon = styled.div`
-  color: ${({ theme }) => theme.colors.primary.green};
-  display: flex;
-  align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  flex-wrap: wrap;
+`
+
+const CategoryTab = styled.button`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+  background: ${({ $isActive }) => ($isActive ? 'white' : 'transparent')};
+  color: ${({ $isActive }) => ($isActive ? '#1a1a1a' : '#999')};
+  border: 1px solid ${({ $isActive }) => ($isActive ? 'white' : '#444')};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  span:first-child {
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: white;
+    color: #1a1a1a;
+    border-color: white;
+  }
 `
 
 const MapWrapper = styled.div`
   position: relative;
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.small};
   cursor: ${({ $isDragging }) => ($isDragging ? 'grabbing' : 'grab')};
   user-select: none;
-  height: 500px;
+  height: 800px;
+  background: transparent;
+  margin: 0 auto;
+  max-width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 600px;
+  }
 `
 
 const MapControls = styled.div`
@@ -447,20 +452,20 @@ const MapControls = styled.div`
 const ControlButton = styled.button`
   width: 40px;
   height: 40px;
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.small};
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: ${({ theme }) => theme.borderRadius.round};
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: ${({ theme }) => theme.shadows.medium};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  color: #1a1a1a;
   transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary.green};
-    color: white;
-    transform: scale(1.05);
+    background: white;
+    transform: scale(1.1);
   }
 
   &:active {
@@ -485,7 +490,8 @@ const MapImageContainer = styled.div`
   position: relative;
   transform: translate(${({ $x }) => $x}px, ${({ $y }) => $y}px) scale(${({ $scale }) => $scale});
   transform-origin: center center;
-  transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.2s ease-out')};
+  transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)')};
+  will-change: ${({ $isDragging }) => ($isDragging ? 'transform' : 'auto')};
 `
 
 const MapImage = styled.img`
@@ -509,12 +515,20 @@ const MapMarker = styled.div`
   position: absolute;
   top: ${({ $top }) => $top};
   left: ${({ $left }) => $left};
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(${({ $isActive }) => ($isActive ? 1 : 0.85)});
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 10;
-  animation: markerAppear 0.5s ease-out;
+  z-index: ${({ $isActive }) => ($isActive ? 20 : 10)};
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  pointer-events: auto;
+  opacity: ${({ $isActive }) => ($isActive ? 1 : 0.95)};
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(${({ $isActive }) => ($isActive ? 1.05 : 0.95)});
+    opacity: 1;
+  }
 
   @keyframes markerAppear {
     from {
@@ -558,72 +572,151 @@ const MarkerPulse = styled.div`
 
 const MarkerIcon = styled.div`
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: ${({ $isActive }) => ($isActive ? '70px' : '55px')};
+  height: ${({ $isActive }) => ($isActive ? '70px' : '55px')};
   background: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  box-shadow: ${({ theme }) => theme.shadows.large};
-  border: 4px solid ${({ theme }) => theme.colors.primary.green};
+  font-size: ${({ $isActive }) => ($isActive ? '32px' : '26px')};
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(255, 255, 255, 0.3);
+  border: ${({ $isActive }) => ($isActive ? '4px' : '3px')} solid white;
   z-index: 2;
+  transition: all 0.3s ease;
 `
 
-const MarkerLabel = styled.div`
-  margin-top: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  white-space: nowrap;
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-`
+const ZoneInfoPopup = styled.div`
+  position: absolute;
+  top: ${({ $top }) => $top};
+  left: ${({ $left }) => $left};
+  transform: translate(60px, -50%);
+  transform-origin: left center;
+  background: rgba(42, 42, 42, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  padding: ${({ theme }) => theme.spacing.lg};
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 350px;
+  max-height: 500px;
+  overflow-y: auto;
+  z-index: 50;
+  pointer-events: auto;
+  animation: popupSlideIn 0.3s ease-out;
 
-const ZoneQuickNav = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: ${({ theme }) => theme.spacing.md};
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(26, 26, 26, 0.5);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 2px;
+  }
+
+  @keyframes popupSlideIn {
+    from {
+      opacity: 0;
+      transform: translate(40px, -50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(60px, -50%) scale(1);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
+    width: 280px;
+    max-height: 400px;
   }
 `
 
-const QuickNavButton = styled.button`
+const PopupHeader = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => theme.spacing.lg};
-  background: ${({ $bgColor }) => $bgColor};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  border: ${({ $isActive, theme }) =>
-    $isActive ? `3px solid ${theme.colors.primary.green}` : '3px solid transparent'};
-  transition: all 0.3s ease;
-  cursor: pointer;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  padding-bottom: ${({ theme }) => theme.spacing.sm};
+  border-bottom: 2px solid #444;
+`
 
-  span:first-child {
-    font-size: 32px;
-  }
+const PopupIcon = styled.div`
+  font-size: 28px;
+`
 
-  span:last-child {
-    font-size: ${({ theme }) => theme.typography.fontSize.small};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-    color: ${({ theme }) => theme.colors.neutral.darkGray};
-  }
+const PopupTitle = styled.h4`
+  font-size: 18px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: white;
+`
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
+const PopupContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md};
+`
+
+const PopupSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const PopupLabel = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs};
+  font-size: 13px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  color: #aaa;
+
+  svg {
+    flex-shrink: 0;
   }
+`
+
+const PopupText = styled.p`
+  font-size: 12px;
+  color: #ddd;
+  line-height: 1.5;
+  padding-left: 24px;
+`
+
+const PopupFeature = styled.div`
+  font-size: 12px;
+  color: #ddd;
+  line-height: 1.5;
+  padding-left: 24px;
+  position: relative;
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 12px;
+    color: #999;
+  }
+`
+
+const PopupFacilities = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 24px;
+`
+
+const PopupFacilityTag = styled.span`
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: ${({ theme }) => theme.borderRadius.small};
+  font-size: 11px;
+  color: #bbb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
 `
 
 export default ParkZoneSection

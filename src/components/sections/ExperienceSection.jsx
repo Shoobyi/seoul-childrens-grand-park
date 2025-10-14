@@ -180,7 +180,7 @@ const ExperienceSection = () => {
       <Container>
         <SectionHeader>
           <EnglishTitle>Experience Schedule</EnglishTitle>
-          <MainTitle>특별한 체험</MainTitle>
+          <MainTitle>다양하고 재밌는 체험</MainTitle>
         </SectionHeader>
 
         <CategoryTabs>
@@ -257,7 +257,7 @@ const ExperienceSection = () => {
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </NavButton>
-          <ViewMoreButton>View More</ViewMoreButton>
+          <ViewMoreButton>더보기</ViewMoreButton>
         </NavigationArea>
       </Container>
     </Section>
