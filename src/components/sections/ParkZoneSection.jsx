@@ -252,7 +252,7 @@ const ParkZoneSection = () => {
             $isDragging={isDragging}
             onClick={handleMapClick}
           >
-            <MapImage src="/park-map-3d.png" alt="서울어린이대공원 지도" />
+            <MapImage src="/images/park-map-3d.png" alt="서울어린이대공원 지도" />
             <MapOverlay>
               {zones.map((zone, index) => (
                 <MapMarker

@@ -6,7 +6,7 @@ const Footer = () => {
     <FooterContainer>
       <TopSection>
         <FirstRow>
-          <Logo src="/서울어린이대공원.svg" alt="서울어린이대공원" />
+          <Logo src="/icons/logo.svg" alt="서울어린이대공원" />
           <FooterLinks>
             <FooterLink href="#">서울시설공단</FooterLink>
             <LinkDivider>|</LinkDivider>
@@ -20,13 +20,13 @@ const Footer = () => {
           </FooterLinks>
           <SocialLinks>
             <SocialLink href="#" aria-label="YouTube">
-              <SocialIcon src="/video_12358197.svg" alt="YouTube" $size="35px" />
+              <SocialIcon src="/icons/youtube.svg" alt="YouTube" $size="35px" />
             </SocialLink>
             <SocialLink href="#" aria-label="Instagram">
-              <SocialIcon src="/camera_15047558.svg" alt="Instagram" $size="24px" />
+              <SocialIcon src="/icons/instagram.svg" alt="Instagram" $size="24px" />
             </SocialLink>
             <SocialLink href="#" aria-label="X">
-              <SocialIcon src="/social-media_14417460.svg" alt="X" $size="24px" />
+              <SocialIcon src="/icons/x-social.svg" alt="X" $size="24px" />
             </SocialLink>
           </SocialLinks>
         </FirstRow>

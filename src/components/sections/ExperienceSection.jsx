@@ -343,10 +343,10 @@ const CategoryTab = styled.button`
 const SliderContainer = styled.div`
   overflow: hidden;
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  cursor: url('/scroll_11122483.svg') 24 24, grab;
+  cursor: url('/icons/scroll.svg') 24 24, grab;
 
   &:active {
-    cursor: url('/scroll_11122483.svg') 24 24, grabbing;
+    cursor: url('/icons/scroll.svg') 24 24, grabbing;
   }
 `
 
@@ -364,7 +364,7 @@ const ExperienceCard = styled.div`
   background: #2a2a2a;
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
-  cursor: url('/scroll_11122483.svg') 24 24, grab;
+  cursor: url('/icons/scroll.svg') 24 24, grab;
   transition: all 0.5s ease;
   pointer-events: auto;
 
@@ -373,7 +373,7 @@ const ExperienceCard = styled.div`
   }
 
   &:active {
-    cursor: url('/scroll_11122483.svg') 24 24, grabbing;
+    cursor: url('/icons/scroll.svg') 24 24, grabbing;
   }
 
   img, video {

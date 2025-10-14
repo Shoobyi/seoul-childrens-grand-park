@@ -8,9 +8,9 @@ const MainBanner = () => {
   const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
 
   const quickGuides = [
-    { title: '입장권 구매', icon: '/티켓.svg', color: '#FFF4D6' },
-    { title: '행사안내', icon: '/행사.svg', color: '#E6D4F0' },
-    { title: '교통안내', icon: '/버스.svg', color: '#D4F0E6' },
+    { title: '입장권 구매', icon: '/icons/ticket.svg', color: '#FFF4D6' },
+    { title: '행사안내', icon: '/icons/event.svg', color: '#E6D4F0' },
+    { title: '교통안내', icon: '/icons/bus.svg', color: '#D4F0E6' },
   ]
 
   useEffect(() => {

@@ -65,7 +65,7 @@ const Header = () => {
     <HeaderContainer $isScrolled={isScrolled}>
       <HeaderInner>
         <Logo href="/">
-          <img src="/서울어린이대공원.svg" alt="서울어린이대공원" />
+          <img src="/icons/logo.svg" alt="서울어린이대공원" />
         </Logo>
 
         <Nav
