@@ -35,11 +35,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
       {progress < 100 ? (
         <>
-          <LoadingIcon>
-            <Dot $delay={0} />
-            <Dot $delay={0.2} />
-            <Dot $delay={0.4} />
-          </LoadingIcon>
+          <LoadingDogImage src="/images/loading-dog.gif" alt="Loading..." />
 
           <ProgressBarContainer>
             <ProgressBar $progress={progress} />
@@ -102,30 +98,15 @@ const SubTitle = styled.p`
   }
 `
 
-const bounce = keyframes`
-  0%, 80%, 100% {
-    transform: scale(0);
-    opacity: 0.5;
-  }
-  40% {
-    transform: scale(1);
-    opacity: 1;
-  }
-`
+const LoadingDogImage = styled.img`
+  width: 150px;
+  height: auto;
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
+  filter: brightness(0) invert(1);
 
-const LoadingIcon = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.sm};
-  margin: ${({ theme }) => `${theme.spacing.xl} 0`};
-`
-
-const Dot = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: white;
-  animation: ${bounce} 1.4s infinite ease-in-out;
-  animation-delay: ${({ $delay }) => $delay}s;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 120px;
+  }
 `
 
 const ProgressBarContainer = styled.div`
