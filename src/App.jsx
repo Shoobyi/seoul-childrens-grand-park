@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
-import Header from './components/common/Header'
 import Footer from './components/common/Footer'
+import Header from './components/common/Header'
 import MainBanner from './components/sections/MainBanner'
 import ExperienceSection from './components/sections/ExperienceSection'
 import ParkZoneSection from './components/sections/ParkZoneSection'
@@ -27,11 +27,11 @@ function App() {
       )}
       <MainContent $isVisible={!showLoading} $isSliding={isSliding}>
         <Header />
-        <main>
+        <MainWrapper>
           <MainBanner />
           <ExperienceSection />
           <ParkZoneSection />
-        </main>
+        </MainWrapper>
         <Footer />
       </MainContent>
     </>
@@ -69,9 +69,14 @@ const LoadingWrapper = styled.div`
 `
 
 const MainContent = styled.div`
+  position: relative;
   opacity: ${({ $isVisible }) => $isVisible ? 1 : 0};
   pointer-events: ${({ $isVisible }) => $isVisible ? 'auto' : 'none'};
   animation: ${({ $isSliding }) => $isSliding ? fadeInScale : 'none'} 0.8s ease-out forwards;
+`
+
+const MainWrapper = styled.main`
+  margin-top: -100px;
 `
 
 export default App

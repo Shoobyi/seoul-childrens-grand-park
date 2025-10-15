@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null)
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -101,17 +102,16 @@ const Header = () => {
 }
 
 const HeaderContainer = styled.header`
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background: ${({ $isScrolled, theme }) =>
-    $isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'};
-  backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? 'blur(10px)' : 'none')};
+  background: ${({ $isScrolled }) =>
+    $isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'transparent'};
+  box-shadow: ${({ $isScrolled }) =>
+    $isScrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none'};
   transition: all 0.3s ease;
-  box-shadow: ${({ $isScrolled, theme }) =>
-    $isScrolled ? theme.shadows.small : 'none'};
 `
 
 const HeaderInner = styled.div`
@@ -218,7 +218,7 @@ const ActionButton = styled.button`
 
   &:hover {
     background: ${({ $isScrolled, theme }) =>
-      $isScrolled ? theme.colors.neutral.lightGray : 'rgba(255, 255, 255, 0.2)'};
+      $isScrolled ? `${theme.colors.primary.lightGreen}30` : 'rgba(255, 255, 255, 0.2)'};
   }
 `
 
