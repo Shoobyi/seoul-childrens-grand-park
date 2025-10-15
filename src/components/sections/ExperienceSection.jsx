@@ -365,27 +365,17 @@ const SliderWrapper = styled.div`
 const ExperienceCard = styled.div`
   min-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
   max-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
-<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.95);
-=======
-  background: #2a2a2a;
->>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
   cursor: url('/icons/scroll.svg') 24 24, grab;
   transition: all 0.5s ease;
   pointer-events: auto;
-<<<<<<< HEAD
   border: 0.5px solid rgba(45, 61, 45, 0.2);
 
   &:hover {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     border-color: rgba(45, 61, 45, 0.4);
-=======
-
-  &:hover {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
->>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   }
 
   &:active {
@@ -458,7 +448,7 @@ const NavButton = styled.button`
   height: 40px;
   border-radius: ${({ theme }) => theme.borderRadius.round};
   background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 0.5px solid rgba(45, 61, 45, 0.4);
   color: #2d3d2d;
   display: flex;
   align-items: center;
@@ -469,7 +459,7 @@ const NavButton = styled.button`
 
   &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(255, 255, 255, 0.9);
+    border-color: #6fb03d;
     color: #1a2a1a;
     transform: scale(1.1);
   }
@@ -496,7 +486,7 @@ const ViewMoreButton = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.95);
     color: #1a2a1a;
-    border-color: #2d3d2d;
+    border-color: #6fb03d;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
