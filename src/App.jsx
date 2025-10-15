@@ -70,7 +70,7 @@ const LoadingWrapper = styled.div`
 
 const MainContent = styled.div`
   position: relative;
-  opacity: ${({ $isVisible }) => $isVisible ? 1 : 0};
+  opacity: 1;
   pointer-events: ${({ $isVisible }) => $isVisible ? 'auto' : 'none'};
   animation: ${({ $isSliding }) => $isSliding ? fadeInScale : 'none'} 0.8s ease-out forwards;
 `
