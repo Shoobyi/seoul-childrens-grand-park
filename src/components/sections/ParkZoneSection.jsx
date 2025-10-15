@@ -343,6 +343,7 @@ const ParkZoneSection = () => {
 const Section = styled.section`
   position: relative;
   padding: ${({ theme }) => `${theme.spacing.xxxl} 0`};
+<<<<<<< HEAD
   background: url('/images/801278_19383-NSBW7R-01.png') center center / cover no-repeat;
   background-attachment: fixed;
   color: #2d3d2d;
@@ -364,6 +365,11 @@ const Section = styled.section`
     );
     z-index: 0;
   }
+=======
+  background: #1a1a1a;
+  color: white;
+  overflow: hidden;
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
 `
 
 const BackgroundEffectWrapper = styled.div`
@@ -398,7 +404,11 @@ const SectionHeader = styled.div`
 
 const EnglishTitle = styled.div`
   font-size: 14px;
+<<<<<<< HEAD
   color: #5a6a5a;
+=======
+  color: #999;
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   letter-spacing: 1px;
 `
@@ -407,8 +417,11 @@ const MainTitle = styled.h2`
   font-size: 48px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+<<<<<<< HEAD
   color: #1a2a1a;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+=======
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
 `
 
 const CategoryTabs = styled.div`
@@ -424,26 +437,41 @@ const CategoryTab = styled.button`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+<<<<<<< HEAD
   background: ${({ $isActive }) => ($isActive ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.3)')};
   color: ${({ $isActive }) => ($isActive ? '#1a2a1a' : '#2d3d2d')};
   border: 0.5px solid ${({ $isActive }) => ($isActive ? '#2d3d2d' : 'rgba(45, 61, 45, 0.4)')};
+=======
+  background: ${({ $isActive }) => ($isActive ? 'white' : 'transparent')};
+  color: ${({ $isActive }) => ($isActive ? '#1a1a1a' : '#999')};
+  border: 1px solid ${({ $isActive }) => ($isActive ? 'white' : '#444')};
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
   transition: all 0.3s ease;
   cursor: pointer;
+<<<<<<< HEAD
   backdrop-filter: blur(5px);
+=======
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
 
   span:first-child {
     font-size: 18px;
   }
 
   &:hover {
+<<<<<<< HEAD
     background: rgba(255, 255, 255, 0.95);
     color: #1a2a1a;
     border-color: #6fb03d;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+=======
+    background: white;
+    color: #1a1a1a;
+    border-color: white;
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   }
 `
 

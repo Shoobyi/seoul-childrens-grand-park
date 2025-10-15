@@ -2,12 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(git config:*)",
+<<<<<<< HEAD
       "Bash(gh auth:*)",
       "Bash(if [ ! -d \"public/images\" ])",
       "Bash(then mkdir -p public/images)",
       "Bash(fi)",
       "Bash(ls:*)",
       "Read(//tmp/**)"
+=======
+      "Bash(gh auth:*)"
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
     ],
     "deny": [],
     "ask": []

@@ -365,17 +365,27 @@ const SliderWrapper = styled.div`
 const ExperienceCard = styled.div`
   min-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
   max-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.95);
+=======
+  background: #2a2a2a;
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
   cursor: url('/icons/scroll.svg') 24 24, grab;
   transition: all 0.5s ease;
   pointer-events: auto;
+<<<<<<< HEAD
   border: 0.5px solid rgba(45, 61, 45, 0.2);
 
   &:hover {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     border-color: rgba(45, 61, 45, 0.4);
+=======
+
+  &:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+>>>>>>> 5fdaa6d58d87e192f4f4aae3b8efe721fc4bace7
   }
 
   &:active {
