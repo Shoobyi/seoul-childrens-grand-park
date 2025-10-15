@@ -452,13 +452,18 @@ const MapWrapper = styled.div`
   overflow: hidden;
   cursor: ${({ $isDragging }) => ($isDragging ? 'grabbing' : 'grab')};
   user-select: none;
-  height: 800px;
+  height: 900px;
   background: transparent;
   margin: 0 auto;
   max-width: 100%;
+  border-radius: ${({ theme }) => theme.borderRadius.large};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    height: 600px;
+    height: 700px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 500px;
   }
 `
 
@@ -515,6 +520,7 @@ const MapImageContainer = styled.div`
   transform-origin: center center;
   transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)')};
   will-change: ${({ $isDragging }) => ($isDragging ? 'transform' : 'auto')};
+  cursor: ${({ $isDragging }) => ($isDragging ? 'grabbing' : 'grab')};
 `
 
 const MapImage = styled.img`
@@ -532,6 +538,7 @@ const MapOverlay = styled.div`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  cursor: ${({ $isDragging }) => ($isDragging ? 'grabbing' : 'grab')};
 `
 
 const MapMarker = styled.div`
@@ -615,12 +622,12 @@ const ZoneInfoPopup = styled.div`
   left: ${({ $left }) => $left};
   transform: translate(60px, -50%);
   transform-origin: left center;
-  background: rgba(42, 42, 42, 0.98);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
   border-radius: ${({ theme }) => theme.borderRadius.large};
   padding: ${({ theme }) => theme.spacing.lg};
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 0.5px solid rgba(45, 61, 45, 0.2);
   width: 350px;
   max-height: 500px;
   overflow-y: auto;
@@ -633,12 +640,12 @@ const ZoneInfoPopup = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(26, 26, 26, 0.5);
+    background: rgba(200, 200, 200, 0.3);
     border-radius: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #444;
+    background: rgba(100, 150, 100, 0.4);
     border-radius: 2px;
   }
 
@@ -665,7 +672,7 @@ const PopupHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   padding-bottom: ${({ theme }) => theme.spacing.sm};
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid rgba(45, 61, 45, 0.2);
 `
 
 const PopupIcon = styled.div`
@@ -675,7 +682,7 @@ const PopupIcon = styled.div`
 const PopupTitle = styled.h4`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: white;
+  color: #1a2a1a;
 `
 
 const PopupContent = styled.div`
@@ -696,7 +703,7 @@ const PopupLabel = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
   font-size: 13px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  color: #aaa;
+  color: #5a6a5a;
 
   svg {
     flex-shrink: 0;
@@ -705,14 +712,14 @@ const PopupLabel = styled.div`
 
 const PopupText = styled.p`
   font-size: 12px;
-  color: #ddd;
+  color: #2d3d2d;
   line-height: 1.5;
   padding-left: 24px;
 `
 
 const PopupFeature = styled.div`
   font-size: 12px;
-  color: #ddd;
+  color: #2d3d2d;
   line-height: 1.5;
   padding-left: 24px;
   position: relative;
@@ -721,7 +728,7 @@ const PopupFeature = styled.div`
     content: '•';
     position: absolute;
     left: 12px;
-    color: #999;
+    color: #6a7a6a;
   }
 `
 
@@ -734,11 +741,11 @@ const PopupFacilities = styled.div`
 
 const PopupFacilityTag = styled.span`
   padding: 4px 10px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(111, 176, 61, 0.1);
   border-radius: ${({ theme }) => theme.borderRadius.small};
   font-size: 11px;
-  color: #bbb;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #3d5a2d;
+  border: 0.5px solid rgba(45, 61, 45, 0.2);
   white-space: nowrap;
 `
 

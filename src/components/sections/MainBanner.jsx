@@ -3,7 +3,9 @@ import styled from 'styled-components'
 
 const MainBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(true)
   const videoRefs = useRef([])
+  const prevSlideRef = useRef(0)
 
   const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
 
@@ -15,18 +17,28 @@ const MainBanner = () => {
 
   useEffect(() => {
     const handleVideoEnd = () => {
-      setCurrentSlide(prev => (prev + 1) % videos.length);
+      if (isPlaying) {
+        setCurrentSlide(prev => (prev + 1) % videos.length);
+      }
     };
 
     const currentVideo = videoRefs.current[currentSlide];
+    const slideChanged = prevSlideRef.current !== currentSlide;
 
     // 비디오 재생 및 이벤트 리스너 설정
     videoRefs.current.forEach((video, index) => {
       if (video) {
         video.removeEventListener('ended', handleVideoEnd); // 이전 리스너 제거
         if (index === currentSlide) {
-          video.currentTime = 0;
-          video.play().catch(err => console.log('Video play error:', err));
+          // 슬라이드가 변경되었을 때만 처음부터 재생
+          if (slideChanged) {
+            video.currentTime = 0;
+          }
+          if (isPlaying) {
+            video.play().catch(err => console.log('Video play error:', err));
+          } else {
+            video.pause();
+          }
           video.addEventListener('ended', handleVideoEnd);
         } else {
           video.pause();
@@ -34,13 +46,28 @@ const MainBanner = () => {
       }
     });
 
+    // 이전 슬라이드 저장
+    prevSlideRef.current = currentSlide;
+
     // 클린업
     return () => {
       if (currentVideo) {
         currentVideo.removeEventListener('ended', handleVideoEnd);
       }
     };
-  }, [currentSlide, videos.length]);
+  }, [currentSlide, videos.length, isPlaying]);
+
+  const togglePlayPause = () => {
+    setIsPlaying(prev => !prev);
+    const currentVideo = videoRefs.current[currentSlide];
+    if (currentVideo) {
+      if (isPlaying) {
+        currentVideo.pause();
+      } else {
+        currentVideo.play().catch(err => console.log('Video play error:', err));
+      }
+    }
+  };
 
   return (
     <BannerContainer>
@@ -94,6 +121,18 @@ const MainBanner = () => {
       </BannerContent>
 
       <SlideIndicators>
+        <PlayPauseButton onClick={togglePlayPause} title={isPlaying ? '일시정지' : '재생'}>
+          {isPlaying ? (
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+              <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+            </svg>
+          ) : (
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M8 5v14l11-7z" fill="currentColor"/>
+            </svg>
+          )}
+        </PlayPauseButton>
         {videos.map((_, index) => (
           <Indicator
             key={index}
@@ -280,6 +319,7 @@ const SlideIndicators = styled.div`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
   z-index: 3;
 `
@@ -295,6 +335,34 @@ const Indicator = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.colors.secondary.yellow};
+  }
+`
+
+const PlayPauseButton = styled.button`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.secondary.yellow};
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.secondary.darkYellow};
+    transform: scale(1.15);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
   }
 `
 
