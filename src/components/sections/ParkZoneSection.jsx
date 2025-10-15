@@ -615,12 +615,12 @@ const ZoneInfoPopup = styled.div`
   left: ${({ $left }) => $left};
   transform: translate(60px, -50%);
   transform-origin: left center;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(42, 42, 42, 0.98);
   backdrop-filter: blur(10px);
   border-radius: ${({ theme }) => theme.borderRadius.large};
   padding: ${({ theme }) => theme.spacing.lg};
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 0.5px solid rgba(45, 61, 45, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   width: 350px;
   max-height: 500px;
   overflow-y: auto;
@@ -633,12 +633,12 @@ const ZoneInfoPopup = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(200, 200, 200, 0.3);
+    background: rgba(26, 26, 26, 0.5);
     border-radius: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(100, 150, 100, 0.4);
+    background: #444;
     border-radius: 2px;
   }
 
@@ -665,7 +665,7 @@ const PopupHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   padding-bottom: ${({ theme }) => theme.spacing.sm};
-  border-bottom: 2px solid rgba(45, 61, 45, 0.2);
+  border-bottom: 2px solid #444;
 `
 
 const PopupIcon = styled.div`
@@ -675,7 +675,7 @@ const PopupIcon = styled.div`
 const PopupTitle = styled.h4`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: #1a2a1a;
+  color: white;
 `
 
 const PopupContent = styled.div`
@@ -696,7 +696,7 @@ const PopupLabel = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
   font-size: 13px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  color: #5a6a5a;
+  color: #aaa;
 
   svg {
     flex-shrink: 0;
@@ -705,14 +705,14 @@ const PopupLabel = styled.div`
 
 const PopupText = styled.p`
   font-size: 12px;
-  color: #2d3d2d;
+  color: #ddd;
   line-height: 1.5;
   padding-left: 24px;
 `
 
 const PopupFeature = styled.div`
   font-size: 12px;
-  color: #2d3d2d;
+  color: #ddd;
   line-height: 1.5;
   padding-left: 24px;
   position: relative;
@@ -721,7 +721,7 @@ const PopupFeature = styled.div`
     content: '•';
     position: absolute;
     left: 12px;
-    color: #6a7a6a;
+    color: #999;
   }
 `
 
@@ -734,11 +734,11 @@ const PopupFacilities = styled.div`
 
 const PopupFacilityTag = styled.span`
   padding: 4px 10px;
-  background: rgba(111, 176, 61, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: ${({ theme }) => theme.borderRadius.small};
   font-size: 11px;
-  color: #3d5a2d;
-  border: 0.5px solid rgba(45, 61, 45, 0.2);
+  color: #bbb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
 `
 

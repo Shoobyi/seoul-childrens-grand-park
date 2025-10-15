@@ -292,7 +292,7 @@ const BackgroundVideoWrapper = styled.div`
 const Container = styled.div`
   position: relative;
   z-index: 2;
-  max-width: 1400px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.xl};
 `
