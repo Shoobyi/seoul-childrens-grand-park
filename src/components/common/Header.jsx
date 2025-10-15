@@ -151,7 +151,7 @@ const NavItemWrapper = styled.div`
 
 const NavItem = styled.a`
   font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ $isScrolled, theme }) =>
     $isScrolled ? theme.colors.neutral.darkGray : 'white'};
   transition: color 0.3s ease;
@@ -209,8 +209,8 @@ const HeaderActions = styled.div`
 const ActionButton = styled.button`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
   color: ${({ $isScrolled, theme }) =>
     $isScrolled ? theme.colors.neutral.darkGray : 'white'};
   background: transparent;
