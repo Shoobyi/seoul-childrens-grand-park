@@ -4,44 +4,47 @@ import styled from 'styled-components'
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterContent>
-        <FooterSection>
-          <FooterTitle>공원 안내</FooterTitle>
-          <FooterLink>공원 소개</FooterLink>
-          <FooterLink>운영 시간</FooterLink>
-          <FooterLink>입장료</FooterLink>
-          <FooterLink>오시는 길</FooterLink>
-        </FooterSection>
-
-        <FooterSection>
-          <FooterTitle>참여하실 수 있는</FooterTitle>
-          <FooterLink>어반 사파리</FooterLink>
-          <FooterLink>그린 가든</FooterLink>
-          <FooterLink>플레이 파크</FooterLink>
-          <FooterLink>가든 페스티벌</FooterLink>
-        </FooterSection>
-
-        <FooterSection>
-          <FooterTitle>바로가기</FooterTitle>
-          <FooterLink>공지사항</FooterLink>
-          <FooterLink>자주 묻는 질문</FooterLink>
-          <FooterLink>이용문의</FooterLink>
-          <FooterLink>프로그램 예약</FooterLink>
-        </FooterSection>
-
-        <FooterSection>
-          <FooterTitle>SNS</FooterTitle>
+      <TopSection>
+        <FirstRow>
+          <Logo src="/icons/logo.svg" alt="서울어린이대공원" />
+          <FooterLinks>
+            <FooterLink href="#">서울시설공단</FooterLink>
+            <LinkDivider>|</LinkDivider>
+            <FooterLink href="#">찾아오시는길</FooterLink>
+            <LinkDivider>|</LinkDivider>
+            <FooterLink href="#">고객서비스헌장</FooterLink>
+            <LinkDivider>|</LinkDivider>
+            <FooterLink href="#" $highlight>개인정보처리방침</FooterLink>
+            <LinkDivider>|</LinkDivider>
+            <FooterLink href="#">사이트맵</FooterLink>
+          </FooterLinks>
           <SocialLinks>
-            <SocialLink href="#" aria-label="Instagram">📷</SocialLink>
-            <SocialLink href="#" aria-label="Facebook">👤</SocialLink>
-            <SocialLink href="#" aria-label="YouTube">▶️</SocialLink>
+            <SocialLink href="#" aria-label="YouTube">
+              <SocialIcon src="/icons/youtube.svg" alt="YouTube" $size="35px" />
+            </SocialLink>
+            <SocialLink href="#" aria-label="Instagram">
+              <SocialIcon src="/icons/instagram.svg" alt="Instagram" $size="24px" />
+            </SocialLink>
+            <SocialLink href="#" aria-label="X">
+              <SocialIcon src="/icons/x-social.svg" alt="X" $size="24px" />
+            </SocialLink>
           </SocialLinks>
-        </FooterSection>
-      </FooterContent>
+        </FirstRow>
+        <SecondRow>
+          <FooterLink href="#">공지사항</FooterLink>
+          <LinkDivider>|</LinkDivider>
+          <FooterLink href="#">자주묻는질문</FooterLink>
+          <LinkDivider>|</LinkDivider>
+          <FooterLink href="#">공원소개</FooterLink>
+          <LinkDivider>|</LinkDivider>
+          <FooterLink href="#">이용문의</FooterLink>
+        </SecondRow>
+      </TopSection>
 
       <FooterBottom>
+        <Address>04991 서울시 광진구 능동로 216 서울어린이대공원 TEL : 02450-9311</Address>
         <Copyright>
-          © 2025 서울어린이대공원. All Rights Reserved.
+          Copyright(c) 2015 Seoul Facilities Corporation. All Rights Reserved
         </Copyright>
       </FooterBottom>
     </FooterContainer>
@@ -49,62 +52,105 @@ const Footer = () => {
 }
 
 const FooterContainer = styled.footer`
-  background: ${({ theme }) => theme.colors.neutral.navy};
+  background: #2b2b2b;
   color: white;
-  padding: ${({ theme }) => `${theme.spacing.xxxl} 0 ${theme.spacing.xl}`};
+  padding: ${({ theme }) => `${theme.spacing.xxl} 0 ${theme.spacing.lg}`};
 `
 
-const FooterContent = styled.div`
+const TopSection = styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: ${({ theme }) => theme.spacing.xl};
+  padding: 0 ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.xl};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const FirstRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.lg};
+  flex-wrap: nowrap;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-wrap: wrap;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: ${({ theme }) => theme.spacing.md};
   }
 `
 
-const FooterSection = styled.div`
+const SecondRow = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md};
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding-left: calc(165px + ${({ theme }) => theme.spacing.lg});
+  flex-wrap: wrap;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-left: 0;
+  }
 `
 
-const FooterTitle = styled.h4`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
+const Logo = styled.img`
+  height: 50px;
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 40px;
+  }
+`
+
+const FooterLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  flex-wrap: wrap;
+  flex: 1;
 `
 
 const FooterLink = styled.a`
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  color: ${({ $highlight }) => ($highlight ? '#4fc3f7' : 'rgba(255, 255, 255, 0.8)')};
+  text-decoration: none;
   transition: color 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.secondary.yellow};
+    color: white;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 13px;
   }
 `
 
+const LinkDivider = styled.span`
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+`
+
 const SocialLinks = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
+  display: inline-flex;
+  gap: ${({ theme }) => theme.spacing.xs};
+  align-items: center;
 `
 
 const SocialLink = styled.a`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: ${({ theme }) => theme.borderRadius.round};
   background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 16px;
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary.green};
@@ -112,18 +158,40 @@ const SocialLink = styled.a`
   }
 `
 
+const SocialIcon = styled.img`
+  width: ${({ $size }) => $size || '24px'};
+  height: ${({ $size }) => $size || '24px'};
+  filter: brightness(0) invert(1);
+`
+
 const FooterBottom = styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};
   margin: 0 auto;
-  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl} 0`};
-  margin-top: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.xl} 0`};
+  margin-top: ${({ theme }) => theme.spacing.md};
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const Address = styled.p`
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 12px;
+  }
 `
 
 const Copyright = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 12px;
+  }
 `
 
 export default Footer

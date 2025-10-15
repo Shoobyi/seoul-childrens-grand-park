@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(gh auth:*)",
+      "Bash(if [ ! -d \"public/images\" ])",
+      "Bash(then mkdir -p public/images)",
+      "Bash(fi)",
+      "Bash(ls:*)",
+      "Read(//tmp/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
