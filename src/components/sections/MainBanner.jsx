@@ -9,11 +9,7 @@ const MainBanner = () => {
 
   const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
 
-  const quickGuides = [
-    { title: '입장권 구매', icon: '/icons/ticket.svg', color: '#FFF4D6' },
-    { title: '행사안내', icon: '/icons/event.svg', color: '#E6D4F0' },
-    { title: '교통안내', icon: '/icons/bus.svg', color: '#D4F0E6' },
-  ]
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleVideoEnd = () => {
@@ -87,60 +83,62 @@ const MainBanner = () => {
 
       <BannerOverlay />
 
-      <BannerContent>
-        <Title>
-          도심 속<br />
-          <Highlight>자연과 체험이</Highlight><br />
-          공존하는 공간
-        </Title>
-        <Subtitle>서울어린이대공원에서 특별한 경험을 시작하세요</Subtitle>
-
-        <SearchBar>
-          <SearchInput placeholder="어떤 체험을 찾으시나요? (예: 동물 먹이주기, 공연 일정 등)" />
-          <SearchButton>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+      <ContentContainer>
+        <TopRightButton>
+          <ReserveButton href="#tickets">
+            입장권 구매
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </SearchButton>
-        </SearchBar>
+          </ReserveButton>
+        </TopRightButton>
 
-        <QuickGuideContainer>
-          {quickGuides.map((guide, index) => (
-            <QuickGuideCard key={index} $bgColor={guide.color}>
-              <GuideIcon src={guide.icon} alt={guide.title} />
-              <GuideTitle>{guide.title}</GuideTitle>
-            </QuickGuideCard>
+        <LeftContent>
+          <SmallText>도심 속 자연</SmallText>
+          <MainTitle>
+            서울<br />
+            어린이대공원
+          </MainTitle>
+          <Tagline>Closer to Nature—Closer to Yourself</Tagline>
+        </LeftContent>
+
+        <BottomLeftInfo>
+          <InfoText>자연과 체험이 공존하는 특별한 공간에서<br />잊지 못할 추억을 만들어보세요.</InfoText>
+        </BottomLeftInfo>
+
+        <SlideIndicators>
+          <PlayPauseButton onClick={togglePlayPause} title={isPlaying ? '일시정지' : '재생'}>
+            {isPlaying ? (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+                <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+              </svg>
+            ) : (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M8 5v14l11-7z" fill="currentColor"/>
+              </svg>
+            )}
+          </PlayPauseButton>
+          {videos.map((_, index) => (
+            <Indicator
+              key={index}
+              $isActive={index === currentSlide}
+              onClick={() => setCurrentSlide(index)}
+            />
           ))}
-        </QuickGuideContainer>
-      </BannerContent>
+        </SlideIndicators>
+      </ContentContainer>
 
-      <SlideIndicators>
-        <PlayPauseButton onClick={togglePlayPause} title={isPlaying ? '일시정지' : '재생'}>
-          {isPlaying ? (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
-              <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
-            </svg>
-          ) : (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-              <path d="M8 5v14l11-7z" fill="currentColor"/>
-            </svg>
-          )}
-        </PlayPauseButton>
-        {videos.map((_, index) => (
-          <Indicator
-            key={index}
-            $isActive={index === currentSlide}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </SlideIndicators>
+      <BottomCenterMenu>
+        <MenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <span>Menu</span>
+          <MenuIcon>
+            <span></span>
+            <span></span>
+            <span></span>
+          </MenuIcon>
+        </MenuButton>
+      </BottomCenterMenu>
     </BannerContainer>
   )
 }
@@ -190,138 +188,204 @@ const BannerOverlay = styled.div`
   z-index: 1;
 `
 
-const BannerContent = styled.div`
+const ContentContainer = styled.div`
   position: relative;
   z-index: 2;
-  text-align: center;
-  color: white;
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.md}`};
-`
+  max-width: ${({ theme }) => theme.container.maxWidth};
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 ${({ theme }) => theme.spacing.xl};
 
-const Title = styled.h1`
-  font-size: 48px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: 1.3;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 ${({ theme }) => theme.spacing.lg};
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 32px;
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `
 
-const Highlight = styled.span`
-  color: ${({ theme }) => theme.colors.secondary.yellow};
+const TopRightButton = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing.xl};
+  right: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: ${({ theme }) => theme.spacing.md};
+  }
 `
 
-const Subtitle = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  opacity: 0.95;
-`
-
-const SearchBar = styled.div`
+const ReserveButton = styled.a`
   display: flex;
   align-items: center;
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  padding: ${({ theme }) => theme.spacing.sm};
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  box-shadow: ${({ theme }) => theme.shadows.large};
-`
-
-const SearchInput = styled.input`
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  background: rgba(255, 255, 255, 0.95);
   color: ${({ theme }) => theme.colors.neutral.darkGray};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.neutral.midGray};
-  }
-`
-
-const SearchButton = styled.button`
-  width: 48px;
-  height: 48px;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50px;
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  svg {
+    transition: transform 0.3s ease;
+  }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary.darkGreen};
-    transform: scale(1.05);
-  }
-`
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
 
-const QuickGuideContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.sm};
-  max-width: 500px;
-  margin: ${({ theme }) => theme.spacing.md} auto 0;
+    svg {
+      transform: translateX(4px);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: ${({ theme }) => theme.spacing.xs};
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+    font-size: ${({ theme }) => theme.typography.fontSize.small};
   }
 `
 
-const QuickGuideCard = styled.div`
-  background: transparent;
-  padding: ${({ theme }) => theme.spacing.sm};
+const LeftContent = styled.div`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  max-width: 600px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 80%;
+  }
+`
+
+const SmallText = styled.p`
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  opacity: 0.9;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+`
+
+const MainTitle = styled.h1`
+  font-size: 80px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  line-height: 1.1;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  letter-spacing: -2px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 40px;
+  }
+`
+
+const Tagline = styled.p`
+  font-size: 18px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  opacity: 0.9;
+  font-style: italic;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 14px;
+  }
+`
+
+const BottomLeftInfo = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 100px;
+  color: white;
+  max-width: 500px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    bottom: 120px;
+    max-width: 70%;
+  }
+`
+
+const InfoText = styled.p`
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 12px;
+  }
+`
+
+const BottomCenterMenu = styled.div`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spacing.xl};
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+`
+
+const MenuButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  background: rgba(255, 255, 255, 0.95);
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  border-radius: 50px;
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+  }
+`
+
+const MenuIcon = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacing.xs};
-  cursor: pointer;
-  transition: all 0.3s ease;
+  gap: 3px;
+  width: 20px;
 
-  &:hover {
-    transform: translateY(-4px);
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: ${({ theme }) => theme.colors.neutral.darkGray};
+    border-radius: 2px;
+    transition: all 0.3s ease;
   }
-`
 
-const GuideIcon = styled.img`
-  width: 32px;
-  height: 32px;
-  filter: brightness(0) invert(1);
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 28px;
-    height: 28px;
-  }
-`
-
-const GuideTitle = styled.span`
-  font-size: 12px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  color: white;
-  text-align: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 10px;
+  span:nth-child(2) {
+    width: 70%;
   }
 `
 
 const SlideIndicators = styled.div`
   position: absolute;
   bottom: ${({ theme }) => theme.spacing.xl};
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
-  z-index: 3;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    bottom: ${({ theme }) => theme.spacing.lg};
+  }
 `
 
 const Indicator = styled.button`

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +14,18 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    // 사이드 메뉴 열릴 때 스크롤 방지
+    if (isSideMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isSideMenuOpen])
 
   const menuItems = [
     {
@@ -63,41 +76,63 @@ const Header = () => {
   ]
 
   return (
-    <HeaderContainer $isScrolled={isScrolled}>
-      <HeaderInner>
-        <Logo href="/">
-          <img src="/icons/logo.svg" alt="서울어린이대공원" />
-        </Logo>
+    <>
+      <HeaderContainer $isScrolled={isScrolled}>
+        <HeaderInner>
+          <Logo href="/">
+            <img src="/icons/logo.svg" alt="서울어린이대공원" />
+          </Logo>
 
-        <Nav
-          onMouseLeave={() => setActiveMenu(null)}
-        >
+          <HeaderActions>
+            <ActionButton $isScrolled={isScrolled} href="#guide">이용안내</ActionButton>
+            <MenuToggleButton onClick={() => setIsSideMenuOpen(!isSideMenuOpen)} $isScrolled={isScrolled}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </MenuToggleButton>
+          </HeaderActions>
+        </HeaderInner>
+      </HeaderContainer>
+
+      {/* 오버레이 */}
+      <Overlay $isOpen={isSideMenuOpen} onClick={() => setIsSideMenuOpen(false)} />
+
+      {/* 사이드 메뉴 */}
+      <SideMenu $isOpen={isSideMenuOpen}>
+        <SideMenuHeader>
+          <CloseButton onClick={() => setIsSideMenuOpen(false)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </CloseButton>
+        </SideMenuHeader>
+
+        <SideMenuContent>
           {menuItems.map((item, index) => (
-            <NavItemWrapper
-              key={item.name}
-              onMouseEnter={() => setActiveMenu(index)}
-            >
-              <NavItem href={item.path} $isScrolled={isScrolled}>
+            <SideMenuItem key={item.name}>
+              <SideMenuItemTitle
+                href={item.path}
+                onClick={() => setActiveMenu(activeMenu === index ? null : index)}
+              >
                 {item.name}
-              </NavItem>
-
-              <SubMenuContainer $isActive={activeMenu === index}>
+              </SideMenuItemTitle>
+              <SideSubMenu $isOpen={activeMenu === index}>
                 {item.subMenu.map((subItem) => (
-                  <SubMenuItem key={subItem.name} href={subItem.path}>
+                  <SideSubMenuItem key={subItem.name} href={subItem.path}>
                     {subItem.name}
-                  </SubMenuItem>
+                  </SideSubMenuItem>
                 ))}
-              </SubMenuContainer>
-            </NavItemWrapper>
+              </SideSubMenu>
+            </SideMenuItem>
           ))}
-        </Nav>
+        </SideMenuContent>
 
-        <HeaderActions>
-          <ActionButton $isScrolled={isScrolled}>로그인</ActionButton>
-          <ActionButton $isScrolled={isScrolled}>이용안내</ActionButton>
-        </HeaderActions>
-      </HeaderInner>
-    </HeaderContainer>
+        <SideMenuFooter>
+          <FooterButton href="#login">로그인</FooterButton>
+          <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+        </SideMenuFooter>
+      </SideMenu>
+    </>
   )
 }
 
@@ -133,67 +168,171 @@ const Logo = styled.a`
   }
 `
 
-const Nav = styled.nav`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing.xl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    display: none;
-  }
-`
-
-const NavItemWrapper = styled.div`
-  position: relative;
+const MenuToggleButton = styled.button`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 
-const NavItem = styled.a`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ $isScrolled, theme }) =>
-    $isScrolled ? theme.colors.neutral.darkGray : 'white'};
-  transition: color 0.3s ease;
-  padding: ${({ theme }) => `${theme.spacing.md} 0`};
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: ${({ $isScrolled, theme }) =>
+      $isScrolled ? theme.colors.neutral.darkGray : 'white'};
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary.green};
+  span:nth-child(2) {
+    width: 70%;
+  }
+
+  &:hover span {
+    background: ${({ theme }) => theme.colors.primary.green};
   }
 `
 
-const SubMenuContainer = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-  padding: ${({ theme }) => theme.spacing.md};
-  min-width: 180px;
-  opacity: ${({ $isActive }) => ($isActive ? 1 : 0)};
-  visibility: ${({ $isActive }) => ($isActive ? 'visible' : 'hidden')};
-  transform: ${({ $isActive }) =>
-    $isActive ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-10px)'};
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   transition: all 0.3s ease;
-  z-index: 1001;
-  margin-top: ${({ theme }) => theme.spacing.sm};
+  z-index: 9998;
+  backdrop-filter: blur(4px);
 `
 
-const SubMenuItem = styled.a`
-  display: block;
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
+const SideMenu = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  background: white;
+  transform: translateX(${({ $isOpen }) => ($isOpen ? '0' : '100%')});
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 100%;
+  }
+`
+
+const SideMenuHeader = styled.div`
+  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl}`};
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+`
+
+const CloseButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.neutral.lightGray};
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-  white-space: nowrap;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary.lightGreen}30;
+    background: ${({ theme }) => theme.colors.primary.green};
+    color: white;
+    transform: rotate(90deg);
+  }
+`
+
+const SideMenuContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl}`};
+`
+
+const SideMenuItem = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+`
+
+const SideMenuItemTitle = styled.a`
+  display: block;
+  font-size: ${({ theme }) => theme.typography.fontSize.h4};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  padding: ${({ theme }) => `${theme.spacing.md} 0`};
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
     color: ${({ theme }) => theme.colors.primary.green};
-    transform: translateX(4px);
+    padding-left: ${({ theme }) => theme.spacing.sm};
+  }
+`
+
+const SideSubMenu = styled.div`
+  max-height: ${({ $isOpen }) => ($isOpen ? '500px' : '0')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  overflow: hidden;
+  transition: all 0.4s ease;
+  padding-left: ${({ theme }) => theme.spacing.lg};
+`
+
+const SideSubMenuItem = styled.a`
+  display: block;
+  padding: ${({ theme }) => `${theme.spacing.sm} 0`};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  color: ${({ theme }) => theme.colors.neutral.midGray};
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary.green};
+    padding-left: ${({ theme }) => theme.spacing.sm};
+  }
+`
+
+const SideMenuFooter = styled.div`
+  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl}`};
+  border-top: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md};
+`
+
+const FooterButton = styled.a`
+  display: block;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  text-align: center;
+  transition: all 0.3s ease;
+  background: ${({ $primary, theme }) =>
+    $primary ? theme.colors.primary.green : 'transparent'};
+  color: ${({ $primary, theme }) =>
+    $primary ? 'white' : theme.colors.neutral.darkGray};
+  border: ${({ $primary, theme }) =>
+    $primary ? 'none' : `2px solid ${theme.colors.neutral.lightGray}`};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+    background: ${({ $primary, theme }) =>
+      $primary ? theme.colors.primary.darkGreen : theme.colors.primary.lightGreen};
+    color: ${({ $primary }) => ($primary ? 'white' : 'inherit')};
   }
 `
 
@@ -206,7 +345,7 @@ const HeaderActions = styled.div`
   }
 `
 
-const ActionButton = styled.button`
+const ActionButton = styled.a`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   font-size: ${({ theme }) => theme.typography.fontSize.body};
@@ -215,10 +354,16 @@ const ActionButton = styled.button`
     $isScrolled ? theme.colors.neutral.darkGray : 'white'};
   background: transparent;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background: ${({ $isScrolled, theme }) =>
       $isScrolled ? `${theme.colors.primary.lightGreen}30` : 'rgba(255, 255, 255, 0.2)'};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
   }
 `
 
