@@ -5,6 +5,7 @@ const Header = () => {
   const [activeMenu, setActiveMenu] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,8 +17,8 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    // 사이드 메뉴 열릴 때 스크롤 방지
-    if (isSideMenuOpen) {
+    // 사이드 메뉴 또는 검색 모달 열릴 때 스크롤 방지
+    if (isSideMenuOpen || isSearchOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -25,7 +26,7 @@ const Header = () => {
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isSideMenuOpen])
+  }, [isSideMenuOpen, isSearchOpen])
 
   const menuItems = [
     {
@@ -73,18 +74,33 @@ const Header = () => {
         { name: '놀이문화', path: '#play-culture' },
       ]
     },
+    {
+      name: '이용안내',
+      path: '#guide',
+      subMenu: [
+        { name: '운영 시간', path: '#hours' },
+        { name: '입장료', path: '#admission' },
+        { name: '편의 시설', path: '#facilities' },
+        { name: '이용 규칙', path: '#rules' },
+      ]
+    },
   ]
 
   return (
     <>
       <HeaderContainer $isScrolled={isScrolled}>
         <HeaderInner>
-          <Logo href="/">
+          <Logo href="/" $isScrolled={isScrolled}>
             <img src="/icons/logo.svg" alt="서울어린이대공원" />
           </Logo>
 
           <HeaderActions>
-            <ActionButton $isScrolled={isScrolled} href="#guide">이용안내</ActionButton>
+            <SearchButton onClick={() => setIsSearchOpen(true)} $isScrolled={isScrolled}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </SearchButton>
             <MenuToggleButton onClick={() => setIsSideMenuOpen(!isSideMenuOpen)} $isScrolled={isScrolled}>
               <span></span>
               <span></span>
@@ -132,6 +148,27 @@ const Header = () => {
           <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
         </SideMenuFooter>
       </SideMenu>
+
+      {/* 검색 모달 */}
+      <SearchOverlay $isOpen={isSearchOpen} onClick={() => setIsSearchOpen(false)} />
+      <SearchModal $isOpen={isSearchOpen}>
+        <SearchModalContent>
+          <SearchInputWrapper>
+            <SearchIcon>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </SearchIcon>
+            <SearchInput type="text" placeholder="어떤 것을 찾으시나요? (예: 동물 먹이주기, 놀이기구 위치 등)" autoFocus />
+            <SearchCloseButton onClick={() => setIsSearchOpen(false)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </SearchCloseButton>
+          </SearchInputWrapper>
+        </SearchModalContent>
+      </SearchModal>
     </>
   )
 }
@@ -156,15 +193,27 @@ const HeaderInner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.lg}`};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.md}`};
+  }
 `
 
 const Logo = styled.a`
   display: flex;
   align-items: center;
+  margin-left: -12px;
 
   img {
     height: 60px;
     width: auto;
+    filter: ${({ $isScrolled }) =>
+      $isScrolled ? 'none' : 'brightness(0) invert(1)'};
+    transition: filter 0.3s ease;
   }
 `
 
@@ -338,32 +387,169 @@ const FooterButton = styled.a`
 
 const HeaderActions = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.lg};
+  margin-right: -8px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `
 
-const ActionButton = styled.a`
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  color: ${({ $isScrolled, theme }) =>
-    $isScrolled ? theme.colors.neutral.darkGray : 'white'};
-  background: transparent;
-  transition: all 0.3s ease;
+const SearchButton = styled.button`
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: ${({ $isScrolled, theme }) =>
+    $isScrolled ? theme.colors.neutral.darkGray : 'white'};
+  transition: all 0.3s ease;
 
   &:hover {
-    background: ${({ $isScrolled, theme }) =>
-      $isScrolled ? `${theme.colors.primary.lightGreen}30` : 'rgba(255, 255, 255, 0.2)'};
+    color: ${({ theme }) => theme.colors.primary.green};
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`
+
+const SearchOverlay = styled.div`
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
+  transition: all 0.3s ease;
+  z-index: 99998 !important;
+  backdrop-filter: blur(8px);
+`
+
+const SearchModal = styled.div`
+  position: fixed !important;
+  top: 50vh !important;
+  left: 50vw !important;
+  transform: ${({ $isOpen }) =>
+    $isOpen
+      ? 'translate(-50%, -50%) scale(1) !important'
+      : 'translate(-50%, -50%) scale(0.9) !important'};
+  width: 90%;
+  max-width: 1200px;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
+  transition: all 0.3s ease;
+  z-index: 99999 !important;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 95%;
+  }
+`
+
+const SearchModalContent = styled.div`
+  background: transparent;
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  padding: ${({ theme }) => theme.spacing.lg};
+  position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
+`
+
+const SearchIcon = styled.div`
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+`
+
+const SearchInputWrapper = styled.div`
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.lg};
+  background: transparent;
+  border-radius: 50px;
+  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xxl}`};
+  backdrop-filter: none;
+  box-shadow: none;
+
+  &:focus-within ${SearchIcon} {
+    color: ${({ theme }) => theme.colors.primary.green};
+  }
+`
+
+const SearchInput = styled.input`
+  flex: 1;
+  padding: ${({ theme }) => theme.spacing.md} 0;
+  font-size: 24px;
+  border: none;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: transparent;
+  color: white;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: ${({ theme }) => theme.colors.primary.green};
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 22px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    display: none;
+    font-size: 18px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+`
+
+const SearchCloseButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 `
 

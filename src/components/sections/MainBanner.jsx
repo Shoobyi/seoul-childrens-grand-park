@@ -9,8 +9,6 @@ const MainBanner = () => {
 
   const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   useEffect(() => {
     const handleVideoEnd = () => {
       if (isPlaying) {
@@ -84,22 +82,13 @@ const MainBanner = () => {
       <BannerOverlay />
 
       <ContentContainer>
-        <TopRightButton>
-          <ReserveButton href="#tickets">
-            입장권 구매
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </ReserveButton>
-        </TopRightButton>
-
         <LeftContent>
           <SmallText>도심 속 자연</SmallText>
           <MainTitle>
             서울<br />
             어린이대공원
           </MainTitle>
-          <Tagline>Closer to Nature—Closer to Yourself</Tagline>
+          <Tagline>Closer to Nature—Closer to Funny</Tagline>
         </LeftContent>
 
         <BottomLeftInfo>
@@ -128,17 +117,6 @@ const MainBanner = () => {
           ))}
         </SlideIndicators>
       </ContentContainer>
-
-      <BottomCenterMenu>
-        <MenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <span>Menu</span>
-          <MenuIcon>
-            <span></span>
-            <span></span>
-            <span></span>
-          </MenuIcon>
-        </MenuButton>
-      </BottomCenterMenu>
     </BannerContainer>
   )
 }
@@ -146,8 +124,7 @@ const MainBanner = () => {
 const BannerContainer = styled.section`
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  height: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -195,96 +172,53 @@ const ContentContainer = styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};
   height: 100%;
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: 0 ${({ theme }) => theme.spacing.lg};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 0 ${({ theme }) => theme.spacing.md};
-  }
-`
-
-const TopRightButton = styled.div`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing.xl};
-  right: 0;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    top: ${({ theme }) => theme.spacing.md};
-  }
-`
-
-const ReserveButton = styled.a`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
-  background: rgba(255, 255, 255, 0.95);
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  border-radius: 50px;
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
-  svg {
-    transition: transform 0.3s ease;
-  }
-
-  &:hover {
-    background: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
-
-    svg {
-      transform: translateX(4px);
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
-    font-size: ${({ theme }) => theme.typography.fontSize.small};
-  }
+  padding: 0;
 `
 
 const LeftContent = styled.div`
   position: absolute;
-  left: 0;
+  left: ${({ theme }) => theme.spacing.xl};
   top: 50%;
   transform: translateY(-50%);
   color: white;
   max-width: 600px;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    left: ${({ theme }) => theme.spacing.lg};
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    left: ${({ theme }) => theme.spacing.md};
     max-width: 80%;
   }
 `
 
 const SmallText = styled.p`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   opacity: 0.9;
   letter-spacing: 2px;
   text-transform: uppercase;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
 `
 
 const MainTitle = styled.h1`
-  font-size: 80px;
+  font-size: 50px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   line-height: 1.1;
   margin-bottom: ${({ theme }) => theme.spacing.md};
   letter-spacing: -2px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 60px;
+    font-size: 44px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 40px;
+    font-size: 36px;
   }
 `
 
@@ -301,90 +235,47 @@ const Tagline = styled.p`
 
 const BottomLeftInfo = styled.div`
   position: absolute;
-  left: 0;
+  left: ${({ theme }) => theme.spacing.xl};
   bottom: 100px;
   color: white;
   max-width: 500px;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    left: ${({ theme }) => theme.spacing.lg};
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    left: ${({ theme }) => theme.spacing.md};
     bottom: 120px;
     max-width: 70%;
   }
 `
 
 const InfoText = styled.p`
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.6;
   opacity: 0.9;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 12px;
-  }
-`
-
-const BottomCenterMenu = styled.div`
-  position: absolute;
-  bottom: ${({ theme }) => theme.spacing.xl};
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-`
-
-const MenuButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.md};
-  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
-  background: rgba(255, 255, 255, 0.95);
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  border-radius: 50px;
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
-  }
-`
-
-const MenuIcon = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  width: 20px;
-
-  span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.neutral.darkGray};
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  span:nth-child(2) {
-    width: 70%;
+    font-size: 16px;
   }
 `
 
 const SlideIndicators = styled.div`
   position: absolute;
-  bottom: ${({ theme }) => theme.spacing.xl};
-  right: 0;
+  bottom: 100px;
+  right: ${({ theme }) => theme.spacing.xl};
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    right: ${({ theme }) => theme.spacing.lg};
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    bottom: ${({ theme }) => theme.spacing.lg};
+    right: ${({ theme }) => theme.spacing.md};
+    bottom: 120px;
   }
 `
 

@@ -298,19 +298,21 @@ const Container = styled.div`
 `
 
 const SectionHeader = styled.div`
-  text-align: center;
+  text-align: left;
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `
 
 const EnglishTitle = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   color: #5a6a5a;
   margin-bottom: ${({ theme }) => theme.spacing.sm};
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  opacity: 0.9;
 `
 
 const MainTitle = styled.h2`
-  font-size: 48px;
+  font-size: ${({ theme }) => theme.typography.fontSize.h2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   color: #1a2a1a;
@@ -318,7 +320,7 @@ const MainTitle = styled.h2`
 
 const CategoryTabs = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: ${({ theme }) => theme.spacing.md};
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `

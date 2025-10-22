@@ -3,12 +3,16 @@ import styled, { keyframes } from 'styled-components'
 import Footer from './components/common/Footer'
 import Header from './components/common/Header'
 import MainBanner from './components/sections/MainBanner'
+import WelcomeSection from './components/sections/WelcomeSection'
+import ZooSection from './components/sections/ZooSection'
+import BotanicalGardenSection from './components/sections/BotanicalGardenSection'
+import AmusementParkSection from './components/sections/AmusementParkSection'
 import ExperienceSection from './components/sections/ExperienceSection'
-import ParkZoneSection from './components/sections/ParkZoneSection'
+import NoticeSection from './components/sections/NoticeSection'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
-  const [showLoading, setShowLoading] = useState(true)
+  const [showLoading, setShowLoading] = useState(false) // 일시적으로 로딩 화면 비활성화
   const [isSliding, setIsSliding] = useState(false)
 
   const handleLoadingComplete = () => {
@@ -27,11 +31,19 @@ function App() {
       )}
       <MainContent $isVisible={!showLoading} $isSliding={isSliding}>
         <Header />
-        <MainWrapper>
-          <MainBanner />
-          <ExperienceSection />
-          <ParkZoneSection />
-        </MainWrapper>
+        <OverlappingSections>
+          <StickyBannerContainer>
+            <MainBanner />
+          </StickyBannerContainer>
+          <ContentWrapper>
+            <WelcomeSection />
+            <ZooSection />
+            <BotanicalGardenSection />
+            <AmusementParkSection />
+            <ExperienceSection />
+            <NoticeSection />
+          </ContentWrapper>
+        </OverlappingSections>
         <Footer />
       </MainContent>
     </>
@@ -65,18 +77,36 @@ const LoadingWrapper = styled.div`
   width: 100%;
   height: 100vh;
   z-index: 10000;
-  animation: ${({ $isSliding }) => $isSliding ? fadeOut : 'none'} 0.6s ease-out forwards;
+  animation: ${({ $isSliding }) => ($isSliding ? fadeOut : 'none')} 0.6s ease-out forwards;
 `
 
 const MainContent = styled.div`
   position: relative;
   opacity: 1;
-  pointer-events: ${({ $isVisible }) => $isVisible ? 'auto' : 'none'};
-  animation: ${({ $isSliding }) => $isSliding ? fadeInScale : 'none'} 0.8s ease-out forwards;
+  pointer-events: ${({ $isVisible }) => ($isVisible ? 'auto' : 'none')};
+  animation: ${({ $isSliding }) => ($isSliding ? fadeInScale : 'none')} 0.8s ease-out forwards;
 `
 
-const MainWrapper = styled.main`
+const OverlappingSections = styled.main`
   margin-top: -100px;
+  position: relative;
+`
+
+const StickyBannerContainer = styled.div`
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`
+
+const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  margin-top: -30px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
 `
 
 export default App
