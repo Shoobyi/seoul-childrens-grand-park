@@ -16,6 +16,10 @@ function App() {
   const [isSliding, setIsSliding] = useState(false)
   const [mapVisible, setMapVisible] = useState(false)
 
+  const zooRef = React.useRef(null)
+  const botanicalRef = React.useRef(null)
+  const amusementRef = React.useRef(null)
+
   useEffect(() => {
     const handleWelcomeVisible = (e) => {
       setMapVisible(e.detail)
@@ -25,6 +29,12 @@ function App() {
       window.removeEventListener('welcomeSectionVisible', handleWelcomeVisible)
     }
   }, [])
+
+  const scrollToSection = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 
   const handleLoadingComplete = () => {
     setIsSliding(true)
@@ -49,10 +59,30 @@ function App() {
           <ContentWrapper>
             <StickyMapWrapper>
               <WelcomeSection />
-              <ZooSection />
-              <FloatingMap src="/images/park-map-3d.png" alt="서울어린이대공원 3D 지도" $isVisible={mapVisible} />
-              <BotanicalGardenSection />
-              <AmusementParkSection />
+              <div ref={zooRef}>
+                <ZooSection />
+              </div>
+              <FloatingMapContainer $isVisible={mapVisible}>
+                <MapImage src="/images/park-map-3d.png" alt="서울어린이대공원 3D 지도" />
+                <MapMarker $position={{ top: '35%', left: '40%' }} onClick={() => scrollToSection(zooRef)}>
+                  <MarkerDot />
+                  <MarkerLabel>어반 사파리</MarkerLabel>
+                </MapMarker>
+                <MapMarker $position={{ top: '45%', left: '55%' }} onClick={() => scrollToSection(botanicalRef)}>
+                  <MarkerDot />
+                  <MarkerLabel>그린 가든</MarkerLabel>
+                </MapMarker>
+                <MapMarker $position={{ top: '60%', left: '50%' }} onClick={() => scrollToSection(amusementRef)}>
+                  <MarkerDot />
+                  <MarkerLabel>플레이 파크</MarkerLabel>
+                </MapMarker>
+              </FloatingMapContainer>
+              <div ref={botanicalRef}>
+                <BotanicalGardenSection />
+              </div>
+              <div ref={amusementRef}>
+                <AmusementParkSection />
+              </div>
             </StickyMapWrapper>
             <ExperienceSection />
             <NoticeSection />
@@ -127,15 +157,13 @@ const StickyMapWrapper = styled.div`
   position: relative;
 `
 
-const FloatingMap = styled.img`
+const FloatingMapContainer = styled.div`
   position: sticky;
   top: 50%;
   transform: translateY(-50%);
   float: right;
   width: 45%;
   max-width: 600px;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  box-shadow: ${({ theme }) => theme.shadows.large};
   margin-top: -980px;
   margin-left: ${({ theme }) => theme.spacing.xxl};
   margin-right: calc((100vw - ${({ theme }) => theme.container.maxWidth}) / 2 + ${({ theme }) => theme.spacing.xl});
@@ -149,6 +177,51 @@ const FloatingMap = styled.img`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: none;
   }
+`
+
+const MapImage = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  box-shadow: ${({ theme }) => theme.shadows.large};
+  display: block;
+`
+
+const MapMarker = styled.div`
+  position: absolute;
+  top: ${({ $position }) => $position.top};
+  left: ${({ $position }) => $position.left};
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+`
+
+const MarkerDot = styled.div`
+  width: 16px;
+  height: 16px;
+  background: ${({ theme }) => theme.colors.primary.green};
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+`
+
+const MarkerLabel = styled.span`
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 `
 
 export default App
