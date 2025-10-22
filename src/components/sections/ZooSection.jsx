@@ -12,6 +12,7 @@ const ZooSection = () => {
           <MainTitle>신비로운 동물들의 세상</MainTitle>
           <Description>
             가까이서 교감하는 동물 친구들, 도심 속에서 만나는 특별한 사파리.
+            <br />
             생동감 넘치는 야생의 세계가 여러분을 기다립니다.
           </Description>
           <ViewMoreButton>자세히 보기</ViewMoreButton>
@@ -26,6 +27,7 @@ const Section = styled.section`
   height: 80vh;
   color: white;
   overflow: hidden;
+  clear: both;
 `
 
 const VideoBg = styled.video`

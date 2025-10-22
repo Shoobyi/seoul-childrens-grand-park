@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const WelcomeSection = () => {
+  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '-400px 0px 0px 0px'
+      }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    // 부모 컴포넌트에 상태 전달
+    window.dispatchEvent(new CustomEvent('welcomeSectionVisible', { detail: isVisible }))
+  }, [isVisible])
+
   return (
-    <Section>
+    <Section ref={sectionRef}>
       <Container>
         <TextContent>
           <Title>
@@ -17,16 +49,14 @@ const WelcomeSection = () => {
             기다립니다.
           </Description>
         </TextContent>
-        <MapContent>
-          <MapImage src="/images/park-map-3d.png" alt="서울어린이대공원 3D 지도" />
-        </MapContent>
+        <MapPlaceholder />
       </Container>
     </Section>
   )
 }
 
 const Section = styled.section`
-  padding: ${({ theme }) => theme.spacing.xxxl} 0;
+  padding: 150px 0;
   background: #fff;
   border-radius: ${({ theme }) => theme.borderRadius.large};
 `
@@ -35,18 +65,18 @@ const Container = styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.xl};
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.xxl};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex-direction: column;
     text-align: center;
   }
 `
 
 const TextContent = styled.div`
-  flex: 1;
+  max-width: 50%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    max-width: 100%;
+  }
 `
 
 const Title = styled.h2`
@@ -67,18 +97,8 @@ const Description = styled.p`
   }
 `
 
-const MapContent = styled.div`
-  flex: 1.2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const MapImage = styled.img`
-  width: 100%;
-  max-width: 600px;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  box-shadow: ${({ theme }) => theme.shadows.large};
+const MapPlaceholder = styled.div`
+  display: none;
 `
 
 export default WelcomeSection

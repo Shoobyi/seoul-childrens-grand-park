@@ -14,6 +14,7 @@ const BotanicalGardenSection = () => {
           <MainTitle>사계절의 아름다움</MainTitle>
           <Description>
             희귀 식물부터 친숙한 꽃까지, 자연의 다채로운 색으로 가득한 곳.
+            <br />
             고요한 산책길을 따라 식물들이 전하는 이야기를 들어보세요.
           </Description>
           <ViewMoreButton>자세히 보기</ViewMoreButton>
@@ -28,6 +29,7 @@ const Section = styled.section`
   height: 80vh;
   color: white;
   overflow: hidden;
+  clear: both;
 `
 
 const BackgroundVideo = styled.video`

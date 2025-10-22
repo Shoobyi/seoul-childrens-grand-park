@@ -12,6 +12,7 @@ const AmusementParkSection = () => {
           <MainTitle>짜릿한 즐거움이 가득!</MainTitle>
           <Description>
             온 가족이 함께 즐기는 신나는 놀이기구의 세계.
+            <br />
             웃음과 함성이 끊이지 않는 이곳에서 최고의 하루를 만끽하세요.
           </Description>
           <ViewMoreButton>자세히 보기</ViewMoreButton>
@@ -26,6 +27,7 @@ const Section = styled.section`
   height: 80vh;
   color: white;
   overflow: hidden;
+  clear: both;
 `
 
 const VideoBg = styled.video`
