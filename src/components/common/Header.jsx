@@ -152,7 +152,7 @@ const Header = () => {
       {/* 검색 모달 */}
       <SearchOverlay $isOpen={isSearchOpen} onClick={() => setIsSearchOpen(false)} />
       <SearchModal $isOpen={isSearchOpen}>
-        <SearchModalContent>
+        <SearchModalContent $isOpen={isSearchOpen}>
           <SearchInputWrapper>
             <SearchIcon>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -209,7 +209,7 @@ const Logo = styled.a`
   margin-left: -12px;
 
   img {
-    height: 60px;
+    height: 50px;
     width: auto;
     filter: ${({ $isScrolled }) =>
       $isScrolled ? 'none' : 'brightness(0) invert(1)'};
@@ -437,24 +437,16 @@ const SearchOverlay = styled.div`
 `
 
 const SearchModal = styled.div`
-  position: fixed !important;
-  top: 50vh !important;
-  left: 50vw !important;
-  transform: ${({ $isOpen }) =>
-    $isOpen
-      ? 'translate(-50%, -50%) scale(1) !important'
-      : 'translate(-50%, -50%) scale(0.9) !important'};
-  width: 90%;
-  max-width: 1200px;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
   visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
-  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
   transition: all 0.3s ease;
-  z-index: 99999 !important;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 95%;
-  }
+  z-index: 99999;
 `
 
 const SearchModalContent = styled.div`
@@ -462,9 +454,14 @@ const SearchModalContent = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.large};
   padding: ${({ theme }) => theme.spacing.lg};
   position: relative;
+  width: 90%;
+  max-width: 1200px;
+  transform: ${({ $isOpen }) => ($isOpen ? 'scale(1)' : 'scale(0.9)')};
+  transition: transform 0.3s ease;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing.md};
+    width: 95%;
   }
 `
 

@@ -27,8 +27,8 @@ const theme = {
   },
   typography: {
     fontFamily: {
-      primary: "'Pretendard Variable', 'SUIT', sans-serif",
-      secondary: "'Nunito', 'Quicksand', sans-serif",
+      primary: "'Roboto', 'Noto Sans KR', sans-serif",
+      secondary: "'Roboto', 'Noto Sans KR', sans-serif",
     },
     fontSize: {
       h1: '40px',

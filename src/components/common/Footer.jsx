@@ -96,7 +96,7 @@ const SecondRow = styled.div`
 `
 
 const Logo = styled.img`
-  height: 50px;
+  height: 42px;
   filter: brightness(0) invert(1);
   flex-shrink: 0;
 

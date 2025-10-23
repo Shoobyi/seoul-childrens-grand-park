@@ -83,17 +83,10 @@ const MainBanner = () => {
 
       <ContentContainer>
         <LeftContent>
-          <SmallText>도심 속 자연</SmallText>
-          <MainTitle>
-            서울<br />
-            어린이대공원
-          </MainTitle>
-          <Tagline>Closer to Nature—Closer to Funny</Tagline>
+          <SmallText>도심속 자연</SmallText>
+          <MainTitle>서울어린이대공원</MainTitle>
+          <Subtitle>자연과 체험이 공존하는 특별한 공간에서<br />잊지 못할 추억을 만드세요</Subtitle>
         </LeftContent>
-
-        <BottomLeftInfo>
-          <InfoText>자연과 체험이 공존하는 특별한 공간에서<br />잊지 못할 추억을 만들어보세요.</InfoText>
-        </BottomLeftInfo>
 
         <SlideIndicators>
           <PlayPauseButton onClick={togglePlayPause} title={isPlaying ? '일시정지' : '재생'}>
@@ -196,7 +189,7 @@ const LeftContent = styled.div`
 const SmallText = styled.p`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   opacity: 0.9;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -222,39 +215,12 @@ const MainTitle = styled.h1`
   }
 `
 
-const Tagline = styled.p`
-  font-size: 18px;
+const Subtitle = styled.p`
+  font-size: 24px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  opacity: 0.9;
-  font-style: italic;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 14px;
-  }
-`
-
-const BottomLeftInfo = styled.div`
-  position: absolute;
-  left: ${({ theme }) => theme.spacing.xl};
-  bottom: 100px;
-  color: white;
-  max-width: 500px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    left: ${({ theme }) => theme.spacing.lg};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: ${({ theme }) => theme.spacing.md};
-    bottom: 120px;
-    max-width: 70%;
-  }
-`
-
-const InfoText = styled.p`
-  font-size: 18px;
   line-height: 1.6;
   opacity: 0.9;
+  margin-top: ${({ theme }) => theme.spacing.md};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 16px;

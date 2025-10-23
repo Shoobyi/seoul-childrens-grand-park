@@ -90,7 +90,7 @@ const Description = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body};
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
-  max-width: 480px;
+  max-width: 400px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     margin: 0 auto;

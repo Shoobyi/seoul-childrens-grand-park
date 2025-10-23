@@ -12,7 +12,7 @@ import NoticeSection from './components/sections/NoticeSection'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
-  const [showLoading, setShowLoading] = useState(true) // 일시적으로 로딩 화면 비활성화
+  const [showLoading, setShowLoading] = useState(false) // 일시적으로 로딩 화면 비활성화
   const [isSliding, setIsSliding] = useState(false)
   const [mapVisible, setMapVisible] = useState(false)
 
