@@ -7,7 +7,11 @@ const MainBanner = () => {
   const videoRefs = useRef([])
   const prevSlideRef = useRef(0)
 
-  const videos = ["/videos/메인배너1.mp4", "/videos/메인배너2.mp4", "/videos/메인배너3.mp4"]
+  const videos = [
+    { src: "/videos/메인배너1.mp4", title: "동물과 함께하는 시간", subtitle: "다양한 동물 친구들을 만나보세요" },
+    { src: "/videos/Nature_s_Light_and_Leaf_Dance.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
+    { src: "/videos/Children_s_Bumper_Cars_at_Seoul_Park.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
+  ]
 
   useEffect(() => {
     const handleVideoEnd = () => {
@@ -70,7 +74,7 @@ const MainBanner = () => {
           <VideoSlide key={index} $isActive={index === currentSlide}>
             <video
               ref={(el) => (videoRefs.current[index] = el)}
-              src={video}
+              src={video.src}
               muted
               playsInline
               autoPlay
@@ -84,8 +88,8 @@ const MainBanner = () => {
       <ContentContainer>
         <LeftContent>
           <SmallText>도심속 자연</SmallText>
-          <MainTitle>서울어린이대공원</MainTitle>
-          <Subtitle>자연과 체험이 공존하는 특별한 공간에서<br />잊지 못할 추억을 만드세요</Subtitle>
+          <MainTitle>{videos[currentSlide].title}</MainTitle>
+          <Subtitle>{videos[currentSlide].subtitle}</Subtitle>
         </LeftContent>
 
         <SlideIndicators>
@@ -187,7 +191,7 @@ const LeftContent = styled.div`
 `
 
 const SmallText = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   opacity: 0.9;
@@ -195,35 +199,61 @@ const SmallText = styled.p`
   text-transform: uppercase;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 16px;
+    font-size: 18px;
   }
 `
 
 const MainTitle = styled.h1`
-  font-size: 50px;
+  font-size: 56px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   line-height: 1.1;
   margin-bottom: ${({ theme }) => theme.spacing.md};
   letter-spacing: -2px;
+  animation: fadeInUp 0.6s ease-out;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 44px;
+    font-size: 48px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 36px;
+    font-size: 40px;
   }
 `
 
 const Subtitle = styled.p`
   font-size: 24px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: 1.6;
+  line-height: 1.5;
   opacity: 0.9;
   margin-top: ${({ theme }) => theme.spacing.md};
+  animation: fadeInUp 0.8s ease-out;
+  min-height: 72px;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 16px;
+    font-size: 18px;
+    min-height: 54px;
   }
 `
 

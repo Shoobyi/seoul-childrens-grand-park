@@ -80,7 +80,7 @@ const Content = styled.div`
 `
 
 const EnglishTitle = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   opacity: 0.9;
@@ -94,7 +94,7 @@ const MainTitle = styled.h2`
 `
 
 const Description = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.7;
   margin-bottom: ${({ theme }) => theme.spacing.xl};
   opacity: 0.95;
@@ -105,7 +105,7 @@ const ViewMoreButton = styled.button`
   background: ${({ theme }) => theme.colors.primary.green};
   color: white;
   border-radius: ${({ theme }) => theme.borderRadius.large};
-  font-size: 16px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
   cursor: pointer;
   transition: all 0.3s ease;

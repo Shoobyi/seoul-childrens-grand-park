@@ -57,6 +57,15 @@ const ExperienceSection = () => {
     },
     {
       id: 4,
+      image: '/videos/Seoul_Walking_Festival_Video_Generated.mp4',
+      title: '2025 한마음 걷기대회',
+      subtitle: '가족과 함께하는 건강 걷기',
+      date: '2025년 5월 예정',
+      category: '문화체험',
+      mediaType: 'video'
+    },
+    {
+      id: 5,
       image: '/videos/freepik__a-bright-and-realistic-scene-at-seoul-childrens-gr__40243.mp4',
       title: '동물 교감 프로그램',
       subtitle: '동물 행동 관찰',
@@ -303,7 +312,7 @@ const SectionHeader = styled.div`
 `
 
 const EnglishTitle = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   color: #5a6a5a;
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   letter-spacing: 2px;
@@ -321,28 +330,60 @@ const MainTitle = styled.h2`
 const CategoryTabs = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.sm};
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+  }
 `
 
 const CategoryTab = styled.button`
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
-  background: ${({ $isActive }) => ($isActive ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.3)')};
-  color: ${({ $isActive }) => ($isActive ? '#1a2a1a' : '#2d3d2d')};
-  border: 0.5px solid ${({ $isActive }) => ($isActive ? '#2d3d2d' : 'rgba(45, 61, 45, 0.4)')};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  transition: all 0.3s ease;
+  position: relative;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  background: ${({ $isActive }) => ($isActive ? 'linear-gradient(135deg, #2ECC71 0%, #27AE60 100%)' : 'transparent')};
+  color: ${({ $isActive }) => ($isActive ? 'white' : '#2d3d2d')};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius.large} ${({ theme }) => theme.borderRadius.large} 0 0;
+  font-size: 17px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  backdrop-filter: blur(5px);
+  backdrop-filter: ${({ $isActive }) => ($isActive ? 'none' : 'blur(5px)')};
+  box-shadow: ${({ $isActive }) => ($isActive ? '0 -4px 12px rgba(46, 204, 113, 0.3)' : 'none')};
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: ${({ $isActive }) => ($isActive ? 'linear-gradient(90deg, #2ECC71, #F9DC5C)' : 'transparent')};
+    border-radius: 2px 2px 0 0;
+    transition: all 0.3s ease;
+  }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.95);
-    color: #1a2a1a;
-    border-color: #6fb03d;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: ${({ $isActive }) => ($isActive ? 'linear-gradient(135deg, #27AE60 0%, #229954 100%)' : 'rgba(255, 255, 255, 0.15)')};
+    color: ${({ $isActive }) => ($isActive ? 'white' : '#1a2a1a')};
+    transform: translateY(-3px);
+
+    &::after {
+      background: ${({ $isActive }) => ($isActive ? 'linear-gradient(90deg, #2ECC71, #F9DC5C)' : 'rgba(46, 204, 113, 0.5)')};
+      height: ${({ $isActive }) => ($isActive ? '4px' : '2px')};
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
   }
 `
 
@@ -413,14 +454,14 @@ const CardContent = styled.div`
 `
 
 const CardTitle = styled.h3`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
   color: #1a2a1a;
 `
 
 const CardSubtitle = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   color: #5a6a5a;
   margin-bottom: ${({ theme }) => theme.spacing.md};
 `
@@ -429,7 +470,7 @@ const CardDate = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
-  font-size: 12px;
+  font-size: 14px;
   color: #6a7a6a;
 
   svg {
@@ -478,7 +519,7 @@ const ViewMoreButton = styled.button`
   border: 0.5px solid rgba(45, 61, 45, 0.4);
   color: #2d3d2d;
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: 14px;
+  font-size: 16px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
   cursor: pointer;
   transition: all 0.3s ease;

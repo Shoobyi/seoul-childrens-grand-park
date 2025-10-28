@@ -83,12 +83,12 @@ const Title = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize.h2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
-  line-height: 1.4;
+  line-height: 1.3;
 `
 
 const Description = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body};
-  line-height: 1.7;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
   max-width: 400px;
 
