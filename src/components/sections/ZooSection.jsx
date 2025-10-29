@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const ZooSection = () => {
@@ -15,7 +16,7 @@ const ZooSection = () => {
             <br />
             생동감 넘치는 야생의 세계가 여러분을 기다립니다.
           </Description>
-          <ViewMoreButton>자세히 보기</ViewMoreButton>
+          <ViewMoreButton to="/safari-story">자세히 보기</ViewMoreButton>
         </Content>
       </Container>
     </Section>
@@ -100,7 +101,8 @@ const Description = styled.p`
   opacity: 0.95;
 `
 
-const ViewMoreButton = styled.button`
+const ViewMoreButton = styled(Link)`
+  display: inline-block;
   padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xxl}`};
   background: ${({ theme }) => theme.colors.primary.green};
   color: white;
@@ -108,6 +110,7 @@ const ViewMoreButton = styled.button`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease;
 
   &:hover {

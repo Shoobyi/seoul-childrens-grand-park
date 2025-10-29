@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Header = () => {
@@ -7,7 +7,10 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
   const location = useLocation()
+  const navigate = useNavigate()
 
   // 홈 페이지가 아니면 항상 헤더를 스크롤된 스타일로 표시
   const isHomePage = location.pathname === '/'
@@ -21,6 +24,38 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // 로그인 상태 확인
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
+      const email = localStorage.getItem('userEmail') || ''
+      setIsLoggedIn(loggedIn)
+      setUserEmail(email)
+    }
+
+    checkLoginStatus()
+    // storage 이벤트 리스너 추가 (다른 탭에서 로그인 시 동기화)
+    window.addEventListener('storage', checkLoginStatus)
+    // 사이드 메뉴 열릴 때마다 확인
+    if (isSideMenuOpen) {
+      checkLoginStatus()
+    }
+
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus)
+    }
+  }, [isSideMenuOpen])
+
+  // 로그아웃 핸들러
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('userEmail')
+    setIsLoggedIn(false)
+    setUserEmail('')
+    setIsSideMenuOpen(false)
+    navigate('/')
+  }
 
   useEffect(() => {
     // 사이드 메뉴 또는 검색 모달 열릴 때 스크롤 방지
@@ -122,6 +157,12 @@ const Header = () => {
       {/* 사이드 메뉴 */}
       <SideMenu $isOpen={isSideMenuOpen}>
         <SideMenuHeader>
+          {isLoggedIn && (
+            <AccountHeaderInfo onClick={() => { setIsSideMenuOpen(false); navigate('/mypage'); }}>
+              <AccountHeaderIcon>👤</AccountHeaderIcon>
+              <AccountHeaderEmail>{userEmail}</AccountHeaderEmail>
+            </AccountHeaderInfo>
+          )}
           <CloseButton onClick={() => setIsSideMenuOpen(false)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -156,8 +197,17 @@ const Header = () => {
         </SideMenuContent>
 
         <SideMenuFooter>
-          <FooterButtonLink to="/login" onClick={() => setIsSideMenuOpen(false)}>로그인</FooterButtonLink>
-          <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+          {isLoggedIn ? (
+            <>
+              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+              <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+            </>
+          ) : (
+            <>
+              <FooterButtonLink to="/login" onClick={() => setIsSideMenuOpen(false)}>로그인</FooterButtonLink>
+              <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+            </>
+          )}
         </SideMenuFooter>
       </SideMenu>
 
@@ -321,8 +371,41 @@ const SideMenu = styled.div`
 const SideMenuHeader = styled.div`
   padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl}`};
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+`
+
+const AccountHeaderInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  margin-left: -${({ theme }) => theme.spacing.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary.lightGreen};
+  }
+`
+
+const AccountHeaderIcon = styled.div`
+  width: 48px;
+  height: 48px;
+  background: ${({ theme }) => theme.colors.primary.lightGreen};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+`
+
+const AccountHeaderEmail = styled.span`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
 `
 
 const CloseButton = styled.button`
@@ -380,7 +463,8 @@ const SideSubMenuItem = styled.a`
   display: block;
   padding: ${({ theme }) => `${theme.spacing.sm} 0`};
   font-size: ${({ theme }) => theme.typography.fontSize.body};
-  color: ${({ theme }) => theme.colors.neutral.midGray};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   transition: all 0.3s ease;
 
   &:hover {
@@ -393,7 +477,8 @@ const SideSubMenuLink = styled(Link)`
   display: block;
   padding: ${({ theme }) => `${theme.spacing.sm} 0`};
   font-size: ${({ theme }) => theme.typography.fontSize.body};
-  color: ${({ theme }) => theme.colors.neutral.midGray};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   transition: all 0.3s ease;
   text-decoration: none;
 
@@ -452,6 +537,30 @@ const FooterButtonLink = styled(Link)`
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
     background: ${({ theme }) => theme.colors.primary.lightGreen};
+  }
+`
+
+const LogoutButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  text-align: center;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  border: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
+  cursor: pointer;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+    background: #FFE6E6;
+    border-color: #FF6B6B;
+    color: #FF6B6B;
   }
 `
 

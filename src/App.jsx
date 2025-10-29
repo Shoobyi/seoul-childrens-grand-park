@@ -6,6 +6,7 @@ import SafariStory from './pages/SafariStory'
 import IndoorGarden from './pages/IndoorGarden'
 import AdventureZone from './pages/AdventureZone'
 import Login from './pages/Login'
+import MyPage from './pages/MyPage'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/indoor-garden" element={<IndoorGarden />} />
           <Route path="/adventure-zone" element={<AdventureZone />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </MainContent>
     </>

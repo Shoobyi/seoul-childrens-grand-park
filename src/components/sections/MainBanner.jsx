@@ -9,8 +9,8 @@ const MainBanner = () => {
 
   const videos = [
     { src: "/videos/메인배너1.mp4", title: "동물과 함께하는 시간", subtitle: "다양한 동물 친구들을 만나보세요" },
-    { src: "/videos/Nature_s_Light_and_Leaf_Dance.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
-    { src: "/videos/Children_s_Bumper_Cars_at_Seoul_Park.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
+    { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
+    { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
   ]
 
   useEffect(() => {

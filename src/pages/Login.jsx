@@ -26,7 +26,6 @@ const Login = () => {
     setTimeout(() => {
       if (email === VALID_ACCOUNT.email && password === VALID_ACCOUNT.password) {
         // 로그인 성공
-        alert('로그인 성공! 환영합니다.')
         // 로컬 스토리지에 로그인 상태 저장
         localStorage.setItem('isLoggedIn', 'true')
         localStorage.setItem('userEmail', email)
@@ -46,17 +45,11 @@ const Login = () => {
       <PageContainer>
         <LoginWrapper>
           <LoginCard>
-            <LogoSection>
-              <WelcomeText>환영합니다!</WelcomeText>
-              <ServiceName>서울어린이대공원</ServiceName>
-              <ServiceDescription>자연과 함께하는 즐거운 하루</ServiceDescription>
-            </LogoSection>
-
-            <FormSection>
+            <LeftSection>
               <FormTitle>로그인</FormTitle>
               <LoginForm onSubmit={handleSubmit}>
                 <InputGroup>
-                  <InputLabel>이메일</InputLabel>
+                  <InputLabel>이메일 주소</InputLabel>
                   <Input
                     type="email"
                     placeholder="example@email.com"
@@ -88,51 +81,30 @@ const Login = () => {
                 <SubmitButton type="submit">로그인</SubmitButton>
               </LoginForm>
 
-              <Divider>
-                <DividerLine />
-                <DividerText>OR</DividerText>
-                <DividerLine />
-              </Divider>
-
-              <SocialLoginSection>
-                <SocialButton $color="#FEE500" $textColor="#000000">
-                  <SocialIcon>💬</SocialIcon>
-                  카카오로 시작하기
-                </SocialButton>
-                <SocialButton $color="#03C75A" $textColor="#FFFFFF">
-                  <SocialIcon>📱</SocialIcon>
-                  네이버로 시작하기
-                </SocialButton>
-                <SocialButton $color="#1877F2" $textColor="#FFFFFF">
-                  <SocialIcon>📘</SocialIcon>
-                  페이스북으로 시작하기
-                </SocialButton>
-              </SocialLoginSection>
-
               <SignupSection>
                 <SignupText>아직 회원이 아니신가요?</SignupText>
                 <SignupLink to="/signup">회원가입</SignupLink>
               </SignupSection>
-            </FormSection>
-          </LoginCard>
+            </LeftSection>
 
-          <BenefitsSection>
-            <BenefitCard>
-              <BenefitIcon>🎫</BenefitIcon>
-              <BenefitTitle>회원 특별 혜택</BenefitTitle>
-              <BenefitText>입장권 10% 할인</BenefitText>
-            </BenefitCard>
-            <BenefitCard>
-              <BenefitIcon>🎉</BenefitIcon>
-              <BenefitTitle>생일 축하 쿠폰</BenefitTitle>
-              <BenefitText>생일월 무료 입장권</BenefitText>
-            </BenefitCard>
-            <BenefitCard>
-              <BenefitIcon>⭐</BenefitIcon>
-              <BenefitTitle>포인트 적립</BenefitTitle>
-              <BenefitText>결제 시 5% 적립</BenefitText>
-            </BenefitCard>
-          </BenefitsSection>
+            <RightSection>
+              <SocialTitle>소셜 미디어로 로그인</SocialTitle>
+              <SocialLoginSection>
+                <SocialButton $color="#FEE500" $textColor="#000000">
+                  <SocialIconImg src="/icons/kakao.svg" alt="카카오" />
+                  카카오로 시작하기
+                </SocialButton>
+                <SocialButton $color="#03C75A" $textColor="#FFFFFF">
+                  <SocialIconImg src="/icons/naver.svg" alt="네이버" />
+                  네이버로 시작하기
+                </SocialButton>
+                <SocialButton $color="#000000" $textColor="#FFFFFF">
+                  <SocialIconImg src="/icons/x-social.svg" alt="X" $invert />
+                  X로 시작하기
+                </SocialButton>
+              </SocialLoginSection>
+            </RightSection>
+          </LoginCard>
         </LoginWrapper>
       </PageContainer>
       <Footer />
@@ -153,11 +125,15 @@ const PageContainer = styled.div`
 `
 
 const LoginWrapper = styled.div`
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    max-width: 500px;
+  }
 `
 
 const LoginCard = styled.div`
@@ -165,43 +141,52 @@ const LoginCard = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: ${({ theme }) => theme.shadows.large};
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+  }
 `
 
-const LogoSection = styled.div`
-  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+const LeftSection = styled.div`
   padding: ${({ theme }) => theme.spacing.xxl};
-  text-align: center;
-  color: white;
-`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
 
-const WelcomeText = styled.p`
-  font-size: 18px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  opacity: 0.95;
-`
-
-const ServiceName = styled.h1`
-  font-size: 32px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-`
-
-const ServiceDescription = styled.p`
-  font-size: 16px;
-  opacity: 0.9;
-`
-
-const FormSection = styled.div`
-  padding: ${({ theme }) => theme.spacing.xxl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    border-right: none;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
     padding: ${({ theme }) => theme.spacing.xl};
   }
 `
 
+const RightSection = styled.div`
+  padding: ${({ theme }) => theme.spacing.xxl};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #F8FFF9 0%, #FFFEF5 100%);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => theme.spacing.xl};
+  }
+`
+
+const SocialTitle = styled.h3`
+  font-size: 20px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  text-align: center;
+`
+
 const FormTitle = styled.h2`
-  font-size: 24px;
+  font-size: 28px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.neutral.darkGray};
   margin-bottom: ${({ theme }) => theme.spacing.xl};
@@ -305,25 +290,6 @@ const SubmitButton = styled.button`
   }
 `
 
-const Divider = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.md};
-  margin: ${({ theme }) => theme.spacing.xl} 0;
-`
-
-const DividerLine = styled.div`
-  flex: 1;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.neutral.lightGray};
-`
-
-const DividerText = styled.span`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.midGray};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-`
-
 const SocialLoginSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -356,8 +322,11 @@ const SocialButton = styled.button`
   }
 `
 
-const SocialIcon = styled.span`
-  font-size: 20px;
+const SocialIconImg = styled.img`
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: ${({ $invert }) => ($invert ? 'brightness(0) invert(1)' : 'none')};
 `
 
 const SignupSection = styled.div`
@@ -366,8 +335,6 @@ const SignupSection = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
   margin-top: ${({ theme }) => theme.spacing.xl};
-  padding-top: ${({ theme }) => theme.spacing.xl};
-  border-top: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
 `
 
 const SignupText = styled.span`
@@ -386,47 +353,6 @@ const SignupLink = styled(Link)`
     color: ${({ theme }) => theme.colors.primary.darkGreen};
     text-decoration: underline;
   }
-`
-
-const BenefitsSection = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.md};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-  }
-`
-
-const BenefitCard = styled.div`
-  background: white;
-  padding: ${({ theme }) => theme.spacing.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  text-align: center;
-  box-shadow: ${({ theme }) => theme.shadows.small};
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
-  }
-`
-
-const BenefitIcon = styled.div`
-  font-size: 36px;
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-`
-
-const BenefitTitle = styled.h3`
-  font-size: 16px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
-`
-
-const BenefitText = styled.p`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.midGray};
 `
 
 export default Login

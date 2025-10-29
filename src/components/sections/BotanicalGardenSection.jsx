@@ -1,12 +1,47 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 const BotanicalGardenSection = () => {
+  const [videoError, setVideoError] = useState(false)
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log('Video autoplay failed:', error)
+      })
+    }
+  }, [])
+
+  const handleVideoError = () => {
+    console.error('Video failed to load')
+    setVideoError(true)
+  }
+
+  const handleVideoLoaded = () => {
+    setVideoLoaded(true)
+  }
+
   return (
     <Section>
-      <BackgroundVideo autoPlay loop muted playsInline>
-        <source src="/videos/Nature_s_Light_and_Leaf_Dance.mp4" type="video/mp4" />
-      </BackgroundVideo>
+      {!videoError && (
+        <BackgroundVideo
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          onError={handleVideoError}
+          onLoadedData={handleVideoLoaded}
+          $isLoaded={videoLoaded}
+        >
+          <source src="/videos/Nature_s_Light_and_Leaf_Dance.mp4" type="video/mp4" />
+        </BackgroundVideo>
+      )}
+      {videoError && (
+        <FallbackBackground />
+      )}
       <Overlay />
       <Container>
         <Content>
@@ -39,6 +74,18 @@ const BackgroundVideo = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
+  opacity: ${({ $isLoaded }) => ($isLoaded ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
+`
+
+const FallbackBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
   z-index: 1;
 `
 
