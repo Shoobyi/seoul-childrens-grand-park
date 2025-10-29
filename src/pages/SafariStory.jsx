@@ -260,6 +260,7 @@ const SafariStory = () => {
 const PageContainer = styled.div`
   min-height: 100vh;
   background: #FAFAFA;
+  overflow-x: hidden;
 `
 
 const HeroSection = styled.section`
@@ -941,7 +942,7 @@ const AnimalContentHalf = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   padding: 0 10% 0 ${({ theme }) => theme.spacing.xxxl};
-  background: transparent;
+  background: #fff;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
