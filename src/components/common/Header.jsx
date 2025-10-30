@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -75,7 +76,7 @@ const Header = () => {
       path: '#urban-safari',
       subMenu: [
         { name: '사파리 스토리', path: '/safari-story' },
-        { name: '애니멀 프렌즈', path: '#animal-friends' },
+        { name: '애니멀 프렌즈', path: '/animal-friends' },
         { name: '사파리 맵 & 가이드', path: '#safari-map' },
       ]
     },
@@ -151,109 +152,118 @@ const Header = () => {
         </HeaderInner>
       </HeaderContainer>
 
-      {/* 오버레이 */}
-      <Overlay $isOpen={isSideMenuOpen} onClick={() => setIsSideMenuOpen(false)} />
+      {/* 오버레이 & 사이드 메뉴 */}
+      {ReactDOM.createPortal(
+        <>
+          <Overlay $isOpen={isSideMenuOpen} onClick={() => setIsSideMenuOpen(false)} />
 
-      {/* 사이드 메뉴 */}
-      <SideMenu $isOpen={isSideMenuOpen}>
-        <SideMenuHeader>
-          {isLoggedIn && (
-            <AccountHeaderInfo onClick={() => { setIsSideMenuOpen(false); navigate('/mypage'); }}>
-              <AccountHeaderIcon>👤</AccountHeaderIcon>
-              <AccountHeaderEmail>{userEmail}</AccountHeaderEmail>
-            </AccountHeaderInfo>
-          )}
-          <CloseButton onClick={() => setIsSideMenuOpen(false)}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </CloseButton>
-        </SideMenuHeader>
+          <SideMenu $isOpen={isSideMenuOpen}>
+            <SideMenuHeader>
+              {isLoggedIn && (
+                <AccountHeaderInfo onClick={() => { setIsSideMenuOpen(false); navigate('/mypage'); }}>
+                  <AccountHeaderIcon>👤</AccountHeaderIcon>
+                  <AccountHeaderEmail>{userEmail}</AccountHeaderEmail>
+                </AccountHeaderInfo>
+              )}
+              <CloseButton onClick={() => setIsSideMenuOpen(false)}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </CloseButton>
+            </SideMenuHeader>
 
-        <SideMenuContent>
-          {menuItems.map((item, index) => (
-            <SideMenuItem key={item.name}>
-              <SideMenuItemTitle
-                href={item.path}
-                onClick={() => setActiveMenu(activeMenu === index ? null : index)}
-              >
-                {item.name}
-              </SideMenuItemTitle>
-              <SideSubMenu $isOpen={activeMenu === index}>
-                {item.subMenu.map((subItem) => (
-                  subItem.path.startsWith('/') ? (
-                    <SideSubMenuLink key={subItem.name} to={subItem.path} onClick={() => setIsSideMenuOpen(false)}>
-                      {subItem.name}
-                    </SideSubMenuLink>
-                  ) : (
-                    <SideSubMenuItem key={subItem.name} href={subItem.path}>
-                      {subItem.name}
-                    </SideSubMenuItem>
-                  )
-                ))}
-              </SideSubMenu>
-            </SideMenuItem>
-          ))}
-        </SideMenuContent>
+            <SideMenuContent>
+              {menuItems.map((item, index) => (
+                <SideMenuItem key={item.name}>
+                  <SideMenuItemTitle
+                    href={item.path}
+                    onClick={() => setActiveMenu(activeMenu === index ? null : index)}
+                  >
+                    {item.name}
+                  </SideMenuItemTitle>
+                  <SideSubMenu $isOpen={activeMenu === index}>
+                    {item.subMenu.map((subItem) => (
+                      subItem.path.startsWith('/') ? (
+                        <SideSubMenuLink key={subItem.name} to={subItem.path} onClick={() => setIsSideMenuOpen(false)}>
+                          {subItem.name}
+                        </SideSubMenuLink>
+                      ) : (
+                        <SideSubMenuItem key={subItem.name} href={subItem.path}>
+                          {subItem.name}
+                        </SideSubMenuItem>
+                      )
+                    ))}
+                  </SideSubMenu>
+                </SideMenuItem>
+              ))}
+            </SideMenuContent>
 
-        <SideMenuFooter>
-          {isLoggedIn ? (
-            <>
-              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-              <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
-            </>
-          ) : (
-            <>
-              <FooterButtonLink to="/login" onClick={() => setIsSideMenuOpen(false)}>로그인</FooterButtonLink>
-              <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
-            </>
-          )}
-        </SideMenuFooter>
-      </SideMenu>
+            <SideMenuFooter>
+              {isLoggedIn ? (
+                <>
+                  <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+                  <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+                </>
+              ) : (
+                <>
+                  <FooterButtonLink to="/login" onClick={() => setIsSideMenuOpen(false)}>로그인</FooterButtonLink>
+                  <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+                </>
+              )}
+            </SideMenuFooter>
+          </SideMenu>
+        </>,
+        document.body
+      )}
 
       {/* 검색 모달 */}
-      <SearchOverlay $isOpen={isSearchOpen} onClick={() => setIsSearchOpen(false)} />
-      <SearchModal $isOpen={isSearchOpen}>
-        <SearchModalContent $isOpen={isSearchOpen}>
-          <AnimalCharacter>
-            <AnimalImage src="/images/monkey-search.svg" alt="원숭이" />
-            <SpeechBubble>
-              무엇을 찾고 계신가요?
-            </SpeechBubble>
-          </AnimalCharacter>
+      {ReactDOM.createPortal(
+        <>
+          <SearchOverlay $isOpen={isSearchOpen} onClick={() => setIsSearchOpen(false)} />
+          <SearchModal $isOpen={isSearchOpen}>
+            <SearchModalContent $isOpen={isSearchOpen}>
+              <AnimalCharacter>
+                <AnimalImage src="/images/monkey-search.svg" alt="원숭이" />
+                <SpeechBubble>
+                  무엇을 찾고 계신가요?
+                </SpeechBubble>
+              </AnimalCharacter>
 
-          <SearchInputWrapper>
-            <SearchIcon>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-                <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </SearchIcon>
-            <SearchInput
-              type="text"
-              placeholder="동물 먹이주기, 놀이기구, 공연 시간 등..."
-              autoFocus
-            />
-            <SearchCloseButton onClick={() => setIsSearchOpen(false)}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </SearchCloseButton>
-          </SearchInputWrapper>
+              <SearchInputWrapper>
+                <SearchIcon>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </SearchIcon>
+                <SearchInput
+                  type="text"
+                  placeholder="동물 먹이주기, 놀이기구, 공연 시간 등..."
+                  autoFocus
+                />
+                <SearchCloseButton onClick={() => setIsSearchOpen(false)}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </SearchCloseButton>
+              </SearchInputWrapper>
 
-          <QuickSearchSection>
-            <QuickSearchTitle>인기 검색어</QuickSearchTitle>
-            <QuickSearchTags>
-              <QuickSearchTag>🦁 동물 먹이주기</QuickSearchTag>
-              <QuickSearchTag>🎡 놀이기구</QuickSearchTag>
-              <QuickSearchTag>🌸 식물원</QuickSearchTag>
-              <QuickSearchTag>🎭 공연 일정</QuickSearchTag>
-              <QuickSearchTag>🗺️ 지도 보기</QuickSearchTag>
-              <QuickSearchTag>🎫 입장료</QuickSearchTag>
-            </QuickSearchTags>
-          </QuickSearchSection>
-        </SearchModalContent>
-      </SearchModal>
+              <QuickSearchSection>
+                <QuickSearchTitle>인기 검색어</QuickSearchTitle>
+                <QuickSearchTags>
+                  <QuickSearchTag>🦁 동물 먹이주기</QuickSearchTag>
+                  <QuickSearchTag>🎡 놀이기구</QuickSearchTag>
+                  <QuickSearchTag>🌸 식물원</QuickSearchTag>
+                  <QuickSearchTag>🎭 공연 일정</QuickSearchTag>
+                  <QuickSearchTag>🗺️ 지도 보기</QuickSearchTag>
+                  <QuickSearchTag>🎫 입장료</QuickSearchTag>
+                </QuickSearchTags>
+              </QuickSearchSection>
+            </SearchModalContent>
+          </SearchModal>
+        </>,
+        document.body
+      )}
     </>
   )
 }

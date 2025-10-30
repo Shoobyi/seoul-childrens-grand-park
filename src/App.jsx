@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import Home from './pages/Home'
 import SafariStory from './pages/SafariStory'
+import AnimalFriends from './pages/AnimalFriends'
 import IndoorGarden from './pages/IndoorGarden'
 import AdventureZone from './pages/AdventureZone'
 import Login from './pages/Login'
@@ -10,7 +11,7 @@ import MyPage from './pages/MyPage'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
-  const [showLoading, setShowLoading] = useState(false) // 일시적으로 로딩 화면 비활성화
+  const [showLoading, setShowLoading] = useState(true) // 로딩 화면 활성화
   const [isSliding, setIsSliding] = useState(false)
 
   const handleLoadingComplete = () => {
@@ -27,10 +28,11 @@ function App() {
           <LoadingScreen onLoadingComplete={handleLoadingComplete} />
         </LoadingWrapper>
       )}
-      <MainContent $isVisible={!showLoading} $isSliding={isSliding}>
+      <MainContent $isSliding={isSliding}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/safari-story" element={<SafariStory />} />
+          <Route path="/animal-friends" element={<AnimalFriends />} />
           <Route path="/indoor-garden" element={<IndoorGarden />} />
           <Route path="/adventure-zone" element={<AdventureZone />} />
           <Route path="/login" element={<Login />} />
@@ -74,7 +76,6 @@ const LoadingWrapper = styled.div`
 const MainContent = styled.div`
   position: relative;
   opacity: 1;
-  pointer-events: ${({ $isVisible }) => ($isVisible ? 'auto' : 'none')};
   animation: ${({ $isSliding }) => ($isSliding ? fadeInScale : 'none')} 0.8s ease-out forwards;
 `
 

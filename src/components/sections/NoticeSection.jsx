@@ -54,14 +54,13 @@ const NoticeSection = () => {
           {notices.map((notice) => (
             <NoticeItem key={notice.id}>
               <NoticeContent>
-                <NoticeTop>
+                <BadgeWrapper>
                   <Category $type={notice.category}>{notice.category}</Category>
                   {notice.isNew && <NewBadge>NEW</NewBadge>}
-                  <Date>{notice.date}</Date>
-                </NoticeTop>
+                </BadgeWrapper>
                 <NoticeTitle>{notice.title}</NoticeTitle>
               </NoticeContent>
-              <ArrowIcon>→</ArrowIcon>
+              <Date>{notice.date}</Date>
             </NoticeItem>
           ))}
         </NoticeList>
@@ -157,13 +156,15 @@ const NoticeItem = styled.div`
 
 const NoticeContent = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
 `
 
-const NoticeTop = styled.div`
+const BadgeWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
 `
 
 const Category = styled.span`
@@ -193,7 +194,6 @@ const NewBadge = styled.span`
 const Date = styled.span`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.neutral.gray};
-  margin-left: auto;
 `
 
 const NoticeTitle = styled.h3`
@@ -201,17 +201,6 @@ const NoticeTitle = styled.h3`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.neutral.black};
   line-height: 1.5;
-`
-
-const ArrowIcon = styled.div`
-  font-size: 20px;
-  color: ${({ theme }) => theme.colors.neutral.gray};
-  transition: all 0.3s ease;
-
-  ${NoticeItem}:hover & {
-    color: ${({ theme }) => theme.colors.primary.green};
-    transform: translateX(5px);
-  }
 `
 
 export default NoticeSection

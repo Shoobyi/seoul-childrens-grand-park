@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../components/common/Header'
@@ -163,7 +164,7 @@ const SafariStory = () => {
           </ZonesShowcase>
 
           {/* 구역 설명 모달 */}
-          {selectedZone && (
+          {selectedZone && ReactDOM.createPortal(
             <>
               <ModalOverlay onClick={() => setSelectedZone(null)} />
               <Modal>
@@ -196,7 +197,8 @@ const SafariStory = () => {
                   </ModalSection>
                 </ModalContent>
               </Modal>
-            </>
+            </>,
+            document.body
           )}
 
           {/* 대표 동물 - 사자 */}
@@ -685,7 +687,7 @@ const ModalOverlay = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
-  z-index: 10000;
+  z-index: 100000;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.3s ease-out;
 
@@ -710,7 +712,7 @@ const Modal = styled.div`
   background: white;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   overflow: hidden;
-  z-index: 10001;
+  z-index: 100001;
   box-shadow: ${({ theme }) => theme.shadows.large};
   display: grid;
   grid-template-columns: 1fr 1fr;
