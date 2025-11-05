@@ -94,7 +94,7 @@ const Header = () => {
       path: '#play-park',
       subMenu: [
         { name: '어드벤처 존', path: '/adventure-zone' },
-        { name: '플레이 그라운드', path: '/playground' },
+        { name: '플레이 그라운드', path: '#playground' },
         { name: '워터파크', path: '#waterpark' },
       ]
     },
@@ -102,7 +102,6 @@ const Header = () => {
       name: '가든 페스티벌',
       path: '#garden-festival',
       subMenu: [
-        { name: '페스티벌 가이드', path: '/festival-guide' },
         { name: '페스티벌 뉴스', path: '#festival-news' },
         { name: '이벤트 캘린더', path: '#event-calendar' },
       ]
@@ -259,12 +258,12 @@ const Header = () => {
               <QuickSearchSection>
                 <QuickSearchTitle>인기 검색어</QuickSearchTitle>
                 <QuickSearchTags>
-                  <QuickSearchTag>🦁 동물 먹이주기</QuickSearchTag>
-                  <QuickSearchTag>🎡 놀이기구</QuickSearchTag>
-                  <QuickSearchTag>🌸 식물원</QuickSearchTag>
-                  <QuickSearchTag>🎭 공연 일정</QuickSearchTag>
-                  <QuickSearchTag>🗺️ 지도 보기</QuickSearchTag>
-                  <QuickSearchTag>🎫 입장료</QuickSearchTag>
+                  <QuickSearchTag>동물 먹이주기</QuickSearchTag>
+                  <QuickSearchTag>놀이기구</QuickSearchTag>
+                  <QuickSearchTag>식물원</QuickSearchTag>
+                  <QuickSearchTag>공연 일정</QuickSearchTag>
+                  <QuickSearchTag>지도 보기</QuickSearchTag>
+                  <QuickSearchTag>입장료</QuickSearchTag>
                 </QuickSearchTags>
               </QuickSearchSection>
             </SearchModalContent>

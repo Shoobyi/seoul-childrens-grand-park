@@ -160,7 +160,6 @@ const TicketPurchase = () => {
                   <TicketTypeGrid>
                     <TicketTypeCard>
                       <TicketTypeHeader>
-                        <TicketTypeIcon>👨</TicketTypeIcon>
                         <div>
                           <TicketTypeName>성인</TicketTypeName>
                           <TicketTypeDesc>만 19세 이상</TicketTypeDesc>
@@ -176,7 +175,6 @@ const TicketPurchase = () => {
 
                     <TicketTypeCard>
                       <TicketTypeHeader>
-                        <TicketTypeIcon>👦</TicketTypeIcon>
                         <div>
                           <TicketTypeName>청소년</TicketTypeName>
                           <TicketTypeDesc>만 13-18세</TicketTypeDesc>
@@ -192,7 +190,6 @@ const TicketPurchase = () => {
 
                     <TicketTypeCard>
                       <TicketTypeHeader>
-                        <TicketTypeIcon>👶</TicketTypeIcon>
                         <div>
                           <TicketTypeName>어린이</TicketTypeName>
                           <TicketTypeDesc>만 3-12세</TicketTypeDesc>
@@ -226,38 +223,31 @@ const TicketPurchase = () => {
                     onClick={() => setSelectedOptions({...selectedOptions, freePass: !selectedOptions.freePass})}
                   >
                     <OptionBadge>인기</OptionBadge>
-                    <OptionIcon>🎫</OptionIcon>
                     <OptionName>자유이용권</OptionName>
                     <OptionDesc>모든 놀이기구 무제한 이용</OptionDesc>
                     <OptionPrice>+{prices.freePass.toLocaleString()}원 /인</OptionPrice>
-                    {selectedOptions.freePass && <CheckMark>✓</CheckMark>}
                   </OptionCard>
 
                   <OptionCard
                     $selected={selectedOptions.parking}
                     onClick={() => setSelectedOptions({...selectedOptions, parking: !selectedOptions.parking})}
                   >
-                    <OptionIcon>🅿️</OptionIcon>
                     <OptionName>주차권</OptionName>
                     <OptionDesc>1일 주차 이용권</OptionDesc>
                     <OptionPrice>+{prices.parking.toLocaleString()}원</OptionPrice>
-                    {selectedOptions.parking && <CheckMark>✓</CheckMark>}
                   </OptionCard>
 
                   <OptionCard
                     $selected={selectedOptions.guideTour}
                     onClick={() => setSelectedOptions({...selectedOptions, guideTour: !selectedOptions.guideTour})}
                   >
-                    <OptionIcon>🎤</OptionIcon>
                     <OptionName>가이드 투어</OptionName>
                     <OptionDesc>전문 가이드와 함께하는 2시간 투어</OptionDesc>
                     <OptionPrice>+{prices.guideTour.toLocaleString()}원 /인</OptionPrice>
-                    {selectedOptions.guideTour && <CheckMark>✓</CheckMark>}
                   </OptionCard>
                 </OptionsGrid>
 
                 <InfoBox>
-                  <InfoIcon>ℹ️</InfoIcon>
                   <InfoText>
                     자유이용권을 선택하시면 기본 입장료 대신 자유이용권 가격으로 적용됩니다.
                   </InfoText>
@@ -309,28 +299,24 @@ const TicketPurchase = () => {
                       $selected={paymentMethod === 'card'}
                       onClick={() => setPaymentMethod('card')}
                     >
-                      <PaymentIcon>💳</PaymentIcon>
                       <PaymentName>신용카드</PaymentName>
                     </PaymentMethodCard>
                     <PaymentMethodCard
                       $selected={paymentMethod === 'kakao'}
                       onClick={() => setPaymentMethod('kakao')}
                     >
-                      <PaymentIcon>💬</PaymentIcon>
                       <PaymentName>카카오페이</PaymentName>
                     </PaymentMethodCard>
                     <PaymentMethodCard
                       $selected={paymentMethod === 'naver'}
                       onClick={() => setPaymentMethod('naver')}
                     >
-                      <PaymentIcon>🟢</PaymentIcon>
                       <PaymentName>네이버페이</PaymentName>
                     </PaymentMethodCard>
                     <PaymentMethodCard
                       $selected={paymentMethod === 'account'}
                       onClick={() => setPaymentMethod('account')}
                     >
-                      <PaymentIcon>🏦</PaymentIcon>
                       <PaymentName>계좌이체</PaymentName>
                     </PaymentMethodCard>
                   </PaymentMethodGrid>
@@ -666,10 +652,6 @@ const TicketTypeHeader = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
 `
 
-const TicketTypeIcon = styled.div`
-  font-size: 32px;
-`
-
 const TicketTypeName = styled.div`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -787,11 +769,6 @@ const OptionBadge = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `
 
-const OptionIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
 const OptionName = styled.div`
   font-size: 20px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -811,22 +788,6 @@ const OptionPrice = styled.div`
   color: ${({ theme }) => theme.colors.primary.green};
 `
 
-const CheckMark = styled.div`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
-`
-
 const InfoBox = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing.md};
@@ -834,11 +795,6 @@ const InfoBox = styled.div`
   background: rgba(52, 152, 219, 0.1);
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   border-left: 4px solid #3498DB;
-`
-
-const InfoIcon = styled.div`
-  font-size: 24px;
-  flex-shrink: 0;
 `
 
 const InfoText = styled.p`
@@ -896,11 +852,6 @@ const PaymentMethodCard = styled.div`
     border-color: ${({ theme }) => theme.colors.primary.green};
     transform: translateY(-2px);
   }
-`
-
-const PaymentIcon = styled.div`
-  font-size: 32px;
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
 `
 
 const PaymentName = styled.div`

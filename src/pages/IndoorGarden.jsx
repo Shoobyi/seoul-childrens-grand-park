@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../components/common/Header'
@@ -6,6 +7,52 @@ import Footer from '../components/common/Footer'
 
 const IndoorGarden = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [selectedZone, setSelectedZone] = useState(null)
+
+  const zones = [
+    {
+      id: 'tropical',
+      name: '열대식물존',
+      image: '/images/열대식물존.jpg',
+      description: '열대 지방의 진귀한 식물들이 실내에서 자라도록 조성된 공간입니다. 무성한 열대 우림 속으로 들어가 거대한 야자수와 형형색색의 열대 꽃들을 만나보세요.',
+      features: ['열대 지방의 진귀한 식물', '높은 습도와 따뜻한 온도', '다양한 열대 꽃']
+    },
+    {
+      id: 'butterfly',
+      name: '꽃과 나비존',
+      image: '/images/꽃과나비존.jpg',
+      description: '죽은 향나무를 활용한 나비의 안식처입니다. 아름다운 꽃들 사이로 나비가 날아다니는 환상적인 공간을 경험하세요.',
+      features: ['나비의 안식처', '다양한 꽃 식물', '자연 생태 체험']
+    },
+    {
+      id: 'scenery',
+      name: '진경산수존',
+      image: '/images/진경산수존.jpg',
+      description: '금강산의 산골짜기를 표현한 조선시대 화풍 작품입니다. 전통 산수화 속으로 들어간 듯한 특별한 경험을 선사합니다.',
+      features: ['금강산 폭포 재현', '조선시대 화풍', '전통 정원 예술']
+    },
+    {
+      id: 'succulent',
+      name: '다육식물존',
+      image: '/images/다육식물존.jpg',
+      description: '건조한 환경에서도 잘 견디는 다육식물들의 세계입니다. 다양한 크기와 모양의 다육이들이 독특한 아름다움을 선사합니다.',
+      features: ['건조 환경 적응 식물', '138종의 선인장', '독특한 형태와 색상']
+    },
+    {
+      id: 'aerial',
+      name: '공중식재관',
+      image: '/images/공중식재관.jpg',
+      description: '공기정화 및 습도 조절 기능을 가진 공중식물들의 공간입니다. 천장에서 자라는 독특한 식물들의 모습을 감상하세요.',
+      features: ['공기정화 식물', '습도 조절 기능', '독특한 생장 방식']
+    },
+    {
+      id: 'hydroponic',
+      name: '수경식재관',
+      image: '/images/수경식재관.jpg',
+      description: '수생식물의 뿌리와 줄기를 관찰할 수 있는 공간입니다. 물속에서 자라는 식물들의 신비로운 모습을 가까이서 만나보세요.',
+      features: ['수생식물 관찰', '뿌리 구조 학습', '물속 생태계']
+    }
+  ]
 
   return (
     <>
@@ -35,171 +82,165 @@ const IndoorGarden = () => {
               </BreadcrumbDropdown>
             </Breadcrumb>
             <PageTitle>인도어 가든</PageTitle>
-            <PageSubtitle>사계절 언제나 푸르른 실내 정원</PageSubtitle>
           </HeroContent>
         </HeroSection>
 
-        <ContentSection>
-          <Container>
-            <IntroBox>
-              <IntroTitle>인도어 가든이란?</IntroTitle>
-              <IntroText>
-                서울어린이대공원의 인도어 가든은 날씨에 관계없이 사계절 내내 아름다운 식물들을 감상할 수 있는 특별한 공간입니다.
-                열대 식물부터 선인장, 다육이까지 다양한 식물들이 어우러진 실내 정원에서 자연의 경이로움을 느껴보세요.
-              </IntroText>
-            </IntroBox>
+        <MainContent>
+          {/* 소개 및 시설 정보 */}
+          <IntroSection>
+            <IntroLeft>
+              <IntroYear>식물원 2층</IntroYear>
+              <IntroMainText>240㎡의 공간<br/>6개 테마로 구성된<br/>실내정원</IntroMainText>
+            </IntroLeft>
+            <IntroRight>
+              <IntroDescription>
+                서울어린이대공원 인도어 가든은 식물원 2층에 위치한 특별한 공간입니다.
+                240㎡의 공간을 리모델링하여 꽃과 나비, 금강산폭포, 열대식물 등 6개 테마로 구성되어 있습니다.
+                휠체어 및 유모차 전용 진출입 경사로가 갖춰져 있어 누구나 편안하게 관람하실 수 있습니다.
+              </IntroDescription>
+              <IntroStats>
+                <IntroStatItem>
+                  <IntroStatValue>240㎡</IntroStatValue>
+                  <IntroStatLabel>실내정원 면적</IntroStatLabel>
+                </IntroStatItem>
+                <IntroStatItem>
+                  <IntroStatValue>6개</IntroStatValue>
+                  <IntroStatLabel>테마 구역</IntroStatLabel>
+                </IntroStatItem>
+              </IntroStats>
+            </IntroRight>
+          </IntroSection>
 
-            <GardenGrid>
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="열대 우림관" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>열대</CardTag>
-                  <CardTitle>열대 우림관</CardTitle>
-                  <CardDescription>
-                    무성한 열대 우림 속으로 들어가보세요. 높은 습도와 따뜻한 온도가 유지되는 공간에서
-                    거대한 야자수, 바나나 나무, 그리고 형형색색의 열대 꽃들을 만날 수 있습니다.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌡️</InfoIcon>
-                      <InfoText>온도: 25-30°C, 습도: 70-80%</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>🌿</InfoIcon>
-                      <InfoText>200여 종의 열대 식물</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+          {/* 6개 테마 구역 소개 */}
+          <ZonesShowcase>
+            <ZonesOverlay>
+              <ZonesTitle>6가지 테마로 구성된</ZonesTitle>
+              <ZonesSubtitle>실내정원 구역 안내</ZonesSubtitle>
+            </ZonesOverlay>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="선인장 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>사막</CardTag>
-                  <CardTitle>선인장 정원</CardTitle>
-                  <CardDescription>
-                    사막의 생존자들을 만나보세요. 다양한 크기와 모양의 선인장과 다육식물들이
-                    독특한 아름다움을 선사합니다. 건조한 환경에 적응한 식물들의 놀라운 생명력을 느껴보세요.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌵</InfoIcon>
-                      <InfoText>150여 종의 선인장</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>💧</InfoIcon>
-                      <InfoText>건조한 환경 유지</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+            <ZonesGrid>
+              <ZoneImageCard $position="top-left" onClick={() => setSelectedZone(zones[0])}>
+                <ZoneCardImage src="/images/열대식물존.jpg" alt="열대식물존" />
+                <ZoneLabel>열대식물존</ZoneLabel>
+              </ZoneImageCard>
+              <ZoneImageCard $position="top-center" onClick={() => setSelectedZone(zones[1])}>
+                <ZoneCardImage src="/images/꽃과나비존.jpg" alt="꽃과 나비존" />
+                <ZoneLabel>꽃과 나비존</ZoneLabel>
+              </ZoneImageCard>
+              <ZoneImageCard $position="top-right" onClick={() => setSelectedZone(zones[2])}>
+                <ZoneCardImage src="/images/진경산수존.jpg" alt="진경산수존" />
+                <ZoneLabel>진경산수존</ZoneLabel>
+              </ZoneImageCard>
+              <ZoneImageCard $position="bottom-left" onClick={() => setSelectedZone(zones[3])}>
+                <ZoneCardImage src="/images/다육식물존.jpg" alt="다육식물존" />
+                <ZoneLabel>다육식물존</ZoneLabel>
+              </ZoneImageCard>
+              <ZoneImageCard $position="bottom-center" onClick={() => setSelectedZone(zones[4])}>
+                <ZoneCardImage src="/images/공중식재관.jpg" alt="공중식재관" />
+                <ZoneLabel>공중식재관</ZoneLabel>
+              </ZoneImageCard>
+              <ZoneImageCard $position="bottom-right" onClick={() => setSelectedZone(zones[5])}>
+                <ZoneCardImage src="/images/수경식재관.jpg" alt="수경식재관" />
+                <ZoneLabel>수경식재관</ZoneLabel>
+              </ZoneImageCard>
+            </ZonesGrid>
+          </ZonesShowcase>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="난초 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>고급</CardTag>
-                  <CardTitle>난초 정원</CardTitle>
-                  <CardDescription>
-                    우아한 난초의 세계로 초대합니다. 희귀한 종류의 난초부터 화려한 색상의 난초까지,
-                    세계 각지에서 온 200여 종의 난초를 감상할 수 있습니다.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌸</InfoIcon>
-                      <InfoText>200여 종의 난초</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>⏰</InfoIcon>
-                      <InfoText>최적 관람 시기: 봄</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+          {/* 구역 설명 모달 */}
+          {selectedZone && ReactDOM.createPortal(
+            <>
+              <ModalOverlay onClick={() => setSelectedZone(null)} />
+              <Modal>
+                <ModalCloseButton onClick={() => setSelectedZone(null)}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </ModalCloseButton>
+                <ModalImage src={selectedZone.image} alt={selectedZone.name} />
+                <ModalContent>
+                  <ModalTitle>{selectedZone.name}</ModalTitle>
+                  <ModalDescription>{selectedZone.description}</ModalDescription>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="허브 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>향기</CardTag>
-                  <CardTitle>허브 정원</CardTitle>
-                  <CardDescription>
-                    향기로운 허브의 세계를 경험하세요. 라벤더, 로즈마리, 바질 등
-                    다양한 허브 식물들의 향기가 가득한 힐링 공간입니다.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌿</InfoIcon>
-                      <InfoText>50여 종의 허브</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>✋</InfoIcon>
-                      <InfoText>터치 가든 체험 가능</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
-            </GardenGrid>
+                  <ModalSection>
+                    <ModalSectionTitle>주요 특징</ModalSectionTitle>
+                    <ModalFeatureList>
+                      {selectedZone.features.map((feature, idx) => (
+                        <ModalFeatureItem key={idx}>• {feature}</ModalFeatureItem>
+                      ))}
+                    </ModalFeatureList>
+                  </ModalSection>
+                </ModalContent>
+              </Modal>
+            </>,
+            document.body
+          )}
+        </MainContent>
 
-            <ProgramSection>
-              <ProgramTitle>체험 프로그램</ProgramTitle>
-              <ProgramGrid>
-                <ProgramCard>
-                  <ProgramIcon>🌱</ProgramIcon>
-                  <ProgramCardTitle>식물 심기 체험</ProgramCardTitle>
-                  <ProgramText>나만의 다육이 화분 만들기<br />매주 토요일 14:00<br />참가비: 15,000원</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>🎨</ProgramIcon>
-                  <ProgramCardTitle>식물 드로잉</ProgramCardTitle>
-                  <ProgramText>식물을 관찰하고 그리기<br />매주 일요일 11:00<br />참가비: 10,000원</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>👨‍🏫</ProgramIcon>
-                  <ProgramCardTitle>가드너 토크</ProgramCardTitle>
-                  <ProgramText>전문 정원사와의 대화<br />매주 금요일 15:00<br />무료 (선착순 30명)</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>📸</ProgramIcon>
-                  <ProgramCardTitle>가든 포토 투어</ProgramCardTitle>
-                  <ProgramText>인생샷 명소 안내<br />매일 10:00, 14:00<br />무료</ProgramText>
-                </ProgramCard>
-              </ProgramGrid>
-            </ProgramSection>
+        {/* 식물원 이야기 */}
+        <PlantStorySection>
+          <PlantStoryImageHalf>
+            <PlantStoryVideo autoPlay loop muted playsInline>
+              <source src="/videos/다육식물.mp4" type="video/mp4" />
+            </PlantStoryVideo>
+          </PlantStoryImageHalf>
+          <PlantStoryContentHalf>
+            <PlantStoryLabel>Plant Story</PlantStoryLabel>
+            <PlantStoryTitle>다육식물</PlantStoryTitle>
+            <PlantStoryDescription>
+              다육식물이란 줄기나 잎에 수분을 저장할 수 있도록 적응된 식물로 138종의 선인장과
+              <br />
+              기타 식물들을 관람할 수 있습니다.
+            </PlantStoryDescription>
+          </PlantStoryContentHalf>
+        </PlantStorySection>
 
-            <VisitInfoSection>
-              <VisitInfoTitle>이용 안내</VisitInfoTitle>
-              <VisitInfoGrid>
-                <VisitInfoCard>
-                  <VisitInfoIcon>🎫</VisitInfoIcon>
-                  <VisitInfoCardTitle>입장료</VisitInfoCardTitle>
-                  <VisitInfoText>성인 3,000원<br />청소년 2,000원<br />어린이 1,000원</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>🕒</VisitInfoIcon>
-                  <VisitInfoCardTitle>운영시간</VisitInfoCardTitle>
-                  <VisitInfoText>매일 09:00 - 18:00<br />마지막 입장 17:30<br />연중무휴</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>📸</VisitInfoIcon>
-                  <VisitInfoCardTitle>사진 촬영</VisitInfoCardTitle>
-                  <VisitInfoText>촬영 가능<br />플래시 사용 금지<br />삼각대 사용 불가</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>⚠️</VisitInfoIcon>
-                  <VisitInfoCardTitle>주의사항</VisitInfoCardTitle>
-                  <VisitInfoText>식물 만지지 마세요<br />음식물 반입 금지<br />애완동물 출입 불가</VisitInfoText>
-                </VisitInfoCard>
-              </VisitInfoGrid>
-            </VisitInfoSection>
-          </Container>
-        </ContentSection>
+        <PlantStorySection>
+          <PlantStoryImageHalf>
+            <PlantStoryVideo autoPlay loop muted playsInline>
+              <source src="/videos/관엽식물.mp4" type="video/mp4" />
+            </PlantStoryVideo>
+          </PlantStoryImageHalf>
+          <PlantStoryContentHalf>
+            <PlantStoryTitle>관엽식물</PlantStoryTitle>
+            <PlantStoryDescription>
+              관엽식물이란 잎의 색깔 또는 형태의 아름다움을 관상하는 식물로 160여종의 살아 숨쉬는 식물을
+              <br />
+              새소리를 들으며 이국적인 분위기를 감상할 수 있습니다.
+            </PlantStoryDescription>
+          </PlantStoryContentHalf>
+        </PlantStorySection>
+
+        <PlantStorySection>
+          <PlantStoryImageHalf>
+            <PlantStoryVideo autoPlay loop muted playsInline>
+              <source src="/videos/분재식물.mp4" type="video/mp4" />
+            </PlantStoryVideo>
+          </PlantStoryImageHalf>
+          <PlantStoryContentHalf>
+            <PlantStoryTitle>분재</PlantStoryTitle>
+            <PlantStoryDescription>
+              분재란 화분에 심은 나무의 가지와 줄기를 다듬어 노수목의 축소판으로 총 49종의 분재가 형태별로
+              <br />
+              전시되어 있으며 100년 이상 오래되어 세월의 흔적을 느낄 수 있는 분재작품도 감상하실 수 있습니다.
+            </PlantStoryDescription>
+          </PlantStoryContentHalf>
+        </PlantStorySection>
+
+        <PlantStorySection>
+          <PlantStoryImageHalf>
+            <PlantStoryVideo autoPlay loop muted playsInline>
+              <source src="/videos/야생화.mp4" type="video/mp4" />
+            </PlantStoryVideo>
+          </PlantStoryImageHalf>
+          <PlantStoryContentHalf>
+            <PlantStoryTitle>야생화</PlantStoryTitle>
+            <PlantStoryDescription>
+              총 66종의 야생화가 계절별로 전시되어 있어 관람로를 따라 들에 핀 꽃과 풀을 감상하세요.
+              <br />
+              할미꽃, 수선화, 나리 등 야생화에 담겨져 있는 이야기를 알아 볼까요?
+            </PlantStoryDescription>
+          </PlantStoryContentHalf>
+        </PlantStorySection>
       </PageContainer>
       <Footer />
     </>
@@ -208,25 +249,23 @@ const IndoorGarden = () => {
 
 const PageContainer = styled.div`
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors.neutral.white};
+  background: #FAFAFA;
+  overflow-x: hidden;
 `
 
 const HeroSection = styled.section`
   position: relative;
-  height: 400px;
-  background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+  height: 500px;
+  background-image: url('/images/실내정원.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('/images/park-map-3d.png') center/cover;
-    opacity: 0.2;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 400px;
   }
 `
 
@@ -369,10 +408,14 @@ const DropdownItem = styled(Link)`
 `
 
 const PageTitle = styled.h1`
-  font-size: 52px;
+  font-size: 64px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.md};
-  letter-spacing: -1px;
+  letter-spacing: -2px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 52px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 40px;
@@ -380,257 +423,561 @@ const PageTitle = styled.h1`
 `
 
 const PageSubtitle = styled.p`
-  font-size: 22px;
+  font-size: 20px;
   opacity: 0.95;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
+`
+
+const MainContent = styled.div`
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: ${({ theme }) => `${theme.spacing.xxxl} ${theme.spacing.xl}`};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => `${theme.spacing.xxl} ${theme.spacing.md}`};
+  }
+`
+
+const IntroSection = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: ${({ theme }) => theme.spacing.xxxl};
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  padding-bottom: ${({ theme }) => theme.spacing.xxl};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.xl};
+  }
+`
+
+const IntroLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const IntroYear = styled.p`
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.neutral.midGray};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
 `
 
-const ContentSection = styled.section`
-  padding: ${({ theme }) => `${theme.spacing.xxxl} 0`};
-`
-
-const Container = styled.div`
-  max-width: ${({ theme }) => theme.container.maxWidth};
-  margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 0 ${({ theme }) => theme.spacing.md};
-  }
-`
-
-const IntroBox = styled.div`
-  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(168, 230, 207, 0.1));
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  padding: ${({ theme }) => theme.spacing.xxl};
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
-  border: 2px solid ${({ theme }) => theme.colors.primary.lightGreen};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const IntroTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
+const IntroMainText = styled.h2`
+  font-size: 36px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.primary.green};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  line-height: 1.4;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 28px;
+  }
 `
 
-const IntroText = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
+const IntroRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
+`
+
+const IntroDescription = styled.p`
+  font-size: 16px;
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
 `
 
-const GardenGrid = styled.div`
+const IntroStats = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: ${({ theme }) => theme.spacing.xl};
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
+  margin-top: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.lg};
+    gap: ${({ theme }) => theme.spacing.md};
   }
 `
 
-const GardenCard = styled.article`
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-  transition: all 0.3s ease;
+const IntroStatItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
 
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: ${({ theme }) => theme.shadows.large};
+const IntroStatValue = styled.p`
+  font-size: 32px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary.green};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 24px;
   }
 `
 
-const CardImage = styled.div`
+const IntroStatLabel = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.neutral.midGray};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+`
+
+const ZonesShowcase = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
   width: 100%;
-  height: 250px;
-  overflow: hidden;
-  background: ${({ theme }) => theme.colors.neutral.lightGray};
+  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
+`
 
-  img {
+const ZonesOverlay = styled.div`
+  text-align: left;
+`
+
+const ZonesTitle = styled.h2`
+  font-size: 20px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  letter-spacing: 1px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
+`
+
+const ZonesSubtitle = styled.h3`
+  font-size: 42px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  letter-spacing: -1px;
+  line-height: 1.2;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 36px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 28px;
+  }
+`
+
+const ZonesGrid = styled.div`
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 500px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 4px;
+    height: 400px;
+  }
+`
+
+const ZoneImageCard = styled.div`
+  position: relative;
+  overflow: hidden;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  ${({ $position }) => {
+    switch ($position) {
+      case 'top-left':
+        return 'grid-column: 1 / 3; grid-row: 1;'
+      case 'top-center':
+        return 'grid-column: 3 / 5; grid-row: 1;'
+      case 'top-right':
+        return 'grid-column: 5 / 7; grid-row: 1;'
+      case 'bottom-left':
+        return 'grid-column: 1 / 3; grid-row: 2;'
+      case 'bottom-center':
+        return 'grid-column: 3 / 5; grid-row: 2;'
+      case 'bottom-right':
+        return 'grid-column: 5 / 7; grid-row: 2;'
+      default:
+        return ''
+    }
+  }}
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
   }
 
-  ${GardenCard}:hover & img {
+  &:hover::after {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`
+
+const ZoneLabel = styled.div`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spacing.lg};
+  left: ${({ theme }) => theme.spacing.lg};
+  color: white;
+  font-size: 20px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  z-index: 5;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  ${ZoneImageCard}:hover & {
+    transform: translateY(-4px);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 16px;
+    bottom: ${({ theme }) => theme.spacing.md};
+    left: ${({ theme }) => theme.spacing.md};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 14px;
+    bottom: ${({ theme }) => theme.spacing.sm};
+    left: ${({ theme }) => theme.spacing.sm};
+  }
+`
+
+const ZoneCardImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+
+  ${ZoneImageCard}:hover & {
     transform: scale(1.1);
   }
 `
 
-const CardContent = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
-`
 
-const CardTag = styled.span`
-  display: inline-block;
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
-  background: ${({ theme }) => theme.colors.primary.lightGreen};
-  color: ${({ theme }) => theme.colors.primary.darkGreen};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const CardTitle = styled.h3`
-  font-size: 22px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const CardDescription = styled.p`
-  font-size: 16px;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`
-
-const CardInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding-top: ${({ theme }) => theme.spacing.md};
-  border-top: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
-`
-
-const InfoItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-`
-
-const InfoIcon = styled.span`
-  font-size: 18px;
-`
-
-const InfoText = styled.span`
-  font-size: 15px;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const ProgramSection = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
-`
-
-const ProgramTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const ProgramGrid = styled.div`
+const PlantStorySection = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: ${({ theme }) => theme.spacing.lg};
+  grid-template-columns: 1fr 1fr;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
+  height: 45vh;
+  min-height: 400px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: auto;
+  }
+`
+
+const PlantStoryImageHalf = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 400px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
+    height: 300px;
   }
 `
 
-const ProgramCard = styled.div`
-  background: white;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  text-align: center;
-  transition: all 0.3s ease;
-  border: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
+const PlantStoryImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
-    border-color: ${({ theme }) => theme.colors.primary.green};
+const PlantStoryVideo = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`
+
+const PlantStoryContentHalf = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 10% 0 ${({ theme }) => theme.spacing.xxxl};
+  background: #fff;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.lg}`};
   }
 `
 
-const ProgramIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+const PlantStoryLabel = styled.p`
+  font-size: 13px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 13px;
+  }
 `
 
-const ProgramCardTitle = styled.h3`
-  font-size: 20px;
+const PlantStoryTitle = styled.h2`
+  font-size: 44px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  line-height: 1.3;
+  letter-spacing: -1px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 38px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 32px;
+  }
 `
 
-const ProgramText = styled.p`
+const PlantStoryDescription = styled.p`
   font-size: 16px;
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 15px;
+  }
 `
 
-const VisitInfoSection = styled.div`
-  background: ${({ theme }) => theme.colors.neutral.lightGray};
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`
+
+const Modal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  background: white;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
+  overflow: hidden;
+  z-index: 100001;
+  box-shadow: ${({ theme }) => theme.shadows.large};
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    max-height: 95vh;
+  }
+`
+
+const ModalCloseButton = styled.button`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing.lg};
+  right: ${({ theme }) => theme.spacing.lg};
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  z-index: 10;
+  box-shadow: ${({ theme }) => theme.shadows.medium};
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary.green};
+    color: white;
+    transform: rotate(90deg);
+  }
+`
+
+const ModalImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: scaleIn 0.5s ease-out both;
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 300px;
+  }
+`
+
+const ModalContent = styled.div`
   padding: ${({ theme }) => theme.spacing.xxl};
+  overflow-y: auto;
+  animation: slideIn 0.5s ease-out 0.2s both;
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing.lg};
   }
 `
 
-const VisitInfoTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
+const ModalTitle = styled.h2`
+  font-size: 32px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
+  color: ${({ theme }) => theme.colors.primary.green};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  animation: fadeInUp 0.6s ease-out 0.3s both;
 
-const VisitInfoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: ${({ theme }) => theme.spacing.lg};
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
+    font-size: 24px;
   }
 `
 
-const VisitInfoCard = styled.div`
-  background: white;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
-  }
-`
-
-const VisitInfoIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const VisitInfoCardTitle = styled.h3`
-  font-size: 20px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const VisitInfoText = styled.p`
+const ModalDescription = styled.p`
   font-size: 16px;
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`
+
+const ModalSection = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  animation: fadeInUp 0.6s ease-out 0.5s both;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`
+
+const ModalSectionTitle = styled.h3`
+  font-size: 18px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+`
+
+const ModalFeatureList = styled.ul`
+  list-style: none;
+  padding: 0;
+`
+
+const ModalFeatureItem = styled.li`
+  font-size: 15px;
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  line-height: 1.8;
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
 `
 
 export default IndoorGarden

@@ -7,8 +7,6 @@ import AnimalFriends from './pages/AnimalFriends'
 import IndoorGarden from './pages/IndoorGarden'
 import OutdoorGarden from './pages/OutdoorGarden'
 import AdventureZone from './pages/AdventureZone'
-import PlayGround from './pages/PlayGround'
-import FestivalGuide from './pages/FestivalGuide'
 import TicketPurchase from './pages/TicketPurchase'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
@@ -45,8 +43,6 @@ function App() {
           <Route path="/indoor-garden" element={<IndoorGarden />} />
           <Route path="/outdoor-garden" element={<OutdoorGarden />} />
           <Route path="/adventure-zone" element={<AdventureZone />} />
-          <Route path="/playground" element={<PlayGround />} />
-          <Route path="/festival-guide" element={<FestivalGuide />} />
           <Route path="/tickets" element={<TicketPurchase />} />
           <Route path="/guide" element={<Guide />} />
           <Route path="/login" element={<Login />} />

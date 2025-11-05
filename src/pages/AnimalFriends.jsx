@@ -19,7 +19,7 @@ const AnimalFriends = () => {
       id: 1,
       name: '유라시아수달',
       category: '포유류',
-      image: '/images/otter.jpg',
+      image: '/images/close-up-otter-wild.jpg',
       scientificName: 'Lutra lutra',
       habitat: '아시아, 북아프리카',
       diet: '육식성',
@@ -33,7 +33,7 @@ const AnimalFriends = () => {
       id: 2,
       name: '바위너구리',
       category: '포유류',
-      image: '/images/rock-hyrax.jpg',
+      image: '/images/바위너구리.jpg',
       scientificName: 'Procavia capensis',
       habitat: '사하라사막 이남 아프리카',
       diet: '초식성',
@@ -47,7 +47,7 @@ const AnimalFriends = () => {
       id: 3,
       name: '코먼마모셋',
       category: '포유류',
-      image: '/images/marmoset.jpg',
+      image: '/images/코먼마모셋.jpg',
       scientificName: 'Callithrix jacchus',
       habitat: '브라질 중동부',
       diet: '잡식성',
@@ -61,7 +61,7 @@ const AnimalFriends = () => {
       id: 4,
       name: '알락꼬리여우원숭이',
       category: '포유류',
-      image: '/images/lemur.jpg',
+      image: '/images/알락꼬리여우원숭이.jpg',
       scientificName: 'Lemur catta',
       habitat: '마다가스카르섬 남부',
       diet: '잡식성',
@@ -75,7 +75,7 @@ const AnimalFriends = () => {
       id: 5,
       name: '트리포큐파인',
       category: '포유류',
-      image: '/images/porcupine.jpg',
+      image: '/images/트리포큐파인.jpg',
       scientificName: 'Coendou prehensilis',
       habitat: '남아메리카',
       diet: '초식성',
@@ -89,7 +89,7 @@ const AnimalFriends = () => {
       id: 6,
       name: '벌거숭이두더지쥐',
       category: '포유류',
-      image: '/images/naked-mole-rat.jpg',
+      image: '/images/벌거숭이두더지쥐.png',
       scientificName: 'Heterocephalus glaber',
       habitat: '동아프리카',
       diet: '초식성',
@@ -103,7 +103,7 @@ const AnimalFriends = () => {
       id: 7,
       name: '검은등자칼',
       category: '포유류',
-      image: '/images/jackal.jpg',
+      image: '/images/검은등자칼.jpg',
       scientificName: 'Canis mesomelas',
       habitat: '아프리카 동남부',
       diet: '육식성',
@@ -117,7 +117,7 @@ const AnimalFriends = () => {
       id: 8,
       name: '스라소니',
       category: '포유류',
-      image: '/images/lynx.jpg',
+      image: '/images/스라소니.jpg',
       scientificName: 'Lynx lynx',
       habitat: '유럽과 유라시아',
       diet: '육식성',
@@ -131,7 +131,7 @@ const AnimalFriends = () => {
       id: 9,
       name: '붉은여우',
       category: '포유류',
-      image: '/images/fox.jpg',
+      image: '/images/붉은 여우.jpg',
       scientificName: 'Vulpes vulpes peculiosa',
       habitat: '유라시아 북부, 북아메리카',
       diet: '잡식성',
@@ -145,7 +145,7 @@ const AnimalFriends = () => {
       id: 10,
       name: '왈라루',
       category: '포유류',
-      image: '/images/wallaroo.jpg',
+      image: '/images/왈랄루.jpg',
       scientificName: 'Macropus robustus',
       habitat: '오스트레일리아',
       diet: '초식성',
@@ -159,7 +159,7 @@ const AnimalFriends = () => {
       id: 11,
       name: '미니말',
       category: '포유류',
-      image: '/images/miniature-horse.jpg',
+      image: '/images/미니말.jpg',
       scientificName: 'Equus ferus caballus',
       habitat: '미국, 유럽',
       diet: '초식성',
@@ -173,7 +173,7 @@ const AnimalFriends = () => {
       id: 12,
       name: '은색기번',
       category: '포유류',
-      image: '/images/silvery-gibbon.jpg',
+      image: '/images/은색기번.jpg',
       scientificName: 'Hylobates moloch',
       habitat: '동남아시아 자바섬',
       diet: '잡식성',
@@ -565,7 +565,7 @@ const AnimalFriends = () => {
       id: 40,
       name: '쇠재두루미',
       category: '조류',
-      image: '/images/demoiselle-crane.jpg',
+      image: '/images/쇠재두루미.jpg',
       scientificName: 'Anthropoides virgo',
       habitat: '중앙아시아, 동북아시아',
       diet: '잡식성',
@@ -579,7 +579,7 @@ const AnimalFriends = () => {
       id: 41,
       name: '분홍펠리컨',
       category: '조류',
-      image: '/images/great-white-pelican.jpg',
+      image: '/images/분홍펠리컨.jpg',
       scientificName: 'Pelecanus onocrotalus',
       habitat: '유럽, 아시아, 아프리카',
       diet: '육식성',
@@ -593,7 +593,7 @@ const AnimalFriends = () => {
       id: 42,
       name: '두루미',
       category: '조류',
-      image: '/images/red-crowned-crane.jpg',
+      image: '/images/두루미.jpg',
       scientificName: 'Grus japonensis',
       habitat: '한국, 일본, 중국, 시베리아',
       diet: '잡식성',
@@ -607,7 +607,7 @@ const AnimalFriends = () => {
       id: 43,
       name: '왜가리',
       category: '조류',
-      image: '/images/grey-heron.jpg',
+      image: '/images/왜가리.jpg',
       scientificName: 'Ardea cinerea',
       habitat: '유라시아대륙, 아프리카대륙',
       diet: '육식성',
@@ -621,7 +621,7 @@ const AnimalFriends = () => {
       id: 44,
       name: '자카스펭귄',
       category: '조류',
-      image: '/images/jackass-penguin.jpg',
+      image: '/images/자카스펭귄.jpg',
       scientificName: 'Spheniscus demersus',
       habitat: '남아프리카 해안',
       diet: '육식성',
@@ -635,7 +635,7 @@ const AnimalFriends = () => {
       id: 45,
       name: '해오라기',
       category: '조류',
-      image: '/images/night-heron.jpg',
+      image: '/images/해오라기.jpg',
       scientificName: 'Nycticorax nycticorax',
       habitat: '유라시아대륙, 한국, 일본',
       diet: '육식성',
@@ -649,7 +649,7 @@ const AnimalFriends = () => {
       id: 46,
       name: '홍부리황새',
       category: '조류',
-      image: '/images/white-stork.jpg',
+      image: '/images/홍부리황새.jpg',
       scientificName: 'Ciconia ciconia',
       habitat: '유럽, 아프리카',
       diet: '육식성',
@@ -663,7 +663,7 @@ const AnimalFriends = () => {
       id: 47,
       name: '흑따오기',
       category: '조류',
-      image: '/images/black-headed-ibis.jpg',
+      image: '/images/흑따오기.jpg',
       scientificName: 'Threskiornis melanocephalus',
       habitat: '인도, 동남아시아',
       diet: '육식성',
@@ -677,7 +677,7 @@ const AnimalFriends = () => {
       id: 48,
       name: '레오파드게코',
       category: '파충류·양서류',
-      image: '/images/leopard-gecko.jpg',
+      image: '/images/레오파드게코.jpg',
       scientificName: 'Eublepharis macularius',
       habitat: '남아시아',
       diet: '육식성',
@@ -691,7 +691,7 @@ const AnimalFriends = () => {
       id: 49,
       name: '블루텅스킨크',
       category: '파충류·양서류',
-      image: '/images/blue-tongued-skink.jpg',
+      image: '/images/블루텅스킨크.jpg',
       scientificName: 'Tiliqua scincoides',
       habitat: '오스트레일리아',
       diet: '잡식성',
@@ -705,7 +705,7 @@ const AnimalFriends = () => {
       id: 50,
       name: '콘스네이크',
       category: '파충류·양서류',
-      image: '/images/corn-snake.jpg',
+      image: '/images/콘스네이크.jpg',
       scientificName: 'Elaphe guttata',
       habitat: '북아메리카',
       diet: '육식성',
@@ -719,7 +719,7 @@ const AnimalFriends = () => {
       id: 51,
       name: '볼파이톤',
       category: '파충류·양서류',
-      image: '/images/ball-python.jpg',
+      image: '/images/볼파이톤.jpg',
       scientificName: 'Python regius',
       habitat: '중서부 아프리카',
       diet: '육식성',
@@ -733,7 +733,7 @@ const AnimalFriends = () => {
       id: 52,
       name: '뱀목거북',
       category: '파충류·양서류',
-      image: '/images/snake-necked-turtle.jpg',
+      image: '/images/뱀목거북.jpg',
       scientificName: 'Chelodina longicollis',
       habitat: '오스트레일리아, 뉴기니 남부',
       diet: '육식성',
@@ -747,7 +747,7 @@ const AnimalFriends = () => {
       id: 53,
       name: '팬케이크거북',
       category: '파충류·양서류',
-      image: '/images/pancake-tortoise.jpg',
+      image: '/images/팬케이크거북.jpg',
       scientificName: 'Malacochersus tornieri',
       habitat: '동아프리카',
       diet: '초식성',
@@ -761,7 +761,7 @@ const AnimalFriends = () => {
       id: 54,
       name: '레오파드거북',
       category: '파충류·양서류',
-      image: '/images/leopard-tortoise.jpg',
+      image: '/images/레오파드거북.jpg',
       scientificName: 'Stigmochelys pardalis',
       habitat: '수단, 남아프리카 사바나',
       diet: '초식성',
@@ -789,7 +789,6 @@ const AnimalFriends = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -820,7 +819,6 @@ const AnimalFriends = () => {
               </BreadcrumbDropdown>
             </Breadcrumb>
             <PageTitle>애니멀 프렌즈</PageTitle>
-            <PageSubtitle>동물 현황</PageSubtitle>
           </HeroContent>
         </HeroSection>
 
@@ -1310,6 +1308,7 @@ const AnimalCardImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 60% center;
   transition: transform 0.5s ease;
 
   ${AnimalCard}:hover & {
@@ -1448,6 +1447,7 @@ const ModalImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 70% center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     height: 300px;

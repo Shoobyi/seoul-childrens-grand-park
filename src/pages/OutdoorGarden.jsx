@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../components/common/Header'
@@ -6,6 +6,84 @@ import Footer from '../components/common/Footer'
 
 const OutdoorGarden = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const scrollContainerRef = useRef(null)
+  const videoRef = useRef(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [selectedImage, setSelectedImage] = useState(null)
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true)
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft)
+    setScrollLeft(scrollContainerRef.current.scrollLeft)
+  }
+
+  const handleMouseLeave = () => {
+    setIsDragging(false)
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return
+    e.preventDefault()
+    const x = e.pageX - scrollContainerRef.current.offsetLeft
+    const walk = (x - startX) * 2
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  const handleImageClick = (imageSrc) => {
+    if (!isDragging) {
+      setSelectedImage(imageSrc)
+    }
+  }
+
+  const zones = [
+    {
+      id: 'ecological-pond',
+      name: '생태 연못',
+      image: '/images/해오라기.jpg',
+      description: '5,100㎡ 면적의 친환경 습지로, 물의 유입에 따라 변화하는 생태계를 관찰할 수 있습니다. 갯버들, 물옥잠 등 한국 습지 자생식물 18종 43,315본이 식재되어 있으며, 나비, 개구리 등 다양한 생물의 서식처를 제공합니다.',
+      features: ['5,100㎡ 친환경 습지', '18종의 한국 습지 자생식물', '다양한 생물 서식처 (나비, 개구리, 새 등)'],
+      video: '/videos/생태연못.mp4',
+      images: [
+        '/images/생태환경1 (1).jpeg',
+        '/images/생태환경1 (2).jpeg',
+        '/images/생태환경1 (3).jpeg',
+        '/images/생태환경1 (4).jpeg'
+      ]
+    },
+    {
+      id: 'environmental-pond',
+      name: '환경 연못',
+      image: '/images/watercase.png',
+      description: '정문 부근에 위치한 4,655㎡ 면적의 연못으로, 약 4만 본의 수생 식물이 식재되어 있습니다. 철새, 물고기, 곤충들의 서식처이며, 한여름에는 부여군에서 가져온 1,500본의 붉은 연꽃이 아름다움을 뽐냅니다.',
+      features: ['4,655㎡ 면적', '약 4만 본의 수생 식물', '붉은 연꽃 군락 (여름)'],
+      video: '/videos/환경연못.mp4',
+      images: [
+        '/images/환경연못 (1).jpeg',
+        '/images/환경연못 (2).jpeg',
+        '/images/환경연못 (3).jpeg'
+      ]
+    }
+  ]
+
+  const [displayedStory, setDisplayedStory] = useState(zones[0]);
+
+  const handleZoneChange = (zone) => {
+    setDisplayedStory(zone)
+    setSelectedImage(null)
+  }
+
+  useEffect(() => {
+    if (videoRef.current && !selectedImage) {
+      videoRef.current.load()
+      videoRef.current.play()
+    }
+  }, [displayedStory, selectedImage])
 
   return (
     <>
@@ -35,171 +113,96 @@ const OutdoorGarden = () => {
               </BreadcrumbDropdown>
             </Breadcrumb>
             <PageTitle>아웃도어 가든</PageTitle>
-            <PageSubtitle>자연과 하나되는 야외 정원</PageSubtitle>
           </HeroContent>
         </HeroSection>
 
-        <ContentSection>
-          <Container>
-            <IntroBox>
-              <IntroTitle>아웃도어 가든이란?</IntroTitle>
-              <IntroText>
-                서울어린이대공원의 아웃도어 가든은 푸른 하늘 아래 펼쳐진 아름다운 야외 정원입니다.
-                사계절의 변화를 온몸으로 느끼며 자연과 교감할 수 있는 특별한 공간에서 힐링의 시간을 가져보세요.
-              </IntroText>
-            </IntroBox>
+        <MainContent>
+          {/* 소개 및 시설 정보 */}
+          <IntroSection>
+            <IntroLeft>
+              <IntroYear>자연 속 힐링 공간</IntroYear>
+              <IntroMainText>자연과 생명이 살아 숨쉬는<br/>생태 연못과 환경 연못</IntroMainText>
+            </IntroLeft>
+            <IntroRight>
+              <IntroDescription>
+                서울어린이대공원 아웃도어 가든은 자연과 교감하며 힐링할 수 있는 아름다운 야외 공간입니다.
+                생태 연못과 환경 연못은 다양한 수생 식물과 야생 동물이 서식하며 자연의 신비로움을 선사합니다.
+                도심 속에서 자연의 여유를 만끽하며 특별한 추억을 만들어보세요.
+              </IntroDescription>
+              <IntroStats>
+                <IntroStatItem>
+                  <IntroStatValue>9,755㎡</IntroStatValue>
+                  <IntroStatLabel>총 연못 면적</IntroStatLabel>
+                </IntroStatItem>
+                <IntroStatItem>
+                  <IntroStatValue>2개</IntroStatValue>
+                  <IntroStatLabel>테마 구역</IntroStatLabel>
+                </IntroStatItem>
+              </IntroStats>
+            </IntroRight>
+          </IntroSection>
 
-            <GardenGrid>
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="사계절 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>사계절</CardTag>
-                  <CardTitle>사계절 정원</CardTitle>
-                  <CardDescription>
-                    봄의 벚꽃, 여름의 수국, 가을의 단풍, 겨울의 동백까지.
-                    계절마다 다른 아름다움을 선사하는 정원에서 사계절의 변화를 만끽하세요.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌸</InfoIcon>
-                      <InfoText>300여 종의 계절 식물</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>📅</InfoIcon>
-                      <InfoText>계절별 특별 전시</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+          {/* 2개 테마 구역 소개 */}
+          <ZonesShowcase>
+            <ZonesOverlay>
+              <ZonesTitle>2가지 테마로 구성된</ZonesTitle>
+              <ZonesSubtitle>야외정원 구역 안내</ZonesSubtitle>
+            </ZonesOverlay>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="장미 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>향기</CardTag>
-                  <CardTitle>장미 정원</CardTitle>
-                  <CardDescription>
-                    다양한 색과 향기의 장미들이 만개하는 아름다운 정원.
-                    5월부터 10월까지 형형색색의 장미들이 방문객들을 환영합니다.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌹</InfoIcon>
-                      <InfoText>150여 종의 장미</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>📸</InfoIcon>
-                      <InfoText>인생샷 명소</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+            <TypoZoneSelectorContainer>
+              {zones.map((zone) => (
+                <TypoZoneButton
+                  key={zone.id}
+                  $isActive={displayedStory.id === zone.id}
+                  onClick={() => handleZoneChange(zone)}
+                >
+                  {zone.name}
+                </TypoZoneButton>
+              ))}
+            </TypoZoneSelectorContainer>
+          </ZonesShowcase>
+        </MainContent>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="수변 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>힐링</CardTag>
-                  <CardTitle>수변 정원</CardTitle>
-                  <CardDescription>
-                    맑은 연못과 시원한 분수가 어우러진 평화로운 공간.
-                    물소리를 들으며 산책하는 힐링의 시간을 경험하세요.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>💧</InfoIcon>
-                      <InfoText>연못과 분수대</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>🦆</InfoIcon>
-                      <InfoText>수생식물 관찰 가능</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
+        {/* 아웃도어 가든 이야기 */}
+        {displayedStory && (
+          <PlantStorySection>
+            <PlantStoryImageHalf>
+              {selectedImage ? (
+                <PlantStoryImage src={selectedImage} alt="선택된 이미지" />
+              ) : (
+                <PlantStoryVideo ref={videoRef} key={displayedStory.id} autoPlay loop muted playsInline>
+                  <source src={displayedStory.video} type="video/mp4" />
+                </PlantStoryVideo>
+              )}
+            </PlantStoryImageHalf>
 
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="명상의 숲" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>자연</CardTag>
-                  <CardTitle>명상의 숲</CardTitle>
-                  <CardDescription>
-                    울창한 나무 그늘 아래 펼쳐진 고요한 산책로.
-                    새소리와 바람소리를 들으며 자연 속에서 마음의 평화를 찾으세요.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌳</InfoIcon>
-                      <InfoText>100년 이상 된 고목</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>🧘</InfoIcon>
-                      <InfoText>명상 공간 제공</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
-            </GardenGrid>
+            <ImageGridContainer
+              ref={scrollContainerRef}
+              onMouseDown={handleMouseDown}
+              onMouseLeave={handleMouseLeave}
+              onMouseUp={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              $isDragging={isDragging}
+            >
+              {displayedStory.images.map((imageSrc, index) => (
+                <ImageGridItem
+                  key={imageSrc}
+                  src={imageSrc}
+                  alt={`${displayedStory.name} ${index + 1}`}
+                  draggable="false"
+                  onClick={() => handleImageClick(imageSrc)}
+                  $isSelected={selectedImage === imageSrc}
+                />
+              ))}
+            </ImageGridContainer>
 
-            <ProgramSection>
-              <ProgramTitle>체험 프로그램</ProgramTitle>
-              <ProgramGrid>
-                <ProgramCard>
-                  <ProgramIcon>🌻</ProgramIcon>
-                  <ProgramCardTitle>정원 가꾸기 체험</ProgramCardTitle>
-                  <ProgramText>계절 꽃 심고 가꾸기<br />매주 토요일 10:00<br />참가비: 20,000원</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>🚶</ProgramIcon>
-                  <ProgramCardTitle>가든 투어</ProgramCardTitle>
-                  <ProgramText>전문 가이드와 함께하는 투어<br />매일 11:00, 15:00<br />무료 (선착순 20명)</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>🎨</ProgramIcon>
-                  <ProgramCardTitle>야외 스케치</ProgramCardTitle>
-                  <ProgramText>자연을 그리는 시간<br />매주 일요일 14:00<br />참가비: 12,000원</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>🧘</ProgramIcon>
-                  <ProgramCardTitle>가든 요가</ProgramCardTitle>
-                  <ProgramText>자연 속에서 하는 요가<br />매주 수, 금 07:00<br />참가비: 15,000원</ProgramText>
-                </ProgramCard>
-              </ProgramGrid>
-            </ProgramSection>
-
-            <VisitInfoSection>
-              <VisitInfoTitle>이용 안내</VisitInfoTitle>
-              <VisitInfoGrid>
-                <VisitInfoCard>
-                  <VisitInfoIcon>🎫</VisitInfoIcon>
-                  <VisitInfoCardTitle>입장료</VisitInfoCardTitle>
-                  <VisitInfoText>무료<br />(체험 프로그램 별도)</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>🕒</VisitInfoIcon>
-                  <VisitInfoCardTitle>운영시간</VisitInfoCardTitle>
-                  <VisitInfoText>매일 05:00 - 22:00<br />연중무휴</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>📸</VisitInfoIcon>
-                  <VisitInfoCardTitle>사진 촬영</VisitInfoCardTitle>
-                  <VisitInfoText>자유롭게 촬영 가능<br />상업적 촬영 사전 신청</VisitInfoText>
-                </VisitInfoCard>
-                <VisitInfoCard>
-                  <VisitInfoIcon>⚠️</VisitInfoIcon>
-                  <VisitInfoCardTitle>주의사항</VisitInfoCardTitle>
-                  <VisitInfoText>꽃과 나무 훼손 금지<br />쓰레기는 되가져가기<br />지정된 장소에서만 피크닉</VisitInfoText>
-                </VisitInfoCard>
-              </VisitInfoGrid>
-            </VisitInfoSection>
-          </Container>
-        </ContentSection>
+            <PlantStoryContentHalf>
+              <PlantStoryDescription>
+                {displayedStory.description}
+              </PlantStoryDescription>
+            </PlantStoryContentHalf>
+          </PlantStorySection>
+        )}
       </PageContainer>
       <Footer />
     </>
@@ -208,25 +211,23 @@ const OutdoorGarden = () => {
 
 const PageContainer = styled.div`
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors.neutral.white};
+  background: #FAFAFA;
+  overflow-x: hidden;
 `
 
 const HeroSection = styled.section`
   position: relative;
-  height: 400px;
-  background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+  height: 500px;
+  background-image: url('/images/실내정원.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('/images/park-map-3d.png') center/cover;
-    opacity: 0.2;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 400px;
   }
 `
 
@@ -236,7 +237,7 @@ const HeroOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(39, 174, 96, 0.9), rgba(46, 204, 113, 0.9));
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.8), rgba(46, 204, 113, 0.8));
 `
 
 const HeroContent = styled.div`
@@ -257,17 +258,6 @@ const Breadcrumb = styled.nav`
   font-size: 16px;
 `
 
-const BreadcrumbLink = styled.a`
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: white;
-    text-decoration: underline;
-  }
-`
-
 const BreadcrumbRouterLink = styled(Link)`
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
@@ -285,11 +275,6 @@ const BreadcrumbText = styled.span`
 
 const BreadcrumbSeparator = styled.span`
   color: rgba(255, 255, 255, 0.6);
-`
-
-const BreadcrumbCurrent = styled.span`
-  color: white;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
 `
 
 const BreadcrumbDropdown = styled.div`
@@ -369,268 +354,339 @@ const DropdownItem = styled(Link)`
 `
 
 const PageTitle = styled.h1`
-  font-size: 52px;
+  font-size: 64px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.md};
-  letter-spacing: -1px;
+  letter-spacing: -2px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 52px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 40px;
   }
 `
 
-const PageSubtitle = styled.p`
-  font-size: 22px;
-  opacity: 0.95;
+const MainContent = styled.div`
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: ${({ theme }) => `${theme.spacing.xxxl} ${theme.spacing.xl}`};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => `${theme.spacing.xxl} ${theme.spacing.md}`};
+  }
+`
+
+const IntroSection = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: ${({ theme }) => theme.spacing.xxxl};
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  padding-bottom: ${({ theme }) => theme.spacing.xxl};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.xl};
+  }
+`
+
+const IntroLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const IntroYear = styled.p`
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.neutral.midGray};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
 `
 
-const ContentSection = styled.section`
-  padding: ${({ theme }) => `${theme.spacing.xxxl} 0`};
-`
-
-const Container = styled.div`
-  max-width: ${({ theme }) => theme.container.maxWidth};
-  margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
+const IntroMainText = styled.h2`
+  font-size: 36px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  line-height: 1.4;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 28px;
+  }
+`
+
+const IntroRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
+`
+
+const IntroDescription = styled.p`
+  font-size: 16px;
+  line-height: 1.8;
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+`
+
+const IntroStats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: ${({ theme }) => theme.spacing.xl};
+  margin-top: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.md};
+  }
+`
+
+const IntroStatItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const IntroStatValue = styled.p`
+  font-size: 32px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary.green};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 24px;
+  }
+`
+
+const IntroStatLabel = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.neutral.midGray};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+`
+
+const ZonesShowcase = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
+  width: 100%;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+`
+
+const ZonesOverlay = styled.div`
+  text-align: left;
+`
+
+const ZonesTitle = styled.h2`
+  font-size: 20px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  letter-spacing: 1px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
+`
+
+const ZonesSubtitle = styled.h3`
+  font-size: 42px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  letter-spacing: -1px;
+  line-height: 1.2;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 36px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 28px;
+  }
+`
+
+const TypoZoneSelectorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xxxl};
+  padding: ${({ theme }) => theme.spacing.xl} 0;
+`;
+
+const TypoZoneButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.neutral.darkGray : theme.colors.neutral.midGray)};
+  position: relative;
+  padding-bottom: ${({ theme }) => theme.spacing.md};
+  transition: color 0.3s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background-color: ${({ theme }) => theme.colors.primary.green};
+    border-radius: 3px;
+    transform: ${({ $isActive }) => ($isActive ? 'scaleX(1)' : 'scaleX(0)')};
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.neutral.darkGray};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 24px;
+  }
+`;
+
+
+const PlantStorySection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
+  padding-bottom: ${({ theme }) => theme.spacing.xxxl}; /* Add padding to the bottom of the entire section */
+  height: auto;
+  min-height: 400px;
+  background: #FAFAFA; /* Ensure background covers the whole section */
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: auto;
+    min-height: auto;
+  }
+`
+
+const PlantStoryImageHalf = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  height: 45vh;
+  overflow: hidden;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 400px;
+    padding: 0 ${({ theme }) => theme.spacing.xl};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 300px;
     padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `
 
-const IntroBox = styled.div`
-  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(168, 230, 207, 0.1));
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  padding: ${({ theme }) => theme.spacing.xxl};
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
-  border: 2px solid ${({ theme }) => theme.colors.primary.lightGreen};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const IntroTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.primary.green};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`
-
-const IntroText = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  line-height: 1.8;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const GardenGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: ${({ theme }) => theme.spacing.xl};
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const GardenCard = styled.article`
-  background: white;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: ${({ theme }) => theme.shadows.large};
-  }
-`
-
-const CardImage = styled.div`
+const PlantStoryVideo = styled.video`
   width: 100%;
-  height: 250px;
-  overflow: hidden;
-  background: ${({ theme }) => theme.colors.neutral.lightGray};
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  ${GardenCard}:hover & img {
-    transform: scale(1.1);
-  }
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 `
 
-const CardContent = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
+const PlantStoryImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 `
 
-const CardTag = styled.span`
-  display: inline-block;
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
-  background: ${({ theme }) => theme.colors.primary.lightGreen};
-  color: ${({ theme }) => theme.colors.primary.darkGreen};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const CardTitle = styled.h3`
-  font-size: 22px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const CardDescription = styled.p`
-  font-size: 16px;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`
-
-const CardInfo = styled.div`
+const PlantStoryContentHalf = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding-top: ${({ theme }) => theme.spacing.md};
-  border-top: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
-`
-
-const InfoItem = styled.div`
-  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-`
-
-const InfoIcon = styled.span`
-  font-size: 18px;
-`
-
-const InfoText = styled.span`
-  font-size: 15px;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const ProgramSection = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing.xxxl};
-`
-
-const ProgramTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
+  padding: ${({ theme }) => theme.spacing.xxl} 10%;
+  background: #fff;
+  max-width: 1240px;
 
-const ProgramGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: ${({ theme }) => theme.spacing.lg};
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => `${theme.spacing.xxl} ${theme.spacing.xl}`};
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
+    padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.md}`};
   }
 `
 
-const ProgramCard = styled.div`
-  background: white;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  text-align: center;
-  transition: all 0.3s ease;
-  border: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
-    border-color: ${({ theme }) => theme.colors.primary.green};
-  }
-`
 
-const ProgramIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const ProgramCardTitle = styled.h3`
-  font-size: 20px;
+const PlantStoryTitle = styled.h2`
+  font-size: 44px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  line-height: 1.3;
+  letter-spacing: -1px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 38px;
+  }
 `
 
-const ProgramText = styled.p`
+const PlantStoryDescription = styled.p`
   font-size: 16px;
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
 `
 
-const VisitInfoSection = styled.div`
-  background: ${({ theme }) => theme.colors.neutral.lightGray};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  padding: ${({ theme }) => theme.spacing.xxl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const VisitInfoTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.h2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  text-align: center;
+const ImageGridContainer = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing.md};
+  max-width: 1240px;
+  width: 100%;
+  padding: 0 ${({ theme }) => theme.spacing.xl};
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: ${({ $isDragging }) => ($isDragging ? 'grabbing' : 'grab')};
+  user-select: none;
 
-const VisitInfoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: ${({ theme }) => theme.spacing.lg};
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
-`
+`;
 
-const VisitInfoCard = styled.div`
-  background: white;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  text-align: center;
+const ImageGridItem = styled.img`
+  min-width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  box-shadow: ${({ theme }) => theme.shadows.small};
+  flex-shrink: 0;
   transition: all 0.3s ease;
+  user-select: none;
+  cursor: pointer;
+  border: 3px solid ${({ theme, $isSelected }) =>
+    $isSelected ? theme.colors.primary.green : 'transparent'};
+  opacity: ${({ $isSelected }) => ($isSelected ? 1 : 0.8)};
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.medium};
+    opacity: 1;
+    transform: translateY(-2px);
   }
-`
 
-const VisitInfoIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const VisitInfoCardTitle = styled.h3`
-  font-size: 20px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
-
-const VisitInfoText = styled.p`
-  font-size: 16px;
-  line-height: 1.8;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-`
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-width: 250px;
+    height: 180px;
+  }
+`;
 
 export default OutdoorGarden
