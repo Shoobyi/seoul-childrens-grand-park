@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const AmusementParkSection = () => {
+  const navigate = useNavigate()
   return (
     <Section>
       <VideoBg autoPlay loop muted playsInline src="/videos/Children_s_Bumper_Cars_at_Seoul_Park.mp4" />
@@ -15,7 +17,7 @@ const AmusementParkSection = () => {
             <br />
             웃음과 함성이 끊이지 않는 이곳에서 최고의 하루를 만끽하세요.
           </Description>
-          <ViewMoreButton>자세히 보기</ViewMoreButton>
+          <ViewMoreButton onClick={() => navigate('/playground')}>자세히 보기</ViewMoreButton>
         </Content>
       </Container>
     </Section>

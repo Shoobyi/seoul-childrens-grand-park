@@ -85,7 +85,7 @@ const Header = () => {
       path: '#green-garden',
       subMenu: [
         { name: '인도어 가든', path: '/indoor-garden' },
-        { name: '아웃도어 가든', path: '#outdoor-garden' },
+        { name: '아웃도어 가든', path: '/outdoor-garden' },
         { name: '가든 맵 & 가이드', path: '#garden-map' },
       ]
     },
@@ -94,7 +94,7 @@ const Header = () => {
       path: '#play-park',
       subMenu: [
         { name: '어드벤처 존', path: '/adventure-zone' },
-        { name: '플레이 그라운드', path: '#playground' },
+        { name: '플레이 그라운드', path: '/playground' },
         { name: '워터파크', path: '#waterpark' },
       ]
     },
@@ -102,7 +102,7 @@ const Header = () => {
       name: '가든 페스티벌',
       path: '#garden-festival',
       subMenu: [
-        { name: '페스티벌 가이드', path: '#festival-guide' },
+        { name: '페스티벌 가이드', path: '/festival-guide' },
         { name: '페스티벌 뉴스', path: '#festival-news' },
         { name: '이벤트 캘린더', path: '#event-calendar' },
       ]
@@ -118,13 +118,8 @@ const Header = () => {
     },
     {
       name: '이용안내',
-      path: '#guide',
-      subMenu: [
-        { name: '운영 시간', path: '#hours' },
-        { name: '입장료', path: '#admission' },
-        { name: '편의 시설', path: '#facilities' },
-        { name: '이용 규칙', path: '#rules' },
-      ]
+      path: '/guide',
+      subMenu: []
     },
   ]
 
@@ -175,25 +170,38 @@ const Header = () => {
             <SideMenuContent>
               {menuItems.map((item, index) => (
                 <SideMenuItem key={item.name}>
-                  <SideMenuItemTitle
-                    href={item.path}
-                    onClick={() => setActiveMenu(activeMenu === index ? null : index)}
-                  >
-                    {item.name}
-                  </SideMenuItemTitle>
-                  <SideSubMenu $isOpen={activeMenu === index}>
-                    {item.subMenu.map((subItem) => (
-                      subItem.path.startsWith('/') ? (
-                        <SideSubMenuLink key={subItem.name} to={subItem.path} onClick={() => setIsSideMenuOpen(false)}>
-                          {subItem.name}
-                        </SideSubMenuLink>
-                      ) : (
-                        <SideSubMenuItem key={subItem.name} href={subItem.path}>
-                          {subItem.name}
-                        </SideSubMenuItem>
-                      )
-                    ))}
-                  </SideSubMenu>
+                  {item.subMenu.length === 0 && item.path.startsWith('/') ? (
+                    <SideMenuItemLink
+                      to={item.path}
+                      onClick={() => setIsSideMenuOpen(false)}
+                    >
+                      {item.name}
+                    </SideMenuItemLink>
+                  ) : (
+                    <>
+                      <SideMenuItemTitle
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setActiveMenu(activeMenu === index ? null : index)
+                        }}
+                      >
+                        {item.name}
+                      </SideMenuItemTitle>
+                      <SideSubMenu $isOpen={activeMenu === index}>
+                        {item.subMenu.map((subItem) => (
+                          subItem.path.startsWith('/') ? (
+                            <SideSubMenuLink key={subItem.name} to={subItem.path} onClick={() => setIsSideMenuOpen(false)}>
+                              {subItem.name}
+                            </SideSubMenuLink>
+                          ) : (
+                            <SideSubMenuItem key={subItem.name} href={subItem.path}>
+                              {subItem.name}
+                            </SideSubMenuItem>
+                          )
+                        ))}
+                      </SideSubMenu>
+                    </>
+                  )}
                 </SideMenuItem>
               ))}
             </SideMenuContent>
@@ -202,12 +210,12 @@ const Header = () => {
               {isLoggedIn ? (
                 <>
                   <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-                  <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+                  <FooterButtonLink to="/tickets" onClick={() => setIsSideMenuOpen(false)} $primary>입장권 구매</FooterButtonLink>
                 </>
               ) : (
                 <>
                   <FooterButtonLink to="/login" onClick={() => setIsSideMenuOpen(false)}>로그인</FooterButtonLink>
-                  <FooterButton href="#tickets" $primary>입장권 구매</FooterButton>
+                  <FooterButtonLink to="/tickets" onClick={() => setIsSideMenuOpen(false)} $primary>입장권 구매</FooterButtonLink>
                 </>
               )}
             </SideMenuFooter>
@@ -446,7 +454,7 @@ const SideMenuItem = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 `
 
-const SideMenuItemTitle = styled.a`
+const SideMenuItemTitle = styled.div`
   display: block;
   font-size: ${({ theme }) => theme.typography.fontSize.h4};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -454,6 +462,22 @@ const SideMenuItemTitle = styled.a`
   padding: ${({ theme }) => `${theme.spacing.md} 0`};
   transition: all 0.3s ease;
   cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary.green};
+    padding-left: ${({ theme }) => theme.spacing.sm};
+  }
+`
+
+const SideMenuItemLink = styled(Link)`
+  display: block;
+  font-size: ${({ theme }) => theme.typography.fontSize.h4};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  padding: ${({ theme }) => `${theme.spacing.md} 0`};
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary.green};
@@ -538,15 +562,20 @@ const FooterButtonLink = styled(Link)`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   text-align: center;
   transition: all 0.3s ease;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.neutral.darkGray};
-  border: 2px solid ${({ theme }) => theme.colors.neutral.lightGray};
+  background: ${({ $primary, theme }) =>
+    $primary ? theme.colors.primary.green : 'transparent'};
+  color: ${({ $primary, theme }) =>
+    $primary ? 'white' : theme.colors.neutral.darkGray};
+  border: ${({ $primary, theme }) =>
+    $primary ? 'none' : `2px solid ${theme.colors.neutral.lightGray}`};
   text-decoration: none;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
-    background: ${({ theme }) => theme.colors.primary.lightGreen};
+    background: ${({ $primary, theme }) =>
+      $primary ? theme.colors.primary.darkGreen : theme.colors.primary.lightGreen};
+    color: ${({ $primary }) => ($primary ? 'white' : 'inherit')};
   }
 `
 

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../components/common/Header'
 import Footer from '../components/common/Footer'
 
 const AdventureZone = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
   return (
     <>
       <Header />
@@ -15,9 +17,22 @@ const AdventureZone = () => {
             <Breadcrumb>
               <BreadcrumbRouterLink to="/">홈</BreadcrumbRouterLink>
               <BreadcrumbSeparator>/</BreadcrumbSeparator>
-              <BreadcrumbLink href="#play-park">플레이 파크</BreadcrumbLink>
+              <BreadcrumbText>플레이 파크</BreadcrumbText>
               <BreadcrumbSeparator>/</BreadcrumbSeparator>
-              <BreadcrumbCurrent>어드벤처 존</BreadcrumbCurrent>
+              <BreadcrumbDropdown
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+              >
+                <BreadcrumbDropdownButton>
+                  어드벤처 존
+                  <DropdownIcon $isOpen={isDropdownOpen}>▼</DropdownIcon>
+                </BreadcrumbDropdownButton>
+                <DropdownMenu $isOpen={isDropdownOpen}>
+                  <DropdownItem to="/adventure-zone">어드벤처 존</DropdownItem>
+                  <DropdownItem to="/playground">플레이 그라운드</DropdownItem>
+                  <DropdownItem as="a" href="#waterpark">워터파크</DropdownItem>
+                </DropdownMenu>
+              </BreadcrumbDropdown>
             </Breadcrumb>
             <PageTitle>어드벤처 존</PageTitle>
             <PageSubtitle>스릴과 모험이 가득한 놀이 공간</PageSubtitle>
@@ -336,6 +351,10 @@ const BreadcrumbRouterLink = styled(Link)`
   }
 `
 
+const BreadcrumbText = styled.span`
+  color: rgba(255, 255, 255, 0.9);
+`
+
 const BreadcrumbSeparator = styled.span`
   color: rgba(255, 255, 255, 0.6);
 `
@@ -343,6 +362,82 @@ const BreadcrumbSeparator = styled.span`
 const BreadcrumbCurrent = styled.span`
   color: white;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+`
+
+const BreadcrumbDropdown = styled.div`
+  position: relative;
+  display: inline-block;
+`
+
+const BreadcrumbDropdownButton = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+`
+
+const DropdownIcon = styled.span`
+  font-size: 10px;
+  transition: transform 0.3s ease;
+  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+`
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 12px;
+  background: white;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  box-shadow: ${({ theme }) => theme.shadows.large};
+  padding: ${({ theme }) => theme.spacing.sm};
+  min-width: 180px;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  transform: translateX(-50%) ${({ $isOpen }) => ($isOpen ? 'translateY(0)' : 'translateY(-10px)')};
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+  }
+`
+
+const DropdownItem = styled(Link)`
+  display: block;
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  color: ${({ theme }) => theme.colors.neutral.darkGray};
+  text-decoration: none;
+  border-radius: ${({ theme }) => theme.borderRadius.small};
+  transition: all 0.2s ease;
+  font-size: 15px;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary.lightGreen};
+    color: ${({ theme }) => theme.colors.primary.darkGreen};
+  }
 `
 
 const PageTitle = styled.h1`

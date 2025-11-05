@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Header from '../components/common/Header'
 import Footer from '../components/common/Footer'
 
-const IndoorGarden = () => {
+const OutdoorGarden = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
@@ -24,7 +24,7 @@ const IndoorGarden = () => {
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <BreadcrumbDropdownButton>
-                  인도어 가든
+                  아웃도어 가든
                   <DropdownIcon $isOpen={isDropdownOpen}>▼</DropdownIcon>
                 </BreadcrumbDropdownButton>
                 <DropdownMenu $isOpen={isDropdownOpen}>
@@ -34,89 +34,41 @@ const IndoorGarden = () => {
                 </DropdownMenu>
               </BreadcrumbDropdown>
             </Breadcrumb>
-            <PageTitle>인도어 가든</PageTitle>
-            <PageSubtitle>사계절 언제나 푸르른 실내 정원</PageSubtitle>
+            <PageTitle>아웃도어 가든</PageTitle>
+            <PageSubtitle>자연과 하나되는 야외 정원</PageSubtitle>
           </HeroContent>
         </HeroSection>
 
         <ContentSection>
           <Container>
             <IntroBox>
-              <IntroTitle>인도어 가든이란?</IntroTitle>
+              <IntroTitle>아웃도어 가든이란?</IntroTitle>
               <IntroText>
-                서울어린이대공원의 인도어 가든은 날씨에 관계없이 사계절 내내 아름다운 식물들을 감상할 수 있는 특별한 공간입니다.
-                열대 식물부터 선인장, 다육이까지 다양한 식물들이 어우러진 실내 정원에서 자연의 경이로움을 느껴보세요.
+                서울어린이대공원의 아웃도어 가든은 푸른 하늘 아래 펼쳐진 아름다운 야외 정원입니다.
+                사계절의 변화를 온몸으로 느끼며 자연과 교감할 수 있는 특별한 공간에서 힐링의 시간을 가져보세요.
               </IntroText>
             </IntroBox>
 
             <GardenGrid>
               <GardenCard>
                 <CardImage>
-                  <img src="/images/park-map-3d.png" alt="열대 우림관" />
+                  <img src="/images/park-map-3d.png" alt="사계절 정원" />
                 </CardImage>
                 <CardContent>
-                  <CardTag>열대</CardTag>
-                  <CardTitle>열대 우림관</CardTitle>
+                  <CardTag>사계절</CardTag>
+                  <CardTitle>사계절 정원</CardTitle>
                   <CardDescription>
-                    무성한 열대 우림 속으로 들어가보세요. 높은 습도와 따뜻한 온도가 유지되는 공간에서
-                    거대한 야자수, 바나나 나무, 그리고 형형색색의 열대 꽃들을 만날 수 있습니다.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌡️</InfoIcon>
-                      <InfoText>온도: 25-30°C, 습도: 70-80%</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>🌿</InfoIcon>
-                      <InfoText>200여 종의 열대 식물</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
-
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="선인장 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>사막</CardTag>
-                  <CardTitle>선인장 정원</CardTitle>
-                  <CardDescription>
-                    사막의 생존자들을 만나보세요. 다양한 크기와 모양의 선인장과 다육식물들이
-                    독특한 아름다움을 선사합니다. 건조한 환경에 적응한 식물들의 놀라운 생명력을 느껴보세요.
-                  </CardDescription>
-                  <CardInfo>
-                    <InfoItem>
-                      <InfoIcon>🌵</InfoIcon>
-                      <InfoText>150여 종의 선인장</InfoText>
-                    </InfoItem>
-                    <InfoItem>
-                      <InfoIcon>💧</InfoIcon>
-                      <InfoText>건조한 환경 유지</InfoText>
-                    </InfoItem>
-                  </CardInfo>
-                </CardContent>
-              </GardenCard>
-
-              <GardenCard>
-                <CardImage>
-                  <img src="/images/park-map-3d.png" alt="난초 정원" />
-                </CardImage>
-                <CardContent>
-                  <CardTag>고급</CardTag>
-                  <CardTitle>난초 정원</CardTitle>
-                  <CardDescription>
-                    우아한 난초의 세계로 초대합니다. 희귀한 종류의 난초부터 화려한 색상의 난초까지,
-                    세계 각지에서 온 200여 종의 난초를 감상할 수 있습니다.
+                    봄의 벚꽃, 여름의 수국, 가을의 단풍, 겨울의 동백까지.
+                    계절마다 다른 아름다움을 선사하는 정원에서 사계절의 변화를 만끽하세요.
                   </CardDescription>
                   <CardInfo>
                     <InfoItem>
                       <InfoIcon>🌸</InfoIcon>
-                      <InfoText>200여 종의 난초</InfoText>
+                      <InfoText>300여 종의 계절 식물</InfoText>
                     </InfoItem>
                     <InfoItem>
-                      <InfoIcon>⏰</InfoIcon>
-                      <InfoText>최적 관람 시기: 봄</InfoText>
+                      <InfoIcon>📅</InfoIcon>
+                      <InfoText>계절별 특별 전시</InfoText>
                     </InfoItem>
                   </CardInfo>
                 </CardContent>
@@ -124,23 +76,71 @@ const IndoorGarden = () => {
 
               <GardenCard>
                 <CardImage>
-                  <img src="/images/park-map-3d.png" alt="허브 정원" />
+                  <img src="/images/park-map-3d.png" alt="장미 정원" />
                 </CardImage>
                 <CardContent>
                   <CardTag>향기</CardTag>
-                  <CardTitle>허브 정원</CardTitle>
+                  <CardTitle>장미 정원</CardTitle>
                   <CardDescription>
-                    향기로운 허브의 세계를 경험하세요. 라벤더, 로즈마리, 바질 등
-                    다양한 허브 식물들의 향기가 가득한 힐링 공간입니다.
+                    다양한 색과 향기의 장미들이 만개하는 아름다운 정원.
+                    5월부터 10월까지 형형색색의 장미들이 방문객들을 환영합니다.
                   </CardDescription>
                   <CardInfo>
                     <InfoItem>
-                      <InfoIcon>🌿</InfoIcon>
-                      <InfoText>50여 종의 허브</InfoText>
+                      <InfoIcon>🌹</InfoIcon>
+                      <InfoText>150여 종의 장미</InfoText>
                     </InfoItem>
                     <InfoItem>
-                      <InfoIcon>✋</InfoIcon>
-                      <InfoText>터치 가든 체험 가능</InfoText>
+                      <InfoIcon>📸</InfoIcon>
+                      <InfoText>인생샷 명소</InfoText>
+                    </InfoItem>
+                  </CardInfo>
+                </CardContent>
+              </GardenCard>
+
+              <GardenCard>
+                <CardImage>
+                  <img src="/images/park-map-3d.png" alt="수변 정원" />
+                </CardImage>
+                <CardContent>
+                  <CardTag>힐링</CardTag>
+                  <CardTitle>수변 정원</CardTitle>
+                  <CardDescription>
+                    맑은 연못과 시원한 분수가 어우러진 평화로운 공간.
+                    물소리를 들으며 산책하는 힐링의 시간을 경험하세요.
+                  </CardDescription>
+                  <CardInfo>
+                    <InfoItem>
+                      <InfoIcon>💧</InfoIcon>
+                      <InfoText>연못과 분수대</InfoText>
+                    </InfoItem>
+                    <InfoItem>
+                      <InfoIcon>🦆</InfoIcon>
+                      <InfoText>수생식물 관찰 가능</InfoText>
+                    </InfoItem>
+                  </CardInfo>
+                </CardContent>
+              </GardenCard>
+
+              <GardenCard>
+                <CardImage>
+                  <img src="/images/park-map-3d.png" alt="명상의 숲" />
+                </CardImage>
+                <CardContent>
+                  <CardTag>자연</CardTag>
+                  <CardTitle>명상의 숲</CardTitle>
+                  <CardDescription>
+                    울창한 나무 그늘 아래 펼쳐진 고요한 산책로.
+                    새소리와 바람소리를 들으며 자연 속에서 마음의 평화를 찾으세요.
+                  </CardDescription>
+                  <CardInfo>
+                    <InfoItem>
+                      <InfoIcon>🌳</InfoIcon>
+                      <InfoText>100년 이상 된 고목</InfoText>
+                    </InfoItem>
+                    <InfoItem>
+                      <InfoIcon>🧘</InfoIcon>
+                      <InfoText>명상 공간 제공</InfoText>
                     </InfoItem>
                   </CardInfo>
                 </CardContent>
@@ -151,24 +151,24 @@ const IndoorGarden = () => {
               <ProgramTitle>체험 프로그램</ProgramTitle>
               <ProgramGrid>
                 <ProgramCard>
-                  <ProgramIcon>🌱</ProgramIcon>
-                  <ProgramCardTitle>식물 심기 체험</ProgramCardTitle>
-                  <ProgramText>나만의 다육이 화분 만들기<br />매주 토요일 14:00<br />참가비: 15,000원</ProgramText>
+                  <ProgramIcon>🌻</ProgramIcon>
+                  <ProgramCardTitle>정원 가꾸기 체험</ProgramCardTitle>
+                  <ProgramText>계절 꽃 심고 가꾸기<br />매주 토요일 10:00<br />참가비: 20,000원</ProgramText>
+                </ProgramCard>
+                <ProgramCard>
+                  <ProgramIcon>🚶</ProgramIcon>
+                  <ProgramCardTitle>가든 투어</ProgramCardTitle>
+                  <ProgramText>전문 가이드와 함께하는 투어<br />매일 11:00, 15:00<br />무료 (선착순 20명)</ProgramText>
                 </ProgramCard>
                 <ProgramCard>
                   <ProgramIcon>🎨</ProgramIcon>
-                  <ProgramCardTitle>식물 드로잉</ProgramCardTitle>
-                  <ProgramText>식물을 관찰하고 그리기<br />매주 일요일 11:00<br />참가비: 10,000원</ProgramText>
+                  <ProgramCardTitle>야외 스케치</ProgramCardTitle>
+                  <ProgramText>자연을 그리는 시간<br />매주 일요일 14:00<br />참가비: 12,000원</ProgramText>
                 </ProgramCard>
                 <ProgramCard>
-                  <ProgramIcon>👨‍🏫</ProgramIcon>
-                  <ProgramCardTitle>가드너 토크</ProgramCardTitle>
-                  <ProgramText>전문 정원사와의 대화<br />매주 금요일 15:00<br />무료 (선착순 30명)</ProgramText>
-                </ProgramCard>
-                <ProgramCard>
-                  <ProgramIcon>📸</ProgramIcon>
-                  <ProgramCardTitle>가든 포토 투어</ProgramCardTitle>
-                  <ProgramText>인생샷 명소 안내<br />매일 10:00, 14:00<br />무료</ProgramText>
+                  <ProgramIcon>🧘</ProgramIcon>
+                  <ProgramCardTitle>가든 요가</ProgramCardTitle>
+                  <ProgramText>자연 속에서 하는 요가<br />매주 수, 금 07:00<br />참가비: 15,000원</ProgramText>
                 </ProgramCard>
               </ProgramGrid>
             </ProgramSection>
@@ -179,22 +179,22 @@ const IndoorGarden = () => {
                 <VisitInfoCard>
                   <VisitInfoIcon>🎫</VisitInfoIcon>
                   <VisitInfoCardTitle>입장료</VisitInfoCardTitle>
-                  <VisitInfoText>성인 3,000원<br />청소년 2,000원<br />어린이 1,000원</VisitInfoText>
+                  <VisitInfoText>무료<br />(체험 프로그램 별도)</VisitInfoText>
                 </VisitInfoCard>
                 <VisitInfoCard>
                   <VisitInfoIcon>🕒</VisitInfoIcon>
                   <VisitInfoCardTitle>운영시간</VisitInfoCardTitle>
-                  <VisitInfoText>매일 09:00 - 18:00<br />마지막 입장 17:30<br />연중무휴</VisitInfoText>
+                  <VisitInfoText>매일 05:00 - 22:00<br />연중무휴</VisitInfoText>
                 </VisitInfoCard>
                 <VisitInfoCard>
                   <VisitInfoIcon>📸</VisitInfoIcon>
                   <VisitInfoCardTitle>사진 촬영</VisitInfoCardTitle>
-                  <VisitInfoText>촬영 가능<br />플래시 사용 금지<br />삼각대 사용 불가</VisitInfoText>
+                  <VisitInfoText>자유롭게 촬영 가능<br />상업적 촬영 사전 신청</VisitInfoText>
                 </VisitInfoCard>
                 <VisitInfoCard>
                   <VisitInfoIcon>⚠️</VisitInfoIcon>
                   <VisitInfoCardTitle>주의사항</VisitInfoCardTitle>
-                  <VisitInfoText>식물 만지지 마세요<br />음식물 반입 금지<br />애완동물 출입 불가</VisitInfoText>
+                  <VisitInfoText>꽃과 나무 훼손 금지<br />쓰레기는 되가져가기<br />지정된 장소에서만 피크닉</VisitInfoText>
                 </VisitInfoCard>
               </VisitInfoGrid>
             </VisitInfoSection>
@@ -633,4 +633,4 @@ const VisitInfoText = styled.p`
   color: ${({ theme }) => theme.colors.neutral.darkGray};
 `
 
-export default IndoorGarden
+export default OutdoorGarden

@@ -5,16 +5,25 @@ import Home from './pages/Home'
 import SafariStory from './pages/SafariStory'
 import AnimalFriends from './pages/AnimalFriends'
 import IndoorGarden from './pages/IndoorGarden'
+import OutdoorGarden from './pages/OutdoorGarden'
 import AdventureZone from './pages/AdventureZone'
+import PlayGround from './pages/PlayGround'
+import FestivalGuide from './pages/FestivalGuide'
+import TicketPurchase from './pages/TicketPurchase'
+import Guide from './pages/Guide'
 import Login from './pages/Login'
 import MyPage from './pages/MyPage'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
-  const [showLoading, setShowLoading] = useState(true) // 로딩 화면 활성화
+  // 세션 중 한 번만 로딩 화면 표시
+  const [showLoading, setShowLoading] = useState(() => {
+    return !sessionStorage.getItem('hasSeenLoading')
+  })
   const [isSliding, setIsSliding] = useState(false)
 
   const handleLoadingComplete = () => {
+    sessionStorage.setItem('hasSeenLoading', 'true')
     setIsSliding(true)
     setTimeout(() => {
       setShowLoading(false)
@@ -34,7 +43,12 @@ function App() {
           <Route path="/safari-story" element={<SafariStory />} />
           <Route path="/animal-friends" element={<AnimalFriends />} />
           <Route path="/indoor-garden" element={<IndoorGarden />} />
+          <Route path="/outdoor-garden" element={<OutdoorGarden />} />
           <Route path="/adventure-zone" element={<AdventureZone />} />
+          <Route path="/playground" element={<PlayGround />} />
+          <Route path="/festival-guide" element={<FestivalGuide />} />
+          <Route path="/tickets" element={<TicketPurchase />} />
+          <Route path="/guide" element={<Guide />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<MyPage />} />
         </Routes>

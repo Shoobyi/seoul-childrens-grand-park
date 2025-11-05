@@ -78,22 +78,22 @@ const SafariStory = () => {
             <Breadcrumb>
               <BreadcrumbRouterLink to="/">홈</BreadcrumbRouterLink>
               <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbText>어반 사파리</BreadcrumbText>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
               <BreadcrumbDropdown
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <BreadcrumbDropdownButton>
-                  어반 사파리
+                  사파리 스토리
                   <DropdownIcon $isOpen={isDropdownOpen}>▼</DropdownIcon>
                 </BreadcrumbDropdownButton>
                 <DropdownMenu $isOpen={isDropdownOpen}>
                   <DropdownItem to="/safari-story">사파리 스토리</DropdownItem>
-                  <DropdownItem as="a" href="#animal-friends">애니멀 프렌즈</DropdownItem>
+                  <DropdownItem to="/animal-friends">애니멀 프렌즈</DropdownItem>
                   <DropdownItem as="a" href="#safari-map">사파리 맵 & 가이드</DropdownItem>
                 </DropdownMenu>
               </BreadcrumbDropdown>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
-              <BreadcrumbCurrent>사파리 스토리</BreadcrumbCurrent>
             </Breadcrumb>
             <PageTitle>사파리 스토리</PageTitle>
           </HeroContent>
@@ -328,6 +328,10 @@ const BreadcrumbRouterLink = styled(Link)`
     color: white;
     text-decoration: underline;
   }
+`
+
+const BreadcrumbText = styled.span`
+  color: rgba(255, 255, 255, 0.9);
 `
 
 const BreadcrumbSeparator = styled.span`

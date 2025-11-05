@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const BotanicalGardenSection = () => {
+  const navigate = useNavigate()
   const [videoError, setVideoError] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const videoRef = useRef(null)
@@ -52,7 +54,7 @@ const BotanicalGardenSection = () => {
             <br />
             고요한 산책길을 따라 식물들이 전하는 이야기를 들어보세요.
           </Description>
-          <ViewMoreButton>자세히 보기</ViewMoreButton>
+          <ViewMoreButton onClick={() => navigate('/outdoor-garden')}>자세히 보기</ViewMoreButton>
         </Content>
       </Container>
     </Section>

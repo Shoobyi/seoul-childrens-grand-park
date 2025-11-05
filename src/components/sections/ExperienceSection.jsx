@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const ExperienceSection = () => {
+  const navigate = useNavigate()
   const [scrollPosition, setScrollPosition] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [backgroundVideo, setBackgroundVideo] = useState(null)
@@ -320,7 +322,7 @@ const ExperienceSection = () => {
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </NavButton>
-          <ViewMoreButton>더보기</ViewMoreButton>
+          <ViewMoreButton onClick={() => navigate('/garden-festival')}>더보기</ViewMoreButton>
         </NavigationArea>
       </Container>
     </Section>

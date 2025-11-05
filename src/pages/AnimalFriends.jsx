@@ -802,12 +802,14 @@ const AnimalFriends = () => {
             <Breadcrumb>
               <BreadcrumbRouterLink to="/">홈</BreadcrumbRouterLink>
               <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbText>어반 사파리</BreadcrumbText>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
               <BreadcrumbDropdown
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <BreadcrumbDropdownButton>
-                  어반 사파리
+                  애니멀 프렌즈
                   <DropdownIcon $isOpen={isDropdownOpen}>▼</DropdownIcon>
                 </BreadcrumbDropdownButton>
                 <DropdownMenu $isOpen={isDropdownOpen}>
@@ -816,8 +818,6 @@ const AnimalFriends = () => {
                   <DropdownItem as="a" href="#safari-map">사파리 맵 & 가이드</DropdownItem>
                 </DropdownMenu>
               </BreadcrumbDropdown>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
-              <BreadcrumbCurrent>애니멀 프렌즈</BreadcrumbCurrent>
             </Breadcrumb>
             <PageTitle>애니멀 프렌즈</PageTitle>
             <PageSubtitle>동물 현황</PageSubtitle>
@@ -1026,6 +1026,10 @@ const BreadcrumbRouterLink = styled(Link)`
     color: white;
     text-decoration: underline;
   }
+`
+
+const BreadcrumbText = styled.span`
+  color: rgba(255, 255, 255, 0.9);
 `
 
 const BreadcrumbSeparator = styled.span`
