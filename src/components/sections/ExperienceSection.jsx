@@ -77,7 +77,7 @@ const ExperienceSection = () => {
     },
     {
       id: 6,
-      image: '/videos/freepik__a-lively-scene-at-seoul-childrens-grand-park-where__31243.mp4',
+      image: '/videos/파충류생태학습.mp4',
       title: '파충류 생태 학습',
       subtitle: '뱀, 도마뱀과의 만남',
       date: '화,목 11시',
@@ -86,7 +86,7 @@ const ExperienceSection = () => {
     },
     {
       id: 7,
-      image: '/videos/freepik__a-bright-and-realistic-scene-at-seoul-childrens-gr__40243.mp4',
+      image: '/videos/새관찰프로그램.mp4',
       title: '새 관찰 프로그램',
       subtitle: '조류의 생태를 배워요',
       date: '매일 13시',
@@ -95,7 +95,7 @@ const ExperienceSection = () => {
     },
     {
       id: 8,
-      image: '/videos/식물 체험.mp4',
+      image: '/videos/숲속힐링산책.mp4',
       title: '숲속 힐링 산책',
       subtitle: '자연과 함께하는 명상',
       date: '평일 10시',
@@ -104,7 +104,7 @@ const ExperienceSection = () => {
     },
     {
       id: 9,
-      image: '/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4',
+      image: '/videos/곤충탐험대.mp4',
       title: '곤충 탐험대',
       subtitle: '신비한 곤충의 세계',
       date: '토,일 11시',
@@ -113,7 +113,7 @@ const ExperienceSection = () => {
     },
     {
       id: 10,
-      image: '/videos/freepik__cusersformadesktopseoulchildrensgrandpark__40241.mp4',
+      image: '/videos/전통공예체험.mp4',
       title: '전통 공예 체험',
       subtitle: '한국 전통 문화 배우기',
       date: '주말 10시, 14시',
@@ -122,7 +122,7 @@ const ExperienceSection = () => {
     },
     {
       id: 11,
-      image: '/videos/Seoul_Walking_Festival_Video_Generated.mp4',
+      image: '/videos/어린이미술교실.mp4',
       title: '어린이 미술 교실',
       subtitle: '자연을 그려보아요',
       date: '수,금 15시',

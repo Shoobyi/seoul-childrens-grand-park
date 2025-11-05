@@ -17,7 +17,7 @@ const AmusementParkSection = () => {
             <br />
             웃음과 함성이 끊이지 않는 이곳에서 최고의 하루를 만끽하세요.
           </Description>
-          <ViewMoreButton onClick={() => navigate('/playground')}>자세히 보기</ViewMoreButton>
+          <ViewMoreButton onClick={() => navigate('/adventure-zone')}>자세히 보기</ViewMoreButton>
         </Content>
       </Container>
     </Section>
