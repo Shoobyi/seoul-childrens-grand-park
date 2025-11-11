@@ -317,6 +317,10 @@ const Logo = styled(Link)`
     filter: ${({ $isScrolled }) =>
       $isScrolled ? 'none' : 'brightness(0) invert(1)'};
     transition: filter 0.3s ease;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+      height: 40px;
+    }
   }
 `
 
@@ -331,6 +335,12 @@ const MenuToggleButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    width: 24px;
+    height: 24px;
+    gap: 4px;
+  }
 
   span {
     display: block;
@@ -391,6 +401,10 @@ const SideMenuHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral.lightGray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
+  }
 `
 
 const AccountHeaderInfo = styled.div`
@@ -447,6 +461,10 @@ const SideMenuContent = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.xl}`};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
+  }
 `
 
 const SideMenuItem = styled.div`
@@ -466,6 +484,11 @@ const SideMenuItemTitle = styled.div`
     color: ${({ theme }) => theme.colors.primary.green};
     padding-left: ${({ theme }) => theme.spacing.sm};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h4};
+    padding: ${({ theme }) => `${theme.spacing.sm} 0`};
+  }
 `
 
 const SideMenuItemLink = styled(Link)`
@@ -481,6 +504,11 @@ const SideMenuItemLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.colors.primary.green};
     padding-left: ${({ theme }) => theme.spacing.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h4};
+    padding: ${({ theme }) => `${theme.spacing.sm} 0`};
   }
 `
 
@@ -608,8 +636,9 @@ const HeaderActions = styled.div`
   gap: ${({ theme }) => theme.spacing.lg};
   margin-right: -8px;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    display: none;
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    gap: ${({ theme }) => theme.spacing.md};
+    margin-right: 0;
   }
 `
 
@@ -635,6 +664,11 @@ const SearchButton = styled.button`
   svg {
     width: 24px;
     height: 24px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+      width: 20px;
+      height: 20px;
+    }
   }
 `
 
@@ -714,6 +748,11 @@ const AnimalImage = styled.img`
     width: 80px;
     height: 80px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    width: 70px;
+    height: 70px;
+  }
 `
 
 const SpeechBubble = styled.div`
@@ -745,6 +784,12 @@ const SpeechBubble = styled.div`
     font-size: 14px;
     padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
     bottom: -40px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 13px;
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+    bottom: -38px;
   }
 `
 
@@ -784,6 +829,13 @@ const SearchInputWrapper = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.lg}`};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+    gap: ${({ theme }) => theme.spacing.md};
+    border-radius: 40px;
+    margin-top: ${({ theme }) => theme.spacing.xl};
+  }
 `
 
 const SearchInput = styled.input`
@@ -810,6 +862,15 @@ const SearchInput = styled.input`
 
     &::placeholder {
       font-size: 14px;
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    padding: ${({ theme }) => theme.spacing.xs} 0;
+
+    &::placeholder {
+      font-size: 12px;
     }
   }
 `

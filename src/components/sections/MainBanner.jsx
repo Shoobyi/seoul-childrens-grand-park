@@ -149,6 +149,13 @@ const VideoSlide = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+      object-fit: cover;
+      object-position: center 40%;
+      transform: scale(1.2);
+    }
   }
 `
 
@@ -188,6 +195,14 @@ const LeftContent = styled.div`
     left: ${({ theme }) => theme.spacing.md};
     max-width: 80%;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 85%;
+    text-align: center;
+  }
 `
 
 const SmallText = styled.p`
@@ -200,6 +215,12 @@ const SmallText = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 18px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 `
 
@@ -229,6 +250,14 @@ const MainTitle = styled.h1`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 40px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 28px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+    white-space: nowrap;
+  }
 `
 
 const Subtitle = styled.p`
@@ -255,6 +284,14 @@ const Subtitle = styled.p`
     font-size: 18px;
     min-height: 54px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    line-height: 1.4;
+    min-height: auto;
+    margin-top: ${({ theme }) => theme.spacing.sm};
+    white-space: nowrap;
+  }
 `
 
 const SlideIndicators = styled.div`
@@ -272,6 +309,12 @@ const SlideIndicators = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     right: ${({ theme }) => theme.spacing.md};
     bottom: 120px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    right: ${({ theme }) => theme.spacing.md};
+    bottom: 100px;
+    gap: ${({ theme }) => theme.spacing.xs};
   }
 `
 

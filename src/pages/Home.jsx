@@ -126,6 +126,10 @@ const Home = () => {
 const OverlappingSections = styled.main`
   margin-top: -100px;
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    margin-top: -60px;
+  }
 `
 
 const StickyBannerContainer = styled.div`
@@ -143,6 +147,12 @@ const ContentWrapper = styled.div`
   border-top-right-radius: 30px;
   margin-top: -30px;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-top: -20px;
+  }
 `
 
 const StickyMapWrapper = styled.div`

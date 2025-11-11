@@ -13,7 +13,7 @@ const ZooSection = () => {
           <MainTitle>신비로운 동물들의 세상</MainTitle>
           <Description>
             가까이서 교감하는 동물 친구들, 도심 속에서 만나는 특별한 사파리.
-            <br />
+            <DesktopBreak />
             생동감 넘치는 야생의 세계가 여러분을 기다립니다.
           </Description>
           <ViewMoreButton to="/safari-story">자세히 보기</ViewMoreButton>
@@ -29,6 +29,13 @@ const Section = styled.section`
   color: white;
   overflow: hidden;
   clear: both;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    height: 400px;
+    border-radius: ${({ theme }) => theme.borderRadius.large};
+    margin: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
 `
 
 const VideoBg = styled.video`
@@ -71,6 +78,10 @@ const Container = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 ${({ theme }) => theme.spacing.md};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const Content = styled.div`
@@ -86,12 +97,22 @@ const EnglishTitle = styled.p`
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   opacity: 0.9;
   letter-spacing: 2px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
 `
 
 const MainTitle = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize.h2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h2};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const Description = styled.p`
@@ -99,6 +120,18 @@ const Description = styled.p`
   line-height: 1.7;
   margin-bottom: ${({ theme }) => theme.spacing.xl};
   opacity: 0.95;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.body};
+    line-height: 1.6;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
+  }
+`
+
+const DesktopBreak = styled.br`
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    display: none;
+  }
 `
 
 const ViewMoreButton = styled(Link)`
@@ -117,6 +150,11 @@ const ViewMoreButton = styled(Link)`
     background: ${({ theme }) => theme.colors.primary.darkGreen};
     transform: translateY(-3px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xl}`};
+    font-size: ${({ theme }) => theme.typography.mobile.body};
   }
 `
 

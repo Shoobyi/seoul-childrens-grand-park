@@ -39,6 +39,15 @@ const theme = {
       small: '16px',
       tiny: '14px',
     },
+    mobile: {
+      h1: '32px',
+      h2: '28px',
+      h3: '24px',
+      h4: '20px',
+      body: '16px',
+      small: '14px',
+      tiny: '12px',
+    },
     fontWeight: {
       bold: 700,
       semiBold: 600,
@@ -63,6 +72,7 @@ const theme = {
     xxxl: '64px',
   },
   breakpoints: {
+    iphone: '430px', // iPhone 16 series
     mobile: '768px',
     tablet: '1024px',
     desktop: '1280px',

@@ -59,6 +59,10 @@ const Section = styled.section`
   padding: 150px 0;
   background: #fff;
   border-radius: ${({ theme }) => theme.borderRadius.large};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 80px 0;
+  }
 `
 
 const Container = styled.div`
@@ -68,6 +72,10 @@ const Container = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     text-align: center;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `
 
@@ -84,6 +92,12 @@ const Title = styled.h2`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   line-height: 1.3;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h2};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+    line-height: 1.4;
+  }
 `
 
 const Description = styled.p`
@@ -94,6 +108,12 @@ const Description = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     margin: 0 auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.body};
+    line-height: 1.6;
+    max-width: 100%;
   }
 `
 

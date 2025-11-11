@@ -14,7 +14,7 @@ const AmusementParkSection = () => {
           <MainTitle>짜릿한 즐거움이 가득!</MainTitle>
           <Description>
             온 가족이 함께 즐기는 신나는 놀이기구의 세계.
-            <br />
+            <DesktopBreak />
             웃음과 함성이 끊이지 않는 이곳에서 최고의 하루를 만끽하세요.
           </Description>
           <ViewMoreButton onClick={() => navigate('/adventure-zone')}>자세히 보기</ViewMoreButton>
@@ -30,6 +30,13 @@ const Section = styled.section`
   color: white;
   overflow: hidden;
   clear: both;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    height: 400px;
+    border-radius: ${({ theme }) => theme.borderRadius.large};
+    margin: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
 `
 
 const VideoBg = styled.video`
@@ -72,6 +79,10 @@ const Container = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 ${({ theme }) => theme.spacing.md};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const Content = styled.div`
@@ -87,12 +98,22 @@ const EnglishTitle = styled.p`
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   opacity: 0.9;
   letter-spacing: 2px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
 `
 
 const MainTitle = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize.h2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h2};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const Description = styled.p`
@@ -100,6 +121,18 @@ const Description = styled.p`
   line-height: 1.7;
   margin-bottom: ${({ theme }) => theme.spacing.xl};
   opacity: 0.95;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.body};
+    line-height: 1.6;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
+  }
+`
+
+const DesktopBreak = styled.br`
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    display: none;
+  }
 `
 
 const ViewMoreButton = styled.button`
@@ -116,6 +149,11 @@ const ViewMoreButton = styled.button`
     background: ${({ theme }) => theme.colors.primary.darkGreen};
     transform: translateY(-3px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xl}`};
+    font-size: ${({ theme }) => theme.typography.mobile.body};
   }
 `
 
