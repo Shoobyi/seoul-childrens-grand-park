@@ -103,6 +103,10 @@ const SectionTitle = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize.h2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.neutral.black};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h2};
+  }
 `
 
 const ViewAllButton = styled.button`
@@ -120,11 +124,20 @@ const ViewAllButton = styled.button`
     background: ${({ theme }) => theme.colors.neutral.lightGray};
     border-color: ${({ theme }) => theme.colors.neutral.darkGray};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 12px;
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  }
 `
 
 const SectionSubtitle = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body};
   color: ${({ theme }) => theme.colors.neutral.darkGray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.body};
+  }
 `
 
 const NoticeList = styled.div`
@@ -180,6 +193,10 @@ const Category = styled.span`
   border-radius: ${({ theme }) => theme.borderRadius.small};
   font-size: 12px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 11px;
+  }
 `
 
 const NewBadge = styled.span`
@@ -189,11 +206,19 @@ const NewBadge = styled.span`
   border-radius: ${({ theme }) => theme.borderRadius.small};
   font-size: 11px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 10px;
+  }
 `
 
 const Date = styled.span`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.neutral.gray};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 12px;
+  }
 `
 
 const NoticeTitle = styled.h3`
@@ -201,6 +226,10 @@ const NoticeTitle = styled.h3`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.neutral.black};
   line-height: 1.5;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+  }
 `
 
 export default NoticeSection

@@ -13,10 +13,6 @@ const Footer = () => {
             <FooterLink href="#">찾아오시는길</FooterLink>
             <LinkDivider>|</LinkDivider>
             <FooterLink href="#">고객서비스헌장</FooterLink>
-            <LinkDivider>|</LinkDivider>
-            <FooterLink href="#" $highlight>개인정보처리방침</FooterLink>
-            <LinkDivider>|</LinkDivider>
-            <FooterLink href="#">사이트맵</FooterLink>
           </FooterLinks>
           <SocialLinks>
             <SocialLink href="#" aria-label="YouTube">
@@ -39,6 +35,11 @@ const Footer = () => {
           <LinkDivider>|</LinkDivider>
           <FooterLink href="#">이용문의</FooterLink>
         </SecondRow>
+        <ThirdRow>
+          <FooterLink href="#" $highlight>개인정보처리방침</FooterLink>
+          <LinkDivider>|</LinkDivider>
+          <FooterLink href="#">사이트맵</FooterLink>
+        </ThirdRow>
       </TopSection>
 
       <FooterBottom>
@@ -55,6 +56,10 @@ const FooterContainer = styled.footer`
   background: #2b2b2b;
   color: white;
   padding: ${({ theme }) => `${theme.spacing.xxl} 0 ${theme.spacing.lg}`};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.xl} 0 calc(65px + ${theme.spacing.lg})`}; /* BottomNav 높이 + 여백 */
+  }
 `
 
 const TopSection = styled.div`
@@ -63,7 +68,11 @@ const TopSection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.xl};
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xs};
+  gap: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  }
 `
 
 const FirstRow = styled.div`
@@ -81,6 +90,10 @@ const FirstRow = styled.div`
     align-items: flex-start;
     gap: ${({ theme }) => theme.spacing.md};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    gap: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const SecondRow = styled.div`
@@ -89,9 +102,31 @@ const SecondRow = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
   padding-left: calc(165px + ${({ theme }) => theme.spacing.lg});
   flex-wrap: wrap;
+  margin-top: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding-left: 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
+`
+
+const ThirdRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding-left: calc(165px + ${({ theme }) => theme.spacing.lg});
+  flex-wrap: wrap;
+  margin-top: ${({ theme }) => theme.spacing.xs};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-left: 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    gap: ${({ theme }) => theme.spacing.xs};
   }
 `
 
@@ -102,6 +137,10 @@ const Logo = styled.img`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 40px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    height: 36px;
   }
 `
 
@@ -127,11 +166,19 @@ const FooterLink = styled.a`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 13px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 12px;
+  }
 `
 
 const LinkDivider = styled.span`
   color: rgba(255, 255, 255, 0.3);
   font-size: 14px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 12px;
+  }
 `
 
 const SocialLinks = styled.div`
@@ -156,6 +203,11 @@ const SocialLink = styled.a`
     background: ${({ theme }) => theme.colors.primary.green};
     transform: translateY(-3px);
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    width: 36px;
+    height: 36px;
+  }
 `
 
 const SocialIcon = styled.img`
@@ -173,6 +225,11 @@ const FooterBottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.md} 0`};
+    margin-top: ${({ theme }) => theme.spacing.sm};
+  }
 `
 
 const Address = styled.p`
@@ -183,6 +240,11 @@ const Address = styled.p`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 11px;
+    line-height: 1.5;
+  }
 `
 
 const Copyright = styled.p`
@@ -191,6 +253,10 @@ const Copyright = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 11px;
   }
 `
 

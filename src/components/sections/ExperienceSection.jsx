@@ -144,11 +144,25 @@ const ExperienceSection = () => {
   }, [])
 
   const handleScroll = (direction) => {
-    const cardWidth = 350
+    const isMobile = window.innerWidth <= 430
+    const cardWidth = isMobile ? 304 : 350 // 모바일: 280px 카드 + 24px gap
+
+    // 모바일: 전체 슬라이더 너비 - 보이는 영역 너비
+    let maxScroll
+    if (isMobile && sliderRef.current) {
+      const containerWidth = sliderRef.current.offsetWidth
+      const paddingLeft = 16
+      const visibleWidth = containerWidth - paddingLeft
+      const totalWidth = (filteredExperiences.length * 280) + ((filteredExperiences.length - 1) * 24) + 16 // 카드들 + gap들 + 오른쪽 패딩
+      maxScroll = Math.max(0, totalWidth - visibleWidth)
+    } else {
+      maxScroll = Math.max(0, (filteredExperiences.length - 3) * cardWidth)
+    }
+
     if (direction === 'left') {
       setScrollPosition(Math.max(0, scrollPosition - cardWidth))
     } else {
-      setScrollPosition(Math.min((filteredExperiences.length - 3) * cardWidth, scrollPosition + cardWidth))
+      setScrollPosition(Math.min(maxScroll, scrollPosition + cardWidth))
     }
   }
 
@@ -178,9 +192,10 @@ const ExperienceSection = () => {
       cancelAnimationFrame(momentumRef.current)
     }
     setIsDragging(true)
-    setStartX(e.pageX)
+    const pageX = e.pageX || (e.touches && e.touches[0].pageX)
+    setStartX(pageX)
     setScrollLeft(scrollPosition)
-    setLastX(e.pageX)
+    setLastX(pageX)
     setLastTime(Date.now())
     setVelocity(0)
   }
@@ -188,7 +203,7 @@ const ExperienceSection = () => {
   const handleDragMove = (e) => {
     if (!isDragging) return
     e.preventDefault()
-    const x = e.pageX
+    const x = e.pageX || (e.touches && e.touches[0].pageX)
     const currentTime = Date.now()
     const timeDelta = currentTime - lastTime
 
@@ -202,7 +217,19 @@ const ExperienceSection = () => {
 
     const walk = (startX - x) * 0.8
     const newPosition = scrollLeft + walk
-    const maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
+    const isMobile = window.innerWidth <= 430
+
+    let maxScroll
+    if (isMobile && sliderRef.current) {
+      const containerWidth = sliderRef.current.offsetWidth
+      const paddingLeft = 16
+      const visibleWidth = containerWidth - paddingLeft
+      const totalWidth = (filteredExperiences.length * 280) + ((filteredExperiences.length - 1) * 24) + 16
+      maxScroll = Math.max(0, totalWidth - visibleWidth)
+    } else {
+      maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
+    }
+
     setScrollPosition(Math.max(0, Math.min(maxScroll, newPosition)))
   }
 
@@ -212,6 +239,18 @@ const ExperienceSection = () => {
     // 관성 효과 적용
     let currentVelocity = velocity * 15
     const friction = 0.92
+    const isMobile = window.innerWidth <= 430
+
+    let maxScroll
+    if (isMobile && sliderRef.current) {
+      const containerWidth = sliderRef.current.offsetWidth
+      const paddingLeft = 16
+      const visibleWidth = containerWidth - paddingLeft
+      const totalWidth = (filteredExperiences.length * 280) + ((filteredExperiences.length - 1) * 24) + 16
+      maxScroll = Math.max(0, totalWidth - visibleWidth)
+    } else {
+      maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
+    }
 
     const applyMomentum = () => {
       if (Math.abs(currentVelocity) < 0.5) {
@@ -220,7 +259,6 @@ const ExperienceSection = () => {
       }
 
       currentVelocity *= friction
-      const maxScroll = Math.max(0, (filteredExperiences.length - 3) * 350)
 
       setScrollPosition((prevPosition) => {
         const newPosition = prevPosition + currentVelocity
@@ -269,6 +307,9 @@ const ExperienceSection = () => {
           onMouseMove={handleDragMove}
           onMouseUp={handleDragEnd}
           onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchMove={handleDragMove}
+          onTouchEnd={handleDragEnd}
         >
           <SliderWrapper $offset={scrollPosition} $isDragging={isDragging}>
             {filteredExperiences.map((exp) => (
@@ -317,7 +358,10 @@ const ExperienceSection = () => {
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </NavButton>
-          <NavButton onClick={() => handleScroll('right')} disabled={scrollPosition >= (filteredExperiences.length - 3) * 350}>
+          <NavButton
+            onClick={() => handleScroll('right')}
+            disabled={scrollPosition >= Math.max(0, (filteredExperiences.length - 3) * 350)}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -360,11 +404,19 @@ const Container = styled.div`
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0;
+  }
 `
 
 const SectionHeader = styled.div`
   text-align: left;
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const EnglishTitle = styled.div`
@@ -374,6 +426,11 @@ const EnglishTitle = styled.div`
   letter-spacing: 2px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   opacity: 0.9;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
 `
 
 const MainTitle = styled.h2`
@@ -381,6 +438,10 @@ const MainTitle = styled.h2`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   color: #1a2a1a;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: ${({ theme }) => theme.typography.mobile.h2};
+  }
 `
 
 const CategoryTabs = styled.div`
@@ -398,6 +459,10 @@ const CategoryTabs = styled.div`
     right: 0;
     height: 2px;
     background: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: 0 ${({ theme }) => theme.spacing.md};
   }
 `
 
@@ -441,6 +506,11 @@ const CategoryTab = styled.button`
   &:active {
     transform: translateY(-1px);
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  }
 `
 
 const SliderContainer = styled.div`
@@ -451,6 +521,12 @@ const SliderContainer = styled.div`
   &:active {
     cursor: url('/icons/scroll.svg') 24 24, grabbing;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
+    overflow: visible;
+    padding-left: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const SliderWrapper = styled.div`
@@ -459,6 +535,10 @@ const SliderWrapper = styled.div`
   transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.5s ease')};
   transform: translateX(-${({ $offset }) => $offset}px);
   user-select: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding-right: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const ExperienceCard = styled.div`
@@ -483,6 +563,11 @@ const ExperienceCard = styled.div`
 
   img, video {
     pointer-events: none;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    min-width: 280px;
+    max-width: 280px;
   }
 `
 
@@ -514,12 +599,20 @@ const CardTitle = styled.h3`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
   color: #1a2a1a;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 18px;
+  }
 `
 
 const CardSubtitle = styled.p`
   font-size: 16px;
   color: #5a6a5a;
   margin-bottom: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+  }
 `
 
 const CardDate = styled.div`
@@ -532,6 +625,10 @@ const CardDate = styled.div`
   svg {
     stroke: #6a7a6a;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 12px;
+  }
 `
 
 const NavigationArea = styled.div`
@@ -540,6 +637,11 @@ const NavigationArea = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.md};
   padding-bottom: ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    display: none;
+    padding: 0 ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const NavButton = styled.button`
@@ -588,6 +690,11 @@ const ViewMoreButton = styled.button`
     border-color: #6fb03d;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    font-size: 14px;
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.lg}`};
   }
 `
 

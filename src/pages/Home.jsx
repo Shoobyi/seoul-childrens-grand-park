@@ -128,7 +128,7 @@ const OverlappingSections = styled.main`
   position: relative;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    margin-top: -60px;
+    margin-top: -80px;
   }
 `
 

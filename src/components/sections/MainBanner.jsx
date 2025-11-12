@@ -4,14 +4,35 @@ import styled from 'styled-components'
 const MainBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const videoRefs = useRef([])
   const prevSlideRef = useRef(0)
 
-  const videos = [
+  // PC용 영상
+  const desktopVideos = [
     { src: "/videos/메인배너1.mp4", title: "동물과 함께하는 시간", subtitle: "다양한 동물 친구들을 만나보세요" },
     { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
     { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
   ]
+
+  // 모바일용 영상 (모바일 전용 영상이 있으면 여기에 추가, 없으면 PC와 동일하게)
+  const mobileVideos = [
+    { src: "/videos/Lion_Video_Generation.mp4", title: "동물과 함께하는 시간", subtitle: "다양한 동물 친구들을 만나보세요" },
+    { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
+    { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
+  ]
+
+  const videos = isMobile ? mobileVideos : desktopVideos
+
+  // 화면 크기 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 430)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleVideoEnd = () => {
@@ -153,8 +174,8 @@ const VideoSlide = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
       object-fit: cover;
-      object-position: center 40%;
-      transform: scale(1.2);
+      object-position: center center;
+      transform: translateY(80px) scale(1.2);
     }
   }
 `
@@ -182,7 +203,7 @@ const ContentContainer = styled.div`
 const LeftContent = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.spacing.xl};
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
   color: white;
   max-width: 600px;
@@ -198,7 +219,7 @@ const LeftContent = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
     left: 50%;
-    top: 50%;
+    top: 45%;
     transform: translate(-50%, -50%);
     max-width: 85%;
     text-align: center;
@@ -218,7 +239,7 @@ const SmallText = styled.p`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1.5px;
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
@@ -252,7 +273,7 @@ const MainTitle = styled.h1`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    font-size: 28px;
+    font-size: 36px;
     letter-spacing: -1px;
     line-height: 1.2;
     margin-bottom: ${({ theme }) => theme.spacing.sm};
@@ -286,7 +307,7 @@ const Subtitle = styled.p`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.4;
     min-height: auto;
     margin-top: ${({ theme }) => theme.spacing.sm};
@@ -312,9 +333,11 @@ const SlideIndicators = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    right: ${({ theme }) => theme.spacing.md};
-    bottom: 100px;
-    gap: ${({ theme }) => theme.spacing.xs};
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 80px;
+    gap: ${({ theme }) => theme.spacing.md};
   }
 `
 
@@ -329,6 +352,14 @@ const Indicator = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.colors.secondary.yellow};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    width: ${({ $isActive }) => ($isActive ? '40px' : '12px')};
+    height: 12px;
+    border-radius: 6px;
+    box-shadow: ${({ $isActive }) =>
+      $isActive ? '0 2px 8px rgba(249, 220, 92, 0.4)' : '0 2px 4px rgba(0, 0, 0, 0.2)'};
   }
 `
 
@@ -357,6 +388,17 @@ const PlayPauseButton = styled.button`
   svg {
     width: 12px;
     height: 12px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 `
 
