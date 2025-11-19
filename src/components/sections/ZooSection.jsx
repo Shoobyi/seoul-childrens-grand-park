@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import MobileOnly from '../common/MobileOnly'
+import DesktopOnly from '../common/DesktopOnly'
 
 const ZooSection = () => {
   return (
@@ -11,11 +13,20 @@ const ZooSection = () => {
         <Content>
           <EnglishTitle>Urban Safari</EnglishTitle>
           <MainTitle>신비로운 동물들의 세상</MainTitle>
-          <Description>
-            가까이서 교감하는 동물 친구들, 도심 속에서 만나는 특별한 사파리.
-            <DesktopBreak />
-            생동감 넘치는 야생의 세계가 여러분을 기다립니다.
-          </Description>
+          <DesktopOnly breakpoint="iphone">
+            <Description>
+              가까이서 교감하는 동물 친구들, 도심 속에서 만나는 특별한 사파리.
+              <br />
+              생동감 넘치는 야생의 세계가 여러분을 기다립니다.
+            </Description>
+          </DesktopOnly>
+          <MobileOnly breakpoint="iphone">
+            <Description>
+              가까이서 교감하는 동물 친구들, 
+               <br />
+              도심 속 특별한 사파리.
+            </Description>
+          </MobileOnly>
           <ViewMoreButton to="/safari-story">자세히 보기</ViewMoreButton>
         </Content>
       </Container>
@@ -128,17 +139,12 @@ const Description = styled.p`
   }
 `
 
-const DesktopBreak = styled.br`
-  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    display: none;
-  }
-`
-
 const ViewMoreButton = styled(Link)`
   display: inline-block;
   padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xxl}`};
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.primary.green};
+  border: 2px solid ${({ theme }) => theme.colors.primary.green};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   font-size: 18px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
@@ -147,7 +153,8 @@ const ViewMoreButton = styled(Link)`
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary.darkGreen};
+    background: ${({ theme }) => theme.colors.primary.green};
+    color: white;
     transform: translateY(-3px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
   }

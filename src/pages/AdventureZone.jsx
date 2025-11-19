@@ -474,8 +474,8 @@ const IntroStats = styled.div`
   margin-top: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.md};
+    grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 `
 

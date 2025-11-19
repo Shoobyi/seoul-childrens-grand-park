@@ -575,6 +575,10 @@ const VideoWrapper = styled.div`
   width: 100%;
   height: 400px;
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    height: 240px;
+  }
 `
 
 const CardImage = styled.img`
@@ -592,6 +596,10 @@ const CardVideo = styled.video`
 
 const CardContent = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const CardTitle = styled.h3`

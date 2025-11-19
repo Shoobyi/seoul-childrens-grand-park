@@ -71,6 +71,7 @@ const NoticeSection = () => {
 
 const Section = styled.section`
   padding: ${({ theme }) => theme.spacing.xxxl} 0;
+  margin-top: -${({ theme }) => theme.spacing.xxxl};
   background: white;
 `
 
@@ -165,6 +166,10 @@ const NoticeItem = styled.div`
   &:last-child {
     border-bottom: none;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    padding: ${({ theme }) => theme.spacing.md} 0;
+  }
 `
 
 const NoticeContent = styled.div`
@@ -172,12 +177,19 @@ const NoticeContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
+    flex-direction: row;
+    align-items: center;
+    gap: ${({ theme }) => theme.spacing.sm};
+  }
 `
 
 const BadgeWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
+  flex-shrink: 0;
 `
 
 const Category = styled.span`
@@ -229,6 +241,12 @@ const NoticeTitle = styled.h3`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+    max-width: 150px;
   }
 `
 

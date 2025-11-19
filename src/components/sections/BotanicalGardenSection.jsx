@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import MobileOnly from '../common/MobileOnly'
+import DesktopOnly from '../common/DesktopOnly'
 
 const BotanicalGardenSection = () => {
   const navigate = useNavigate()
@@ -49,11 +51,20 @@ const BotanicalGardenSection = () => {
         <Content>
           <EnglishTitle>Green Garden</EnglishTitle>
           <MainTitle>사계절의 아름다움</MainTitle>
-          <Description>
-            희귀 식물부터 친숙한 꽃까지, 자연의 다채로운 색으로 가득한 곳.
-            <DesktopBreak />
-            고요한 산책길을 따라 식물들이 전하는 이야기를 들어보세요.
-          </Description>
+          <DesktopOnly breakpoint="iphone">
+            <Description>
+              희귀 식물부터 친숙한 꽃까지, 자연의 다채로운 색으로 가득한 곳.
+              <br />
+              고요한 산책길을 따라 식물들이 전하는 이야기를 들어보세요.
+            </Description>
+          </DesktopOnly>
+          <MobileOnly breakpoint="iphone">
+            <Description>
+              희귀 식물부터 친숙한 꽃까지,
+               <br />
+              자연의 다채로운 색으로 가득한 곳.
+            </Description>
+          </MobileOnly>
           <ViewMoreButton onClick={() => navigate('/outdoor-garden')}>자세히 보기</ViewMoreButton>
         </Content>
       </Container>
@@ -176,16 +187,11 @@ const Description = styled.p`
   }
 `
 
-const DesktopBreak = styled.br`
-  @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    display: none;
-  }
-`
-
 const ViewMoreButton = styled.button`
   padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xxl}`};
-  background: ${({ theme }) => theme.colors.primary.green};
-  color: white;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.primary.green};
+  border: 2px solid ${({ theme }) => theme.colors.primary.green};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   font-size: 16px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
@@ -193,7 +199,8 @@ const ViewMoreButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary.darkGreen};
+    background: ${({ theme }) => theme.colors.primary.green};
+    color: white;
     transform: translateY(-3px);
     box-shadow: ${({ theme }) => theme.shadows.medium};
   }

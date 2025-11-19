@@ -507,8 +507,8 @@ const IntroStats = styled.div`
   margin-top: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.md};
+    grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 `
 
@@ -556,8 +556,10 @@ const ZonesGrid = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    gap: 4px;
-    height: 400px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: ${({ theme }) => theme.spacing.sm};
+    height: auto;
   }
 `
 
@@ -610,6 +612,12 @@ const ZoneImageCard = styled.div`
 
   &:active {
     transform: scale(0.98);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    aspect-ratio: 1;
   }
 `
 
