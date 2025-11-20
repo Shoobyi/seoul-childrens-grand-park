@@ -151,15 +151,18 @@ const Content = styled.div`
 `
 
 const EnglishTitle = styled.p`
-  font-size: 16px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  opacity: 0.9;
-  letter-spacing: 2px;
+  font-size: 32px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  opacity: 1;
+  letter-spacing: 0;
+  color: ${({ theme }) => theme.colors.primary.green};
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    font-size: 14px;
-    letter-spacing: 1.5px;
+    font-size: 22px;
+    letter-spacing: 0;
   }
 `
 

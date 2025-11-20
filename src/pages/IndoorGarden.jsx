@@ -511,19 +511,19 @@ const IntroStatItem = styled.div`
 `
 
 const IntroStatValue = styled.p`
-  font-size: 32px;
+  font-size: 48px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.primary.green};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 24px;
+    font-size: 32px;
   }
 `
 
 const IntroStatLabel = styled.p`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.midGray};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  color: #000000;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
 `
 
 const ZonesShowcase = styled.section`

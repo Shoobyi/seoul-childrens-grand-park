@@ -202,7 +202,7 @@ const ExperienceSection = () => {
 
   const handleDragMove = (e) => {
     if (!isDragging) return
-    e.preventDefault()
+    // preventDefault는 CSS touch-action으로 대체
     const x = e.pageX || (e.touches && e.touches[0].pageX)
     const currentTime = Date.now()
     const timeDelta = currentTime - lastTime
@@ -422,7 +422,7 @@ const SectionHeader = styled.div`
 const EnglishTitle = styled.div`
   font-size: 18px;
   color: #5a6a5a;
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
   letter-spacing: 2px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   opacity: 0.9;
@@ -448,7 +448,7 @@ const CategoryTabs = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: ${({ theme }) => theme.spacing.sm};
-  margin-bottom: ${({ theme }) => theme.spacing.xxl};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   position: relative;
 
   &::before {
@@ -517,6 +517,7 @@ const SliderContainer = styled.div`
   overflow: hidden;
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
   cursor: url('/icons/scroll.svg') 24 24, grab;
+  touch-action: pan-y pinch-zoom;
 
   &:active {
     cursor: url('/icons/scroll.svg') 24 24, grabbing;
@@ -526,14 +527,18 @@ const SliderContainer = styled.div`
     margin-bottom: ${({ theme }) => theme.spacing.lg};
     overflow: visible;
     padding-left: ${({ theme }) => theme.spacing.md};
+    touch-action: pan-y pinch-zoom;
   }
 `
 
-const SliderWrapper = styled.div`
+const SliderWrapper = styled.div.attrs(({ $offset, $isDragging }) => ({
+  style: {
+    transform: `translateX(-${$offset}px)`,
+    transition: $isDragging ? 'none' : 'transform 0.5s ease',
+  },
+}))`
   display: flex;
   gap: ${({ theme }) => theme.spacing.lg};
-  transition: ${({ $isDragging }) => ($isDragging ? 'none' : 'transform 0.5s ease')};
-  transform: translateX(-${({ $offset }) => $offset}px);
   user-select: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
@@ -541,9 +546,12 @@ const SliderWrapper = styled.div`
   }
 `
 
-const ExperienceCard = styled.div`
-  min-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
-  max-width: ${({ $isHovered }) => ($isHovered ? '450px' : '320px')};
+const ExperienceCard = styled.div.attrs(({ $isHovered }) => ({
+  style: {
+    minWidth: $isHovered ? '450px' : '320px',
+    maxWidth: $isHovered ? '450px' : '320px',
+  },
+}))`
   background: rgba(255, 255, 255, 0.95);
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;

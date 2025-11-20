@@ -212,9 +212,7 @@ const SafariStory = () => {
               <AnimalLabel>Representative Animal</AnimalLabel>
               <AnimalTitle>사자</AnimalTitle>
               <AnimalDescription>
-                카리스마 넘치는 사자 가족의 가장, 레오를 만나보세요.
-                <br /><br />
-                위엄 있는 모습과 강인한 힘으로 초원을 지배하는 맹수의 왕입니다.
+                카리스마 넘치는 사자 가족의 가장, 레오를 만나보세요. 위엄 있는 모습과 강인한 힘으로 초원을 지배하는 맹수의 왕입니다.
               </AnimalDescription>
             </AnimalContentHalf>
           </AnimalSection>
@@ -229,9 +227,7 @@ const SafariStory = () => {
             <AnimalContentHalf>
               <AnimalTitle>유라시아 수달</AnimalTitle>
               <AnimalDescription>
-                귀여운 외모와 뛰어난 수영 실력을 자랑하는 수달을 만나보세요.
-                <br /><br />
-                장난기 가득한 성격으로 물속에서 자유롭게 헤엄치며 즐거운 시간을 보냅니다.
+                귀여운 외모와 뛰어난 수영 실력을 자랑하는 수달을 만나보세요. 장난기 가득한 성격으로 물속에서 자유롭게 헤엄치며 즐거운 시간을 보냅니다.
               </AnimalDescription>
             </AnimalContentHalf>
           </AnimalSection>
@@ -246,9 +242,7 @@ const SafariStory = () => {
             <AnimalContentHalf>
               <AnimalTitle>검은등 자칼</AnimalTitle>
               <AnimalDescription>
-                날렵한 몸매와 뛰어난 순발력을 가진 검은등 자칼을 만나보세요.
-                <br /><br />
-                영리한 두뇌와 빠른 발걸음으로 초원을 누비는 민첩한 사냥꾼입니다.
+                날렵한 몸매와 뛰어난 순발력을 가진 검은등 자칼을 만나보세요. 영리한 두뇌와 빠른 발걸음으로 초원을 누비는 민첩한 사냥꾼입니다.
               </AnimalDescription>
             </AnimalContentHalf>
           </AnimalSection>
@@ -519,19 +513,19 @@ const IntroStatItem = styled.div`
 `
 
 const IntroStatValue = styled.p`
-  font-size: 32px;
+  font-size: 48px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.primary.green};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 24px;
+    font-size: 32px;
   }
 `
 
 const IntroStatLabel = styled.p`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.neutral.midGray};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  color: #000000;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
 `
 
 const ZonesShowcase = styled.section`
@@ -955,7 +949,7 @@ const AnimalContentHalf = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 10% 0 ${({ theme }) => theme.spacing.xxxl};
+  padding: 0 10% 0 ${({ theme }) => theme.spacing.xxl};
   background: #fff;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -977,6 +971,7 @@ const AnimalLabel = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 13px;
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `
 
@@ -994,12 +989,13 @@ const AnimalTitle = styled.h2`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 32px;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
 `
 
 const AnimalDescription = styled.p`
   font-size: 16px;
-  line-height: 1.0;
+  line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
