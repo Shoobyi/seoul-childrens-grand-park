@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import TextType from '../TextType/TextType'
 
 const MainBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -109,20 +110,37 @@ const MainBanner = () => {
       <ContentContainer>
         <LeftContent>
           <SmallText>도심속 자연</SmallText>
-          <MainTitle>{videos[currentSlide].title}</MainTitle>
-          <Subtitle>{videos[currentSlide].subtitle}</Subtitle>
+          <MainTitle>
+            <TextType
+              text={videos[currentSlide].title}
+              typingSpeed={80}
+              showCursor={true}
+              loop={false}
+              key={`title-${currentSlide}`}
+            />
+          </MainTitle>
+          <Subtitle>
+            <TextType
+              text={videos[currentSlide].subtitle}
+              typingSpeed={50}
+              showCursor={true}
+              loop={false}
+              initialDelay={800}
+              key={`subtitle-${currentSlide}`}
+            />
+          </Subtitle>
         </LeftContent>
 
         <SlideIndicators>
           <PlayPauseButton onClick={togglePlayPause} title={isPlaying ? '일시정지' : '재생'}>
             {isPlaying ? (
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
-                <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+                <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" />
+                <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" />
               </svg>
             ) : (
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                <path d="M8 5v14l11-7z" fill="currentColor"/>
+                <path d="M8 5v14l11-7z" fill="currentColor" />
               </svg>
             )}
           </PlayPauseButton>
@@ -359,7 +377,7 @@ const Indicator = styled.button`
     height: 12px;
     border-radius: 6px;
     box-shadow: ${({ $isActive }) =>
-      $isActive ? '0 2px 8px rgba(249, 220, 92, 0.4)' : '0 2px 4px rgba(0, 0, 0, 0.2)'};
+    $isActive ? '0 2px 8px rgba(249, 220, 92, 0.4)' : '0 2px 4px rgba(0, 0, 0, 0.2)'};
   }
 `
 

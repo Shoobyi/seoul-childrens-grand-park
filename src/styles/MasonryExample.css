@@ -1,0 +1,50 @@
+.masonry-example-container {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 20px;
+}
+
+.masonry-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 60px;
+    padding: 20px;
+}
+
+.masonry-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.masonry-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.masonry-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+@media (max-width: 768px) {
+    .masonry-header h1 {
+        font-size: 2rem;
+    }
+
+    .masonry-header p {
+        font-size: 1rem;
+    }
+
+    .masonry-wrapper {
+        padding: 10px;
+    }
+}

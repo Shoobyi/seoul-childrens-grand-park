@@ -11,6 +11,7 @@ import TicketPurchase from './pages/TicketPurchase'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
 import MyPage from './pages/MyPage'
+import MasonryExample from './pages/MasonryExample'
 import LoadingScreen from './components/common/LoadingScreen'
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/guide" element={<Guide />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/masonry" element={<MasonryExample />} />
         </Routes>
       </MainContent>
     </>

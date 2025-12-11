@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Shoobyi/seoul-childrens-grand-park#readme",
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.4",
+    "gsap": "^3.14.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
