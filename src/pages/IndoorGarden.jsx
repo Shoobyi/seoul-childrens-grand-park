@@ -187,9 +187,7 @@ const IndoorGarden = () => {
             <PlantStoryLabel>Plant Story</PlantStoryLabel>
             <PlantStoryTitle>다육식물</PlantStoryTitle>
             <PlantStoryDescription>
-              다육식물이란 줄기나 잎에 수분을 저장할 수 있도록 적응된 식물로 138종의 선인장과
-              <br />
-              기타 식물들을 관람할 수 있습니다.
+              다육식물이란 줄기나 잎에 수분을 저장할 수 있도록 적응된 식물로 138종의 선인장과 기타 식물들을 관람할 수 있습니다.
             </PlantStoryDescription>
           </PlantStoryContentHalf>
         </PlantStorySection>
@@ -203,9 +201,7 @@ const IndoorGarden = () => {
           <PlantStoryContentHalf>
             <PlantStoryTitle>관엽식물</PlantStoryTitle>
             <PlantStoryDescription>
-              관엽식물이란 잎의 색깔 또는 형태의 아름다움을 관상하는 식물로 160여종의 살아 숨쉬는 식물을
-              <br />
-              새소리를 들으며 이국적인 분위기를 감상할 수 있습니다.
+              관엽식물이란 잎의 색깔 또는 형태의 아름다움을 관상하는 식물로 160여종의 살아 숨쉬는 식물을 새소리를 들으며 이국적인 분위기를 감상할 수 있습니다.
             </PlantStoryDescription>
           </PlantStoryContentHalf>
         </PlantStorySection>
@@ -219,9 +215,7 @@ const IndoorGarden = () => {
           <PlantStoryContentHalf>
             <PlantStoryTitle>분재</PlantStoryTitle>
             <PlantStoryDescription>
-              분재란 화분에 심은 나무의 가지와 줄기를 다듬어 노수목의 축소판으로 총 49종의 분재가 형태별로
-              <br />
-              전시되어 있으며 100년 이상 오래되어 세월의 흔적을 느낄 수 있는 분재작품도 감상하실 수 있습니다.
+              분재란 화분에 심은 나무의 가지와 줄기를 다듬어 노수목의 축소판으로 총 49종의 분재가 형태별로 전시되어 있으며 100년 이상 오래되어 세월의 흔적을 느낄 수 있는 분재작품도 감상하실 수 있습니다.
             </PlantStoryDescription>
           </PlantStoryContentHalf>
         </PlantStorySection>
@@ -235,9 +229,7 @@ const IndoorGarden = () => {
           <PlantStoryContentHalf>
             <PlantStoryTitle>야생화</PlantStoryTitle>
             <PlantStoryDescription>
-              총 66종의 야생화가 계절별로 전시되어 있어 관람로를 따라 들에 핀 꽃과 풀을 감상하세요.
-              <br />
-              할미꽃, 수선화, 나리 등 야생화에 담겨져 있는 이야기를 알아 볼까요?
+              총 66종의 야생화가 계절별로 전시되어 있어 관람로를 따라 들에 핀 꽃과 풀을 감상하세요. 할미꽃, 수선화, 나리 등 야생화에 담겨져 있는 이야기를 알아 볼까요?
             </PlantStoryDescription>
           </PlantStoryContentHalf>
         </PlantStorySection>
@@ -728,7 +720,7 @@ const PlantStoryContentHalf = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 10% 0 ${({ theme }) => theme.spacing.xxxl};
+  padding: 0 10% 0 ${({ theme }) => theme.spacing.xxl};
   background: #fff;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -750,6 +742,7 @@ const PlantStoryLabel = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 13px;
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `
 
@@ -767,12 +760,13 @@ const PlantStoryTitle = styled.h2`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 32px;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
 `
 
 const PlantStoryDescription = styled.p`
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.darkGray};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
