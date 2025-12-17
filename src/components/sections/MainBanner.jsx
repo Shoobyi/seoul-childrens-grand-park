@@ -20,7 +20,7 @@ const MainBanner = () => {
   const mobileVideos = [
     { src: "/videos/Lion_Video_Generation.mp4", title: "동물과\n함께하는 시간", subtitle: "다양한 동물 친구들을\n만나보세요" },
     { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서\n여유를 찾으세요" },
-    { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운\n놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
+    { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운\n놀이동산", subtitle: "신나는 놀이기구와 함께하는\n추억" }
   ]
 
   const videos = isMobile ? mobileVideos : desktopVideos
