@@ -18,8 +18,8 @@ const MainBanner = () => {
 
   // 모바일용 영상 (모바일 전용 영상이 있으면 여기에 추가, 없으면 PC와 동일하게)
   const mobileVideos = [
-    { src: "/videos/Lion_Video_Generation.mp4", title: "동물과 함께하는 시간", subtitle: "다양한 동물 친구들을 만나보세요" },
-    { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서 여유를 찾으세요" },
+    { src: "/videos/Lion_Video_Generation.mp4", title: "동물과\n함께하는 시간", subtitle: "다양한 동물 친구들을\n만나보세요" },
+    { src: "/videos/freepik__a-nature-exploration-tour-taking-place-at-seoul-ch__40242.mp4", title: "자연 속 힐링", subtitle: "도심 속 자연에서\n여유를 찾으세요" },
     { src: "/videos/Super_Viking_Ride_Video_Generation.mp4", title: "즐거운 놀이동산", subtitle: "신나는 놀이기구와 함께하는 추억" }
   ]
 
@@ -112,6 +112,7 @@ const MainBanner = () => {
           <SmallText>도심속 자연</SmallText>
           <MainTitle>
             <TextType
+              as="span"
               text={videos[currentSlide].title}
               typingSpeed={80}
               showCursor={true}
@@ -121,6 +122,7 @@ const MainBanner = () => {
           </MainTitle>
           <Subtitle>
             <TextType
+              as="span"
               text={videos[currentSlide].subtitle}
               typingSpeed={50}
               showCursor={true}
@@ -232,14 +234,14 @@ const LeftContent = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     left: ${({ theme }) => theme.spacing.md};
-    max-width: 80%;
+    max-width: 90%;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
     left: 50%;
     top: 45%;
     transform: translate(-50%, -50%);
-    max-width: 85%;
+    max-width: 95%;
     text-align: center;
   }
 `
@@ -287,11 +289,13 @@ const MainTitle = styled.h1`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 40px;
+    font-size: 36px;
+    white-space: nowrap;
+    word-break: keep-all;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.iphone}) {
-    font-size: 36px;
+    font-size: 32px;
     letter-spacing: -1px;
     line-height: 1.2;
     margin-bottom: ${({ theme }) => theme.spacing.sm};
